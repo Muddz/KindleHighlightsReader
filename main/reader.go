@@ -7,11 +7,15 @@ import (
 	"strings"
 )
 
-const msgWelcome = `KindleHighlightReader v1.0.0 is a little program that reads all of your highlights 
+const programVersion = "v1.0.0"
+const msgWelcome = `KindleHighlightsReader %s is a little program that reads all of your highlights 
 from your Amazon Kindle and can save them nicely formatted in either Json, PDF or as an CSV file`
-const msgSetFilePath = `Enter the full path for the "My Clippings.txt" file: `
-const msgSetOutputFormats = `Enter one or more of the following output formats JSON, PDF, CSV separated by spaces: `
-const msgOutputDestination = `Enter a destination path for the output files: `
+
+const (
+	msgSetFilePath       = `Enter the full path for the "My Clippings.txt" file: `
+	msgSetOutputFormats  = `Enter one or more of the following output formats JSON, PDF, CSV separated by spaces: `
+	msgOutputDestination = `Enter a destination path for the output files: `
+)
 
 var highlights []Highlight
 var validOutputFormats = []string{"JSON", "PDF", "CSV"}
@@ -30,13 +34,17 @@ type Highlight struct {
 }
 
 func main() {
-	fmt.Print(msgWelcome)
-	fmt.Println("\n")
+	greetMsg()
 	readFilePath()
 	fmt.Println("")
 	readOutputFormats()
 	fmt.Println("")
 	readFileOutputDestination()
+}
+
+func greetMsg() {
+	fmt.Printf(msgWelcome, programVersion)
+	fmt.Println("\n ")
 }
 
 func readFilePath() {
