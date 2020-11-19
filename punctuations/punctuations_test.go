@@ -1,8 +1,6 @@
 package punctuations
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestSetSingleQuotations(t *testing.T) {
 	testString := "Hello"

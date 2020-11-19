@@ -1,9 +1,9 @@
 package punctuations
 
-func SetSingleQuotations(input string) string {
-	chars := []rune(input)
-	firstChar := string(input[0])
-	lastChar := string(input[len(input)-1])
+func SetSingleQuotations(text string) string {
+	chars := []rune(text)
+	firstChar := string(text[0])
+	lastChar := string(text[len(text)-1])
 
 	if firstChar == string('"') {
 		chars[0] = '\''
@@ -21,10 +21,10 @@ func SetSingleQuotations(input string) string {
 	return string(chars)
 }
 
-func SetDoubleQuotations(input string) string {
-	chars := []rune(input)
-	firstChar := string(input[0])
-	lastChar := string(input[len(input)-1])
+func SetDoubleQuotations(text string) string {
+	chars := []rune(text)
+	firstChar := string(text[0])
+	lastChar := string(text[len(text)-1])
 
 	if firstChar == string('\'') {
 		chars[0] = '"'
@@ -42,10 +42,10 @@ func SetDoubleQuotations(input string) string {
 	return string(chars)
 }
 
-func RemoveQuotations(input string) string {
-	chars := []rune(input)
-	firstChar := string(input[0])
-	lastChar := string(input[len(input)-1])
+func RemoveQuotations(text string) string {
+	chars := []rune(text)
+	firstChar := string(text[0])
+	lastChar := string(text[len(text)-1])
 
 	if firstChar == string('\'') || firstChar == string('"') {
 		chars = append(chars[1:])
@@ -56,18 +56,18 @@ func RemoveQuotations(input string) string {
 	return string(chars)
 }
 
-func SetFullStop(input string) string {
-	chars := []rune(input)
-	lastChar := string(input[len(input)-1])
+func SetFullStop(text string) string {
+	chars := []rune(text)
+	lastChar := string(text[len(text)-1])
 	if lastChar != string('.') {
 		chars = append(chars, '.')
 	}
 	return string(chars)
 }
 
-func RemoveFullStop(input string) string {
-	chars := []rune(input)
-	lastChar := string(input[len(input)-1])
+func RemoveFullStop(text string) string {
+	chars := []rune(text)
+	lastChar := string(text[len(text)-1])
 	if lastChar == string('.') {
 		chars = chars[:len(chars)-1]
 	}

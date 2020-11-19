@@ -41,6 +41,7 @@ type Highlight struct {
 }
 
 func main() {
+
 	//TODO should methods return a value and append it to the global member variables?
 	//greetMsg()
 	//readSrcPath()
@@ -52,8 +53,6 @@ func main() {
 	//time.Sleep(time.Second * 2)
 
 	//readOptionQuotationMarks()
-
-	fmt.Println(message.GetGreeting())
 
 	mockValues = append(mockValues,
 

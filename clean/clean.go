@@ -1,21 +1,31 @@
 package clean
 
-import "strings"
+import (
+	"fmt"
+	"log"
+	"regexp"
+	"strings"
+)
 
 func WhiteSpaces(text string) string {
+	fmt.Println(strings.TrimSpace(text))
 	return strings.TrimSpace(text)
 }
 
-func Prefixes() {
-	//#PreFixes
-	//itself. A male runs the risk of losing far more women 	(\w+\S\s)
-	//s. A male runs the risk of losing far more women			(\w+\S\s)
-	//. A male runs the risk of losing far more women			(^\S\s)
+func Prefixes(text string) string {
+	pattern := `^\.\s|^\w+\.\s`
+	match, err := regexp.Compile(pattern)
+	if err != nil {
+		log.Println(err)
+	}
+	return match.ReplaceAllString(text, "")
 }
 
-func PostFixes() {
-
-	//#PostFixes
-	//A male runs the risk of losing far more women. itself 	(\.\s\w*)
-	//A male runs the risk of losing far more women. i			(\.\s\w*)
+func PostFixes(text string) string {
+	pattern := `\.\s\w+$`
+	match, err := regexp.Compile(pattern)
+	if err != nil {
+		log.Println(err)
+	}
+	return match.ReplaceAllString(text, "")
 }
