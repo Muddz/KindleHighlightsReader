@@ -1,6 +1,7 @@
 package main
 
 import (
+	"KindleHighlightsReader/message"
 	"bufio"
 	"fmt"
 	"log"
@@ -10,21 +11,6 @@ import (
 )
 
 var mockValues []Highlight
-
-const programVersion = "v1.0.0"
-const msgWelcome = `Welcome! KindleHighlightsReader %s is a program that reads all of your Kindle highlights 
-and can save them nicely formatted in either Json, PDF or as an CSV file.`
-
-const (
-	msgSetSrcPath        = `Enter the path for the "My Clippings.txt" file: `
-	msgSetOutputFormats  = `Enter one or more of the following output formats JSON, PDF, CSV separated by spaces: `
-	msgSetDstPath        = `Enter a destination path for the output file(s) or leave empty for desktop path: `
-	msgSetQuotationMarks = `Wrap every highlight in quotation marks?
-1 - YES (Double quotation "Hi")
-2 - YES (Single quotation 'Hi')
-3 - REMOVE
-4 - SKIP`
-)
 
 const (
 	optionSingleQuotation = iota
@@ -66,6 +52,8 @@ func main() {
 	//time.Sleep(time.Second * 2)
 
 	//readOptionQuotationMarks()
+
+	fmt.Println(message.GetGreeting())
 
 	mockValues = append(mockValues,
 
@@ -134,13 +122,8 @@ func main() {
 	//setSingleQuotations(mockValues)
 }
 
-func greetMsg() {
-	fmt.Printf(msgWelcome, programVersion)
-	fmt.Println("\n ")
-}
-
 func readSrcPath() {
-	fmt.Print(msgSetSrcPath)
+	fmt.Print(message.SetSrcPath)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -165,7 +148,7 @@ func fileExists(path string) bool {
 }
 
 func readOutputFormats() {
-	fmt.Print(msgSetOutputFormats)
+	fmt.Print(message.SetOutputFormats)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -206,7 +189,7 @@ func validateOutputFormats(formats string) bool {
 }
 
 func readDstPath() {
-	fmt.Print(msgSetDstPath)
+	fmt.Print(message.SetDstPath)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -259,7 +242,7 @@ func printHighlight(highlights []Highlight) {
 }
 
 func readOptionQuotationMarks() {
-	fmt.Println(msgSetQuotationMarks)
+	fmt.Println(message.OptionQuotationMarks)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())

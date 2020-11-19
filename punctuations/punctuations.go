@@ -1,7 +1,5 @@
 package punctuations
 
-import "fmt"
-
 func SetSingleQuotations(input string) string {
 	chars := []rune(input)
 	firstChar := string(input[0])
@@ -73,6 +71,5 @@ func RemoveFullStop(input string) string {
 	if lastChar == string('.') {
 		chars = chars[:len(chars)-1]
 	}
-	fmt.Println(string(chars))
 	return string(chars)
 }

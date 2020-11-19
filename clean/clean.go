@@ -8,16 +8,14 @@ func WhiteSpaces(text string) string {
 
 func Prefixes() {
 	//#PreFixes
-	//do. Hello
-	//o. Hello
-	//d hello
-	//. Hello
+	//itself. A male runs the risk of losing far more women 	(\w+\S\s)
+	//s. A male runs the risk of losing far more women			(\w+\S\s)
+	//. A male runs the risk of losing far more women			(^\S\s)
 }
 
 func PostFixes() {
 
 	//#PostFixes
-	//	Hello.
-	//	Hello. A
-	//	Hello. AS
+	//A male runs the risk of losing far more women. itself 	(\.\s\w*)
+	//A male runs the risk of losing far more women. i			(\.\s\w*)
 }
