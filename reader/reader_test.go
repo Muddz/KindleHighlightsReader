@@ -35,11 +35,19 @@ Quote`
 	}
 }
 
+func TestRemoveAuthor(t *testing.T) {
+	testString := "The story of Microsoft (Bill Gates)"
+	testString = removeAuthor(testString)
+	if testString != "The story of Microsoft" {
+		t.Errorf("Failed to remove author from title %s", testString) //TODO parse another object
+	}
+}
+
 func TestExtractAuthorName(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	testString = extractAuthor(testString)
-	if testString != "(Bill Gates)" {
-		t.Errorf("Failed to extract author's name from %s", testString)
+	if testString != "Bill Gates" {
+		t.Errorf("Failed to extract author's name from %s", testString) //TODO parse another object
 	}
 }
 

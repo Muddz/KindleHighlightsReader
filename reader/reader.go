@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 )
 
 type Highlight struct {
@@ -30,30 +31,35 @@ func highlightsParser(content string) []Highlight {
 	var highlights []Highlight
 	for _, match := range matches {
 		var title = match[2]
-		var author = extractAuthor(title)
 		var text = match[4]
 		highlights = append(highlights, Highlight{
-			Title:  title,
-			Author: author,
+			Title:  removeAuthor(title),
+			Author: extractAuthor(title),
 			Text:   text,
 		})
 	}
 	return highlights
 }
 
-func extractAuthor(text string) string {
+func removeAuthor(title string) string {
+	result := strings.Split(title, " (")
+	return result[0]
+}
+
+func extractAuthor(title string) string {
 	pattern := `(\(.*\))`
 	match, err := regexp.Compile(pattern)
 	if err != nil {
 		log.Println(err)
 	}
-	return match.FindString(text)
+	title = match.FindString(title)
+	return removeAuthorParentheses(title)
 }
 
-func removeAuthorParentheses(text string) string {
-	chars := []rune(text)
-	firstChar := string(text[0])
-	lastChar := string(text[len(text)-1])
+func removeAuthorParentheses(author string) string {
+	chars := []rune(author)
+	firstChar := string(author[0])
+	lastChar := string(author[len(author)-1])
 
 	if firstChar == string('(') || lastChar == string(')') {
 		chars = append(chars[1 : len(chars)-1])

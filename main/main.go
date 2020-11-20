@@ -3,6 +3,7 @@ package main
 import (
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/save"
 	"bufio"
 	"fmt"
 	"log"
@@ -34,8 +35,18 @@ type Options struct {
 func main() {
 	//fmt.Println(message.GetGreeting())
 	//readSrcPath()
+	highlights, _ := reader.ReadHighlightFile("C:\\Users\\Muddz\\Desktop\\My Clippings.txt")
+	//if err != nil {
+	//	log.Println(err)
+	//}
 
-	reader.ReadHighlightFile("reader/My Clippings_test.txt")
+	//save.ToJSON(highlights, getUserDesktopDst())
+
+	save.ToTxt(highlights, getUserDesktopDst())
+
+	//if len(highlights) > 0 {
+	//	printHighlight(highlights)
+	//}
 
 	//readDstPath()
 	//readOutputFormats()
@@ -64,6 +75,16 @@ func readSrcPath() {
 			return
 		}
 		srcPath = scanner.Text()
+
+		//Todo 1) path.length >0
+		//Todo 2) if contains ".txt"
+		//Todo 3) if file exist
+
+		if !strings.Contains(srcPath, ".txt") {
+			fmt.Print("Error! File is not a \".txt\" file. Try again: ")
+			break
+		}
+
 		if len(srcPath) > 0 {
 			fmt.Println(srcPath + "\n")
 			return
@@ -150,22 +171,23 @@ func getUserDesktopDst() string {
 	return fmt.Sprintf("%s\\Desktop", homeDir)
 }
 
-//func printHighlight(highlights []Highlight) {
-//	highlightsCount := 0
-//	booksCount := make(map[string]int)
-//	for _, v := range highlights {
-//		msg := fmt.Sprintf("Title: %s\nAuthor: %s %s\nText: %s\n", v.Title, v.Author, v.AuthorLastName, v.Text)
-//		fmt.Println(msg)
-//		if len(v.Text) > 0 {
-//			highlightsCount++
-//		}
-//		if len(v.Title) > 0 {
-//			booksCount[v.Title] = 0
-//		}
-//	}
-//	msg := fmt.Sprintf("### Found %d highlights from %d different books", highlightsCount, len(booksCount))
-//	fmt.Println(msg)
-//}
+//TODO is the argument passing correct?
+func printHighlight(highlights []reader.Highlight) {
+	highlightsCount := 0
+	booksCount := make(map[string]int)
+	for _, v := range highlights {
+		msg := fmt.Sprintf("Title: %s\nAuthor: %s\nText: %s\n", v.Title, v.Author, v.Text)
+		fmt.Println(msg)
+		if len(v.Text) > 0 {
+			highlightsCount++
+		}
+		if len(v.Title) > 0 {
+			booksCount[v.Title] = 0
+		}
+	}
+	msg := fmt.Sprintf("### Found %d highlights from %d different books", highlightsCount, len(booksCount))
+	fmt.Println(msg)
+}
 
 func readOptionQuotationMarks() {
 	fmt.Println(message.OptionQuotationMarks)
