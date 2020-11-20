@@ -4,20 +4,20 @@ import "fmt"
 
 const ProgramVersion = "v1.0.0"
 
-const Greeting = `Welcome! KindleHighlightsReader %s is a program that reads all of your Kindle highlights 
-and can save them nicely formatted in either Json, PDF or as an CSV file.`
+const Greeting = `Welcome! KindleHighlightsReader %s is a program that can read all of your Kindle highlights 
+and saves them nicely formatted in either Json, PDF or as an CSV file, with many formatting and styling options.`
 
-const SetSrcPath = `Enter the path for the "My Clippings.txt" file: `
+const SetSrcPath = `Enter the path for the "My Clippings.txt" file from your Kindle device: `
 const SetDstPath = `Enter a destination path for the output file(s) or leave empty for desktop path: `
 const SetOutputFormats = `Enter one or more of the following output formats JSON, PDF, CSV separated by spaces: `
 
-const OptionQuotationMarks = `Wrap every highlight in quotation marks?
+const OptionQuotationMarks = `Choose your quotation marks option for every highlight text:
 1 - YES (Double quotation "Hi")
 2 - YES (Single quotation 'Hi')
 3 - REMOVE
 4 - SKIP`
 
-const OptionFullstops = `Insert fullstops/periods at the end of every highlight?
+const OptionFullstops = `Choose your full-stop/period option for every highlight text:
 1 - YES
 2 - REMOVE
 3 - SKIP`

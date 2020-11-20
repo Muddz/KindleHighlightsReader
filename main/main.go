@@ -2,6 +2,7 @@ package main
 
 import (
 	"KindleHighlightsReader/message"
+	"KindleHighlightsReader/reader"
 	"bufio"
 	"fmt"
 	"log"
@@ -10,8 +11,6 @@ import (
 	"strings"
 )
 
-var mockValues []Highlight
-
 const (
 	optionSingleQuotation = iota
 	optionDoubleQuotation
@@ -19,7 +18,6 @@ const (
 	optionSkipQuotationS
 )
 
-var highlights []Highlight
 var validOutputFormats = []string{"JSON", "PDF", "CSV"}
 var options Options
 
@@ -33,18 +31,12 @@ type Options struct {
 	QuotationMarks int
 }
 
-type Highlight struct {
-	Title           string
-	AuthorFirstName string
-	AuthorLastName  string
-	Text            string
-}
-
 func main() {
-
-	//TODO should methods return a value and append it to the global member variables?
-	//greetMsg()
+	//fmt.Println(message.GetGreeting())
 	//readSrcPath()
+
+	reader.ReadHighlightFile("reader/My Clippings_test.txt")
+
 	//readDstPath()
 	//readOutputFormats()
 	//
@@ -53,63 +45,6 @@ func main() {
 	//time.Sleep(time.Second * 2)
 
 	//readOptionQuotationMarks()
-
-	mockValues = append(mockValues,
-
-		Highlight{
-			Title:           "The Book of Pook",
-			AuthorFirstName: "Pook",
-			AuthorLastName:  "",
-			Text:            "'The greatest risk you can take in life is not to risk it all!'"},
-
-		Highlight{
-			Title:           "The Book of Pook",
-			AuthorFirstName: "Pook",
-			AuthorLastName:  "",
-			Text:            "'You can be the smartest person in the world, the most talented, the most persistent, but you will never win in the world or with women unless you embrace the glory of RISK."},
-
-		Highlight{
-			Title:           "'The Book of Pook",
-			AuthorFirstName: "Pook",
-			AuthorLastName:  "",
-			Text:            "If you start treating a woman like precious gold, she will believe she is gold. And once she believes it, she will DUMP YOU because YOU have given her the sense that she is BETTER then you.'"},
-
-		Highlight{
-			Title:           "The Manual: What Women Want and How to Give It to Them",
-			AuthorFirstName: "W.",
-			AuthorLastName:  "Anton",
-			Text:            "\"To spend a lot of money on women that you have not had sex with is also a bad idea for a range of other reasons. First, you risk making a woman feel uncomfortable, either by making her feel like she owes you something or by making her feel like a whore because you expect sex in return.\""},
-
-		Highlight{
-			Title:           "The Manual: What Women Want and How to Give It to Them",
-			AuthorFirstName: "W.",
-			AuthorLastName:  "Anton",
-			Text:            "\"if a woman tells you that she wants to meet you again, you must not act surprised to hear it as if you were expecting her to turn you down. That will only make her suspicious and doubtful about whether she made the right choice"},
-
-		Highlight{
-			Title:           "The Manual: What Women Want and How to Give It to Them",
-			AuthorFirstName: "W.",
-			AuthorLastName:  "Anton",
-			Text:            "If a woman does behave badly and deserves to be put in her place, you have to do so and not treat her differently only because she is beautiful.\""},
-
-		Highlight{
-			Title:           "Models: Attract Women Through Honesty",
-			AuthorFirstName: "Mark",
-			AuthorLastName:  "Manson",
-			Text:            "A man who feels like he needs to buy or steal a woman’s attention or affection through entertainment, money or superficiality is a man who is not confident in his identity and who is not genuinely attractive."},
-
-		Highlight{
-			Title:           "Models: Attract Women Through Honesty",
-			AuthorFirstName: "Mark",
-			AuthorLastName:  "Manson",
-			Text:            "Non-neediness is when a man places a higher priority on his own perception of himself than the perceptions of others."},
-
-		Highlight{
-			Title:           "Models: Attract Women Through Honesty",
-			AuthorFirstName: "Mark",
-			AuthorLastName:  "Manson",
-			Text:            "As with any type of failure, it’s not until you’ve been rejected a certain amount that you realize how insignificant it actually is, how you spent so much time worrying about nothing, and how you’re free to act however you choose"},
-	)
 
 	//for _, v := range mockValues{
 	//	v.Text = punctuations.RemoveQuotations(v.Text)
@@ -129,21 +64,13 @@ func readSrcPath() {
 			return
 		}
 		srcPath = scanner.Text()
-		if len(srcPath) > 0 && fileExists(srcPath) {
+		if len(srcPath) > 0 {
 			fmt.Println(srcPath + "\n")
 			return
 		} else {
 			fmt.Print("Error! Couldn't find text file. Try again: ")
 		}
 	}
-}
-
-func fileExists(path string) bool {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) || info == nil {
-		return false
-	}
-	return !info.IsDir()
 }
 
 func readOutputFormats() {
@@ -223,22 +150,22 @@ func getUserDesktopDst() string {
 	return fmt.Sprintf("%s\\Desktop", homeDir)
 }
 
-func printHighlight(highlights []Highlight) {
-	highlightsCount := 0
-	booksCount := make(map[string]int)
-	for _, v := range highlights {
-		msg := fmt.Sprintf("Title: %s\nAuthor: %s %s\nText: %s\n", v.Title, v.AuthorFirstName, v.AuthorLastName, v.Text)
-		fmt.Println(msg)
-		if len(v.Text) > 0 {
-			highlightsCount++
-		}
-		if len(v.Title) > 0 {
-			booksCount[v.Title] = 0
-		}
-	}
-	msg := fmt.Sprintf("### Found %d highlights from %d different books", highlightsCount, len(booksCount))
-	fmt.Println(msg)
-}
+//func printHighlight(highlights []Highlight) {
+//	highlightsCount := 0
+//	booksCount := make(map[string]int)
+//	for _, v := range highlights {
+//		msg := fmt.Sprintf("Title: %s\nAuthor: %s %s\nText: %s\n", v.Title, v.Author, v.AuthorLastName, v.Text)
+//		fmt.Println(msg)
+//		if len(v.Text) > 0 {
+//			highlightsCount++
+//		}
+//		if len(v.Title) > 0 {
+//			booksCount[v.Title] = 0
+//		}
+//	}
+//	msg := fmt.Sprintf("### Found %d highlights from %d different books", highlightsCount, len(booksCount))
+//	fmt.Println(msg)
+//}
 
 func readOptionQuotationMarks() {
 	fmt.Println(message.OptionQuotationMarks)
