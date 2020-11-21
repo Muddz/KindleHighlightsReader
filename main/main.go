@@ -3,7 +3,6 @@ package main
 import (
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/reader"
-	"KindleHighlightsReader/save"
 	"bufio"
 	"fmt"
 	"log"
@@ -36,13 +35,14 @@ func main() {
 	//fmt.Println(message.GetGreeting())
 	//readSrcPath()
 	highlights, _ := reader.ReadHighlightFile("C:\\Users\\Muddz\\Desktop\\My Clippings.txt")
+	printHighlight(highlights)
 	//if err != nil {
 	//	log.Println(err)
 	//}
 
 	//save.ToJSON(highlights, getUserDesktopDst())
-
-	save.ToTxt(highlights, getUserDesktopDst())
+	//
+	//save.ToTxt(highlights, getUserDesktopDst())
 
 	//if len(highlights) > 0 {
 	//	printHighlight(highlights)
@@ -56,14 +56,6 @@ func main() {
 	//time.Sleep(time.Second * 2)
 
 	//readOptionQuotationMarks()
-
-	//for _, v := range mockValues{
-	//	v.Text = punctuations.RemoveQuotations(v.Text)
-	//	v.Text = punctuations.SetFullStop(v.Text)
-	//	punctuations.RemoveFullStop(v.Text)
-	//}
-
-	//printHighlight(mockValues)
 	//setSingleQuotations(mockValues)
 }
 
@@ -185,7 +177,7 @@ func printHighlight(highlights []reader.Highlight) {
 			booksCount[v.Title] = 0
 		}
 	}
-	msg := fmt.Sprintf("### Found %d highlights from %d different books", highlightsCount, len(booksCount))
+	msg := fmt.Sprintf("### Found %d highlights from %d different books ###", highlightsCount, len(booksCount))
 	fmt.Println(msg)
 }
 

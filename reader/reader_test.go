@@ -11,7 +11,7 @@ func TestReadHighlightFile(t *testing.T) {
 	}
 }
 
-func TestContentParser(t *testing.T) {
+func TestHighlightParser(t *testing.T) {
 	testString :=
 		`==========
 Book title (Author)
@@ -43,7 +43,7 @@ func TestRemoveAuthor(t *testing.T) {
 	}
 }
 
-func TestExtractAuthorName(t *testing.T) {
+func TestExtractAuthor(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	testString = extractAuthor(testString)
 	if testString != "Bill Gates" {
@@ -59,17 +59,17 @@ func TestRemoveAuthorParentheses(t *testing.T) {
 	}
 }
 
-func TestIfFileExist(t *testing.T) {
-	testFile := "My Clippings_test.txt"
-	if !fileExists(testFile) {
-		t.Errorf("Failed to detect existence of file %s", testFile)
-	}
-}
-
 func TestGetFileContent(t *testing.T) {
 	testFile := "My Clippings_test.txt"
 	content := getFileContent(testFile)
 	if len(content) < 1 {
 		t.Errorf("Failed to get any content of from file %s", testFile)
+	}
+}
+
+func TestIfFileExist(t *testing.T) {
+	testFile := "My Clippings_test.txt"
+	if !fileExists(testFile) {
+		t.Errorf("Failed to detect existence of file %s", testFile)
 	}
 }

@@ -5,6 +5,22 @@ import (
 	"testing"
 )
 
+func TestToJSON(t *testing.T) {
+
+}
+
+func TestToTxt(t *testing.T) {
+
+}
+
+func TestToPDF(t *testing.T) {
+
+}
+
+func TestToCSV(t *testing.T) {
+
+}
+
 func TestWriteToFile(t *testing.T) {
 	filename := "./testfile.txt"
 	content := "Hello World!"

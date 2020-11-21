@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-//todo we need to overwrite existing
+//TODO 1) Remove BOM and /r characters
 func ToJSON(highlights []reader.Highlight, destination string) bool {
 	b, err := json.Marshal(highlights)
 	if err != nil {
@@ -22,7 +22,6 @@ func ToJSON(highlights []reader.Highlight, destination string) bool {
 	return false
 }
 
-//todo we need to overwrite existing
 func ToTxt(highlights []reader.Highlight, destination string) bool {
 	layout := "%s, %s\n\n%s\n_______________________________\n\n"
 	sb := strings.Builder{}
@@ -58,7 +57,7 @@ func writeToFile(f *os.File, b []byte) bool {
 }
 
 func createNewFile(filename string) *os.File {
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Println("Failed to create file:", filename)
 		return nil
