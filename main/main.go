@@ -18,7 +18,7 @@ const (
 	optionSkipQuotationS
 )
 
-var validOutputFormats = []string{"JSON", "PDF", "CSV"}
+var validOutputFormats = []string{"JSON", "PDF", "CSV", "TEXT"}
 var options Options
 
 var srcPath string

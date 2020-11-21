@@ -24,6 +24,22 @@ func ReadHighlightFile(path string) ([]Highlight, error) {
 	return highlights, nil
 }
 
+func fileExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) || info == nil {
+		return false
+	}
+	return !info.IsDir()
+}
+
+func getFileContent(path string) string {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Println(err)
+	}
+	return string(data)
+}
+
 func highlightsParser(content string) []Highlight {
 	pattern := `(?m)(^=+)\r?\n(^.*)\r?\n(^.*)\r?\n\r?\n(^.*)`
 	regex := regexp.MustCompile(pattern)
@@ -65,20 +81,4 @@ func removeAuthorParentheses(author string) string {
 		chars = append(chars[1 : len(chars)-1])
 	}
 	return string(chars)
-}
-
-func getFileContent(path string) string {
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		log.Println(err)
-	}
-	return string(data)
-}
-
-func fileExists(path string) bool {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) || info == nil {
-		return false
-	}
-	return !info.IsDir()
 }
