@@ -25,13 +25,13 @@ func TestSave(t *testing.T) {
 	filename := "./testfile.txt"
 	content := []byte("Hello World")
 	ok := save(filename, content)
-	if !destinationExists(filename) && !ok {
+	if !fileExist(filename) && !ok {
 		t.Errorf("Failed to save file %s, with content '%s'", filename, string(content))
 	}
 	_ = os.Remove(filename)
 }
 
-func destinationExists(path string) bool {
+func fileExist(path string) bool {
 	info, err := os.Stat(path)
 	if os.IsNotExist(err) {
 		return false

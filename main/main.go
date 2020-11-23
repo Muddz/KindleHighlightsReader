@@ -20,11 +20,8 @@ const (
 
 var validOutputFormats = []string{"JSON", "PDF", "CSV", "TEXT"}
 var options Options
-
-var srcPath string
-var dstPath string //TODO do we really need this step? Why not just save it to the desktop
-var outputFormats []string
-
+var input string
+var formats []string
 var scanner = bufio.NewScanner(os.Stdin)
 
 type Options struct {
@@ -40,9 +37,9 @@ func main() {
 	//	log.Println(err)
 	//}
 
-	//save.ToJSON(highlights, getUserDesktopDst())
+	//save.ToJSON(highlights, getUserDesktopPath())
 	//
-	//save.ToTxt(highlights, getUserDesktopDst())
+	//save.ToTxt(highlights, getUserDesktopPath())
 
 	//if len(highlights) > 0 {
 	//	printHighlight(highlights)
@@ -66,24 +63,22 @@ func readSrcPath() {
 			fmt.Println("Error:", scanner.Err())
 			return
 		}
-		srcPath = scanner.Text()
-
-		//Todo 1) path.length >0
-		//Todo 2) if contains ".txt"
-		//Todo 3) if file exist
-
-		if !strings.Contains(srcPath, ".txt") {
-			fmt.Print("Error! File is not a \".txt\" file. Try again: ")
-			break
-		}
-
-		if len(srcPath) > 0 {
-			fmt.Println(srcPath + "\n")
+		input = scanner.Text()
+		if fileExist(input) {
+			fmt.Println(input + "\n")
 			return
 		} else {
 			fmt.Print("Error! Couldn't find text file. Try again: ")
 		}
 	}
+}
+
+func fileExist(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return info.IsDir()
 }
 
 func readOutputFormats() {
@@ -93,30 +88,32 @@ func readOutputFormats() {
 			fmt.Println("Error:", scanner.Err())
 			return
 		}
-		formats := scanner.Text()
-		if len(formats) > 0 && validateOutputFormats(formats) {
-
-			//TODO make this prettier
-			if len(strings.Fields(formats)) > 3 {
-				fmt.Println(strings.Fields(formats)[:len(validOutputFormats)])
+		input := scanner.Text()
+		if validateOutputFormats(input) {
+			formats := strings.Fields(input)
+			if len(formats) > 3 {
+				formats = formats[:len(validOutputFormats)]
+				fmt.Println(formats)
 			} else {
-				fmt.Println(formats + "\n")
+				fmt.Println(input + "\n")
 			}
-
 			return
 		} else {
-			fmt.Printf("Error! Invalid formats. Try again: ")
+			fmt.Printf("Error! Invalid output format(s). Try again: ")
 		}
 	}
 }
 
-func validateOutputFormats(formats string) bool {
+func validateOutputFormats(input string) bool {
 	var result = false
-	outputFormats = strings.Fields(formats)
-	if len(outputFormats) > 3 {
-		outputFormats = outputFormats[0:len(validOutputFormats)]
+	formats = strings.Fields(input)
+
+	if len(formats) < 1 {
+		return false
+	} else if len(formats) > 3 {
+		formats = formats[0:len(validOutputFormats)]
 	}
-	for _, format := range outputFormats {
+	for _, format := range formats {
 		for _, validFormat := range validOutputFormats {
 			result = strings.EqualFold(format, validFormat)
 			if result {
@@ -127,37 +124,7 @@ func validateOutputFormats(formats string) bool {
 	return result
 }
 
-//TODO do we really need this step? Why not just save it to the desktop
-func readDstPath() {
-	fmt.Print(message.SetDstPath)
-	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-			return
-		}
-		dstPath = scanner.Text()
-		if len(dstPath) == 0 {
-			dstPath = getUserDesktopDst()
-		}
-		if destinationExists(dstPath) {
-			fmt.Println(dstPath + "\n")
-			return
-		} else {
-			fmt.Print("Error! Couldn't find destination path. Try again: ")
-		}
-	}
-}
-
-//TODO do we really need this step? Why not just save it to the desktop
-func destinationExists(path string) bool {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return info.IsDir()
-}
-
-func getUserDesktopDst() string {
+func getUserDesktopPath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Println(err)
