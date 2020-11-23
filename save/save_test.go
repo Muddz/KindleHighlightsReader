@@ -21,18 +21,22 @@ func TestToCSV(t *testing.T) {
 
 }
 
-func TestWriteToFile(t *testing.T) {
+func TestSave(t *testing.T) {
 	filename := "./testfile.txt"
-	content := "Hello World!"
-	f := createNewFile(filename)
-	data := []byte(content)
-	ok := writeToFile(f, data)
-
-	if !ok {
-		t.Error("Failed to write \"Hello World\" to file:", filename)
+	content := []byte("Hello World")
+	ok := save(filename, content)
+	if !destinationExists(filename) && !ok {
+		t.Errorf("Failed to save file %s, with content '%s'", filename, string(content))
 	}
-	_ = f.Close()
 	_ = os.Remove(filename)
+}
+
+func destinationExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return info.IsDir()
 }
 
 func TestCreateNewFile(t *testing.T) {
@@ -40,6 +44,20 @@ func TestCreateNewFile(t *testing.T) {
 	f := createNewFile(filename)
 	if f == nil {
 		t.Error("Failed to create file:", filename)
+	}
+	_ = f.Close()
+	_ = os.Remove(filename)
+}
+
+func TestWriteToFile(t *testing.T) {
+	filename := "./testfile.txt"
+	content := "Hello World!"
+	data := []byte(content)
+	f := createNewFile(filename)
+	ok := writeToFile(f, data)
+
+	if !ok {
+		t.Error("Failed to write \"Hello World\" to file:", filename)
 	}
 	_ = f.Close()
 	_ = os.Remove(filename)
