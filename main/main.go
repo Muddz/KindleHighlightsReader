@@ -22,7 +22,7 @@ var validOutputFormats = []string{"JSON", "PDF", "CSV", "TEXT"}
 var options Options
 
 var srcPath string
-var dstPath string
+var dstPath string //TODO do we really need this step? Why not just save it to the desktop
 var outputFormats []string
 
 var scanner = bufio.NewScanner(os.Stdin)
@@ -127,6 +127,7 @@ func validateOutputFormats(formats string) bool {
 	return result
 }
 
+//TODO do we really need this step? Why not just save it to the desktop
 func readDstPath() {
 	fmt.Print(message.SetDstPath)
 	for {
@@ -147,6 +148,7 @@ func readDstPath() {
 	}
 }
 
+//TODO do we really need this step? Why not just save it to the desktop
 func destinationExists(path string) bool {
 	info, err := os.Stat(path)
 	if os.IsNotExist(err) {
