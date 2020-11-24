@@ -8,8 +8,8 @@ import (
 	"os"
 )
 
-func ToJSON(highlights []reader.Highlight, destination string) bool {
-	filename := fmt.Sprintf("%s/%s", destination, "My Clippings Json.txt")
+func ToJSON(highlights []reader.Highlight) bool {
+	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings JSON.txt")
 	b := convert.ToJSON(highlights)
 	if f := createNewFile(filename); f != nil {
 		return writeToFile(f, b)
@@ -17,8 +17,8 @@ func ToJSON(highlights []reader.Highlight, destination string) bool {
 	return false
 }
 
-func ToTxt(highlights []reader.Highlight, destination string) bool {
-	filename := fmt.Sprintf("%s/%s", destination, "My Clippings Text.txt")
+func ToTxt(highlights []reader.Highlight) bool {
+	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings Text.txt")
 	b := convert.ToText(highlights)
 	if f := createNewFile(filename); f != nil {
 		return writeToFile(f, b)
@@ -26,13 +26,24 @@ func ToTxt(highlights []reader.Highlight, destination string) bool {
 	return false
 }
 
-func toPDF() {
-
+//Todo Return error or bool
+func ToPDF(highlights []reader.Highlight) bool {
+	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings.pdf")
+	b := convert.ToPDF(highlights)
+	if f := createNewFile(filename); f != nil {
+		return writeToFile(f, b)
+	}
+	return false
 }
 
-func toCSV(highlights []reader.Highlight, destination string) {
-
-	//ok := save("",nil)
+//Todo Return error or bool?
+func ToCSV(highlights []reader.Highlight) bool {
+	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings.csv")
+	b := convert.ToCSV(highlights)
+	if f := createNewFile(filename); f != nil {
+		return writeToFile(f, b)
+	}
+	return false
 }
 
 //Todo Return error or bool?
@@ -64,4 +75,13 @@ func writeToFile(f *os.File, b []byte) bool {
 		log.Println("Failed to close file:", f.Name())
 	}
 	return i == len(b)
+}
+
+//Todo Return error too?
+func getUserDesktopPath() string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Println(err)
+	}
+	return fmt.Sprintf("%s\\Desktop", homeDir)
 }

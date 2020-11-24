@@ -10,9 +10,9 @@ import (
 )
 
 type Highlight struct {
-	Title  string
-	Author string
 	Text   string
+	Author string
+	Title  string
 }
 
 func ReadHighlightFile(path string) ([]Highlight, error) {

@@ -1,12 +1,15 @@
 package save
 
 import (
+	"io/ioutil"
+	"log"
 	"os"
 	"testing"
 )
 
 func TestToJSON(t *testing.T) {
 
+	to
 }
 
 func TestToTxt(t *testing.T) {
@@ -25,8 +28,18 @@ func TestSave(t *testing.T) {
 	filename := "./testfile.txt"
 	content := []byte("Hello World")
 	ok := save(filename, content)
+
 	if !fileExist(filename) && !ok {
 		t.Errorf("Failed to save file %s, with content '%s'", filename, string(content))
+	}
+
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Println("Failed to read file:", filename)
+	}
+
+	if string(b) != string(content) {
+		t.Error("Written content didn't match read content in file", filename)
 	}
 	_ = os.Remove(filename)
 }
@@ -57,7 +70,7 @@ func TestWriteToFile(t *testing.T) {
 	ok := writeToFile(f, data)
 
 	if !ok {
-		t.Error("Failed to write \"Hello World\" to file:", filename)
+		t.Error("Failed to write ''Hello World' to file:", filename)
 	}
 	_ = f.Close()
 	_ = os.Remove(filename)

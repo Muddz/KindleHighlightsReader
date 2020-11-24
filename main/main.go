@@ -3,9 +3,9 @@ package main
 import (
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/save"
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -32,10 +32,15 @@ func main() {
 	//fmt.Println(message.GetGreeting())
 	//readSrcPath()
 	highlights, _ := reader.ReadHighlightFile("C:\\Users\\Muddz\\Desktop\\My Clippings.txt")
-	printHighlight(highlights)
+	//printHighlight(highlights)
 	//if err != nil {
 	//	log.Println(err)
 	//}
+
+	//save.ToJSON(highlights)
+	//save.ToCSV(highlights)
+	//save.ToTxt(highlights)
+	save.ToPDF(highlights)
 
 	//save.ToJSON(highlights, getUserDesktopPath())
 	//
@@ -54,6 +59,7 @@ func main() {
 
 	//readOptionQuotationMarks()
 	//setSingleQuotations(mockValues)
+
 }
 
 func readSrcPath() {
@@ -122,14 +128,6 @@ func validateOutputFormats(input string) bool {
 		}
 	}
 	return result
-}
-
-func getUserDesktopPath() string {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		log.Println(err)
-	}
-	return fmt.Sprintf("%s\\Desktop", homeDir)
 }
 
 //TODO is the argument passing correct?
