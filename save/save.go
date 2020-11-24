@@ -71,9 +71,11 @@ func writeToFile(f *os.File, b []byte) bool {
 		log.Println("Failed to write to file:", f.Name())
 		return false
 	}
-	if err := f.Close(); err != nil {
-		log.Println("Failed to close file:", f.Name())
-	}
+	defer func() {
+		if err := f.Close(); err != nil {
+			log.Println("Failed to close file:", f.Name())
+		}
+	}()
 	return i == len(b)
 }
 

@@ -1,14 +1,12 @@
 package clean
 
 import (
-	"fmt"
 	"log"
 	"regexp"
 	"strings"
 )
 
 func WhiteSpaces(text string) string {
-	fmt.Println(strings.TrimSpace(text))
 	return strings.TrimSpace(text)
 }
 

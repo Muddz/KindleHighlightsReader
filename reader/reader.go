@@ -2,6 +2,7 @@ package reader
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -37,7 +38,8 @@ func getFileContent(path string) string {
 	if err != nil {
 		log.Println(err)
 	}
-	return string(data)
+	content := fmt.Sprintf("=\n%s", string(data))
+	return content
 }
 
 func highlightsParser(content string) []Highlight {
@@ -68,11 +70,15 @@ func extractAuthor(title string) string {
 	if err != nil {
 		log.Println(err)
 	}
-	title = match.FindString(title)
-	return removeAuthorParentheses(title)
+	author := match.FindString(title)
+	author = removeAuthorParentheses(author)
+	return author
 }
 
 func removeAuthorParentheses(author string) string {
+	if len(author) < 1 {
+		return ""
+	}
 	chars := []rune(author)
 	firstChar := string(author[0])
 	lastChar := string(author[len(author)-1])

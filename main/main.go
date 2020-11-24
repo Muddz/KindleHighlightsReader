@@ -39,8 +39,8 @@ func main() {
 
 	//save.ToJSON(highlights)
 	//save.ToCSV(highlights)
-	//save.ToTxt(highlights)
-	save.ToPDF(highlights)
+	save.ToTxt(highlights)
+	//save.ToPDF(highlights)
 
 	//save.ToJSON(highlights, getUserDesktopPath())
 	//

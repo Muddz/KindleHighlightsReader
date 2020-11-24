@@ -68,16 +68,20 @@ func ToCSV(highlights []reader.Highlight) []byte {
 
 func ToPDF(highlights []reader.Highlight) []byte {
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.SetFont("Helvetica", "", 14)
-	layout := "%s, %s\n\n%s\n\n\n"
 	for i, v := range highlights {
-		if i%3 == 0 {
+		if i%5 == 0 {
 			pdf.AddPage()
 		}
 
-		highlight := fmt.Sprintf(layout, v.Author, v.Title, v.Text)
-		highlight = strings.TrimRight(highlight, "\r\n")
-		pdf.MultiCell(0, 10, highlight, "0", "0", false)
+		text := fmt.Sprintf("\n%s", v.Text)
+		text = strings.TrimRight(text, "\r\n")
+		pdf.SetFont("Arial", "", 14)
+		pdf.MultiCell(0, 10, text, "0", "0", false)
+
+		author := fmt.Sprintf("%s, %s\n\n", v.Author, v.Title)
+		author = strings.TrimRight(author, "\r\n")
+		pdf.SetFont("Arial", "i", 10)
+		pdf.MultiCell(0, 10, author, "0", "0", false)
 	}
 
 	var b bytes.Buffer
@@ -92,10 +96,10 @@ func removeBOM(text string) string {
 	return ""
 }
 
-func removeNewLines(text string) string {
+func removeNewLinesChars(text string) string {
 	return ""
 }
 
-func removeCarriageReturns(text string) string {
+func removeCarriageReturnsChars(text string) string {
 	return ""
 }
