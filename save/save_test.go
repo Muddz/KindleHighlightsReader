@@ -71,6 +71,7 @@ func TestWriteToFile(t *testing.T) {
 	if !ok {
 		t.Error("Failed to write ''Hello World' to file:", filename)
 	}
+
 	_ = f.Close()
 	_ = os.Remove(filename)
 }

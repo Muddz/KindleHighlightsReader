@@ -72,7 +72,6 @@ func ToPDF(highlights []reader.Highlight) []byte {
 		if i%5 == 0 {
 			pdf.AddPage()
 		}
-
 		text := fmt.Sprintf("\n%s", v.Text)
 		text = strings.TrimRight(text, "\r\n")
 		pdf.SetFont("Arial", "", 14)
@@ -87,7 +86,10 @@ func ToPDF(highlights []reader.Highlight) []byte {
 	var b bytes.Buffer
 	w := bufio.NewWriter(&b)
 	if err := pdf.Output(w); err != nil {
-		log.Println("Failed to write PDF")
+		log.Println("Failed to output PDF")
+	}
+	if err := w.Flush(); err != nil {
+		log.Println("Failed to flush PDF writer")
 	}
 	return b.Bytes()
 }

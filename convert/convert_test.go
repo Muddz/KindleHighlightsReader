@@ -21,8 +21,8 @@ func TestToText(t *testing.T) {
 	highlights := getTestData()
 	b := ToText(highlights)
 	content := string(b)
-	if len(content) < 1 {
-		t.Error("Failed to convert highlights to text. No text was found")
+	if len(content) < len(highlights) {
+		t.Error("Failed to convert highlights to text. Data missing")
 	}
 	h := highlights[0]
 	if !strings.Contains(content, h.Text) {
@@ -49,7 +49,14 @@ func TestToCSV(t *testing.T) {
 			t.Error("Failed to convert highlights to CSV. No values was found")
 		}
 	}
+}
 
+func TestToPDF(t *testing.T) {
+	highlights := getTestData()
+	b := ToPDF(highlights)
+	if len(b) < len(highlights) {
+		t.Error("Failed to convert highlights to PDF. Data missing")
+	}
 }
 
 func getTestData() []reader.Highlight {
