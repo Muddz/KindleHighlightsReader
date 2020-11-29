@@ -14,14 +14,19 @@ import (
 )
 
 //Todo* Return error or bool with the bytes?
-
-//TODO 1) Remove BOM and /r characters
 func ToJSON(highlights []reader.Highlight) []byte {
 	b, err := json.Marshal(highlights)
+	b = removeBOM(b)
 	if err != nil {
 		log.Println(err)
 	}
 	return b
+}
+
+func removeBOM(b []byte) []byte {
+	bom := "\xef\xbb\xbf"
+	o := []byte(bom)
+	return bytes.ReplaceAll(b, o, nil)
 }
 
 func ToText(highlights []reader.Highlight) []byte {
@@ -73,7 +78,6 @@ func ToPDF(highlights []reader.Highlight) []byte {
 			pdf.AddPage()
 		}
 		text := fmt.Sprintf("\n%s", v.Text)
-		text = strings.TrimRight(text, "\r\n")
 		pdf.SetFont("Arial", "", 14)
 		pdf.MultiCell(0, 10, text, "0", "0", false)
 
@@ -91,17 +95,13 @@ func ToPDF(highlights []reader.Highlight) []byte {
 	if err := w.Flush(); err != nil {
 		log.Println("Failed to flush PDF writer")
 	}
-	return b.Bytes()
+
+	return removeBOM(b.Bytes())
 }
 
-func removeBOM(text string) string {
-	return ""
-}
-
-func removeNewLinesChars(text string) string {
-	return ""
-}
-
-func removeCarriageReturnsChars(text string) string {
+func utfToWindows(text string) string {
+	//https://github.com/djimenez/iconv-go
+	//https://github.com/signintech/gopdf
+	//https://godoc.org/github.com/jung-kurt/gofpdf#example-Fpdf-CellFormat-Codepage
 	return ""
 }

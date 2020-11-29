@@ -37,7 +37,7 @@ func main() {
 	//	log.Println(err)
 	//}
 
-	save.ToJSON(highlights)
+	//save.ToJSON(highlights)
 	//save.ToCSV(highlights)
 	//save.ToTxt(highlights)
 	//save.ToPDF(highlights)

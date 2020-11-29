@@ -56,7 +56,7 @@ func save(filename string, b []byte) bool {
 
 //Todo Return error or bool?
 func createNewFile(filename string) *os.File {
-	file, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR, 0644)
+	file, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Println("Failed to create file:", filename)
 		return nil
