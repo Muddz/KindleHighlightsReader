@@ -45,7 +45,7 @@ func TestToPDF(t *testing.T) {
 
 func TestToCSV(t *testing.T) {
 	filename := getUserDesktopPath() + "\\My Clippings.csv"
-	ok := ToCSV(nil)
+	ok := ToCSV(nil) //TODO this will throw an error, but still correctly passes the test
 	if !ok {
 		t.Error("Failed to save to csv. Result was not ok")
 	}

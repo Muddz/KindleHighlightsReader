@@ -5,16 +5,9 @@ import (
 )
 
 func TestReadHighlightFile(t *testing.T) {
-	highlights, err := ReadHighlightFile("./My Clippings_test.txt")
-	if err != nil && len(highlights) != 2 {
-		t.Error("Failed to read highlights from file. ERROR: ", err)
-	}
-}
-
-func TestIfFileExist(t *testing.T) {
-	testFile := "My Clippings_test.txt"
-	if !fileExists(testFile) {
-		t.Errorf("Failed to detect existence of file %s", testFile)
+	highlights := ReadHighlightFile("./My Clippings_test.txt")
+	if len(highlights) != 2 {
+		t.Error("Failed to read all highlights from file")
 	}
 }
 
@@ -52,7 +45,7 @@ Quote`
 
 func TestRemoveAuthor(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
-	result := removeAuthor(testString)
+	result := removeAuthorFromTitle(testString)
 	if result != "The story of Microsoft" {
 		t.Errorf("Failed to remove author from title %s", testString)
 	}
@@ -60,7 +53,7 @@ func TestRemoveAuthor(t *testing.T) {
 
 func TestExtractAuthor(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
-	result := extractAuthor(testString)
+	result := getAuthorFromTitle(testString)
 	if result != "Bill Gates" {
 		t.Errorf("Failed to extract author's name from %s", testString)
 	}

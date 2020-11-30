@@ -16,17 +16,10 @@ import (
 //Todo* Return error or bool with the bytes?
 func ToJSON(highlights []reader.Highlight) []byte {
 	b, err := json.Marshal(highlights)
-	b = removeBOM(b)
 	if err != nil {
 		log.Println(err)
 	}
 	return b
-}
-
-func removeBOM(b []byte) []byte {
-	bom := "\xef\xbb\xbf"
-	o := []byte(bom)
-	return bytes.ReplaceAll(b, o, nil)
 }
 
 func ToText(highlights []reader.Highlight) []byte {
@@ -62,7 +55,6 @@ func ToCSV(highlights []reader.Highlight) []byte {
 			log.Println("Failed to write csv values:", err)
 		}
 	}
-
 	writer.Flush()
 	if err := writer.Error(); err != nil {
 		log.Println("Failed to flush csv writer,", err)
@@ -86,7 +78,6 @@ func ToPDF(highlights []reader.Highlight) []byte {
 		pdf.SetFont("Arial", "i", 10)
 		pdf.MultiCell(0, 10, author, "0", "0", false)
 	}
-
 	var b bytes.Buffer
 	w := bufio.NewWriter(&b)
 	if err := pdf.Output(w); err != nil {
@@ -95,8 +86,7 @@ func ToPDF(highlights []reader.Highlight) []byte {
 	if err := w.Flush(); err != nil {
 		log.Println("Failed to flush PDF writer")
 	}
-
-	return removeBOM(b.Bytes())
+	return b.Bytes()
 }
 
 func utfToWindows(text string) string {

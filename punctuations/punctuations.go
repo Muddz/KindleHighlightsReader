@@ -57,12 +57,12 @@ func RemoveQuotations(text string) string {
 }
 
 func SetFullStop(text string) string {
-	chars := []rune(text)
-	lastChar := string(text[len(text)-1])
+	lastRune := text[len(text)-1]
+	lastChar := string(lastRune)
 	if lastChar != string('.') {
-		chars = append(chars, '.')
+		return text + "."
 	}
-	return string(chars)
+	return text
 }
 
 func RemoveFullStop(text string) string {

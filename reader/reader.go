@@ -1,11 +1,10 @@
 package reader
 
 import (
-	"errors"
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"regexp"
 	"strings"
 )
@@ -16,21 +15,10 @@ type Highlight struct {
 	Title  string
 }
 
-func ReadHighlightFile(path string) ([]Highlight, error) {
-	if !fileExists(path) {
-		return nil, errors.New("failed to find file")
-	}
+func ReadHighlightFile(path string) []Highlight {
 	fileContent := getFileContent(path)
 	highlights := highlightsParser(fileContent)
-	return highlights, nil
-}
-
-func fileExists(path string) bool {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) || info == nil {
-		return false
-	}
-	return !info.IsDir()
+	return highlights
 }
 
 func getFileContent(path string) string {
@@ -48,23 +36,30 @@ func highlightsParser(content string) []Highlight {
 	matches := regex.FindAllStringSubmatch(content, -1)
 	var highlights []Highlight
 	for _, match := range matches {
+
 		var title = match[2]
 		var text = match[4]
+
+		//TODO make this prettier
+
+		title = removeBOM(title)
+		text = removeBOM(text)
+
 		highlights = append(highlights, Highlight{
-			Title:  removeAuthor(title),
-			Author: extractAuthor(title),
-			Text:   text,
+			Title:  removeAuthorFromTitle(title),
+			Author: getAuthorFromTitle(title),
+			Text:   cleanText(text),
 		})
 	}
 	return highlights
 }
 
-func removeAuthor(title string) string {
+func removeAuthorFromTitle(title string) string {
 	result := strings.Split(title, " (")
 	return result[0]
 }
 
-func extractAuthor(title string) string {
+func getAuthorFromTitle(title string) string {
 	pattern := `(\(.*\))`
 	match, err := regexp.Compile(pattern)
 	if err != nil {
@@ -87,4 +82,19 @@ func removeAuthorParentheses(author string) string {
 		chars = append(chars[1 : len(chars)-1])
 	}
 	return string(chars)
+}
+
+func cleanText(text string) string {
+	result := strings.TrimSuffix(text, "\r")
+	result = strings.TrimSuffix(result, "\\")
+	result = strings.TrimSpace(text)
+	return result
+}
+
+func removeBOM(text string) string {
+	bom := "\xef\xbb\xbf"
+	b := []byte(text)
+	o := []byte(bom)
+	b = bytes.ReplaceAll(b, o, nil)
+	return string(b)
 }
