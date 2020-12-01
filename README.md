@@ -17,8 +17,7 @@ The Text and PDF formats makes all of your highlights easy and appeling to read 
 ## Installation & Usage
 
 **Windows:** Run the `KindleHighlightReader.exe`. The program will open in a CMD window and can automatically find the `My Clippings.txt` if its on the *Desktop* or if your Kindle device is plugged into your Windows computer. 
-
-[Download the program here](https://github.com/Muddz/KindleHighlightReader/)
+[Download the .exe program here](https://github.com/Muddz/KindleHighlightReader/)
 
 **MacOs:**
 
