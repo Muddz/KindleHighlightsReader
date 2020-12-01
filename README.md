@@ -11,7 +11,7 @@ The Text and PDF formats makes all of your highlights easy and appeling to read 
 - Insert full-stop/periods on all highlights.
 - Insert double or single quotations on all highlights.
 - Remove any quotation from all highlights.
-- Export as *.txt*, *json*, *.csv* or *.pdf* files.
+- Export as *.txt*  *json*  *.csv* or *.pdf* files.
 - Works on Windows and MacOS
 
 ## Installation & Usage
