@@ -5,7 +5,7 @@ import (
 )
 
 func TestReadHighlightFile(t *testing.T) {
-	highlights := ReadHighlightFile("./My Clippings_test.txt")
+	highlights := ReadHighlights("./My Clippings_test.txt")
 	if len(highlights) != 2 {
 		t.Error("Failed to read all highlights from file")
 	}

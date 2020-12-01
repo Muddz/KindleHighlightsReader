@@ -3,12 +3,7 @@ package clean
 import (
 	"log"
 	"regexp"
-	"strings"
 )
-
-func WhiteSpaces(text string) string {
-	return strings.TrimSpace(text)
-}
 
 func Prefixes(text string) string {
 	pattern := `^\.\s|^\w+\.\s`

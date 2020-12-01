@@ -1,4 +1,4 @@
-package save
+package export
 
 import (
 	"io/ioutil"
@@ -7,11 +7,11 @@ import (
 	"testing"
 )
 
-func TestToJSON(t *testing.T) {
+func TestAsJSON(t *testing.T) {
 	filename := getUserDesktopPath() + "\\My Clippings JSON.txt"
-	ok := ToJSON(nil)
+	ok := AsJSON(nil)
 	if !ok {
-		t.Error("Failed to save to Json. Result was not ok")
+		t.Error("Failed to export to JSON. Result was not ok")
 	}
 	if !fileExist(filename) {
 		t.Error("Failed to find JSON file: ", filename)
@@ -19,11 +19,11 @@ func TestToJSON(t *testing.T) {
 	_ = os.Remove(filename)
 }
 
-func TestToTxt(t *testing.T) {
+func TestAsTxt(t *testing.T) {
 	filename := getUserDesktopPath() + "\\My Clippings Text.txt"
-	ok := ToTxt(nil)
+	ok := AsTxt(nil)
 	if !ok {
-		t.Error("Failed to save to Text. Result was not ok")
+		t.Error("Failed to export to Text. Result was not ok")
 	}
 	if !fileExist(filename) {
 		t.Error("Failed to find Text file: ", filename)
@@ -31,11 +31,11 @@ func TestToTxt(t *testing.T) {
 	_ = os.Remove(filename)
 }
 
-func TestToPDF(t *testing.T) {
+func TestAsPDF(t *testing.T) {
 	filename := getUserDesktopPath() + "\\My Clippings.pdf"
-	ok := ToPDF(nil)
+	ok := AsPDF(nil)
 	if !ok {
-		t.Error("Failed to save to PDF. Result was not ok")
+		t.Error("Failed to export to PDF. Result was not ok")
 	}
 	if !fileExist(filename) {
 		t.Error("Failed to find PDF file: ", filename)
@@ -43,11 +43,11 @@ func TestToPDF(t *testing.T) {
 	_ = os.Remove(filename)
 }
 
-func TestToCSV(t *testing.T) {
+func TestAsCSV(t *testing.T) {
 	filename := getUserDesktopPath() + "\\My Clippings.csv"
-	ok := ToCSV(nil) //TODO this will throw an error, but still correctly passes the test
+	ok := AsCSV(nil) //TODO this will throw an error, but still correctly passes the test
 	if !ok {
-		t.Error("Failed to save to csv. Result was not ok")
+		t.Error("Failed to export to csv. Result was not ok")
 	}
 	if !fileExist(filename) {
 		t.Error("Failed to find csv file: ", filename)
@@ -61,7 +61,7 @@ func TestSave(t *testing.T) {
 	ok := save(filename, content)
 
 	if !fileExist(filename) && !ok {
-		t.Errorf("Failed to save file %s, with content '%s'", filename, string(content))
+		t.Errorf("Failed to export file %s, with content '%s'", filename, string(content))
 	}
 
 	b, err := ioutil.ReadFile(filename)

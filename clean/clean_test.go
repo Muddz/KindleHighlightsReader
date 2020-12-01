@@ -5,14 +5,6 @@ import (
 	"testing"
 )
 
-func TestRemoveWhiteSpaces(t *testing.T) {
-	testString := " The quick brown fox jumps over the lazy dog "
-	result := WhiteSpaces(testString)
-	if result != "The quick brown fox jumps over the lazy dog" {
-		t.Errorf("Failed to remove whitespaces of %s", testString)
-	}
-}
-
 func TestCleanPrefixWithAWord(t *testing.T) {
 	testString := "The. The quick brown fox jumps over the lazy dog"
 	result := Prefixes(testString)

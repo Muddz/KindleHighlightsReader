@@ -1,4 +1,4 @@
-package save
+package export
 
 import (
 	"KindleHighlightsReader/convert"
@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func ToJSON(highlights []reader.Highlight) bool {
+func AsJSON(highlights []reader.Highlight) bool {
 	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings JSON.txt")
 	b := convert.ToJSON(highlights)
 	if f := createNewFile(filename); f != nil {
@@ -17,7 +17,7 @@ func ToJSON(highlights []reader.Highlight) bool {
 	return false
 }
 
-func ToTxt(highlights []reader.Highlight) bool {
+func AsTxt(highlights []reader.Highlight) bool {
 	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings Text.txt")
 	b := convert.ToText(highlights)
 	if f := createNewFile(filename); f != nil {
@@ -27,7 +27,7 @@ func ToTxt(highlights []reader.Highlight) bool {
 }
 
 //Todo Return error or bool
-func ToPDF(highlights []reader.Highlight) bool {
+func AsPDF(highlights []reader.Highlight) bool {
 	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings.pdf")
 	b := convert.ToPDF(highlights)
 	if f := createNewFile(filename); f != nil {
@@ -37,7 +37,7 @@ func ToPDF(highlights []reader.Highlight) bool {
 }
 
 //Todo Return error or bool?
-func ToCSV(highlights []reader.Highlight) bool {
+func AsCSV(highlights []reader.Highlight) bool {
 	filename := fmt.Sprintf("%s\\%s", getUserDesktopPath(), "My Clippings.csv")
 	b := convert.ToCSV(highlights)
 	if f := createNewFile(filename); f != nil {

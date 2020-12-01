@@ -1,10 +1,12 @@
 package main
 
 import (
+	"KindleHighlightsReader/clean"
+	"KindleHighlightsReader/export"
+	"KindleHighlightsReader/filefinder"
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/punctuations"
 	"KindleHighlightsReader/reader"
-	"KindleHighlightsReader/save"
 	"bufio"
 	"fmt"
 	"os"
@@ -13,9 +15,8 @@ import (
 )
 
 const (
-	optionSingleQuotation = iota + 1
-	optionDoubleQuotation
-	optionNoQuotation
+	optionCleanPrefix = iota + 1
+	optionCleanPostFix
 )
 
 const (
@@ -23,18 +24,46 @@ const (
 	optionRemoveFullStop
 )
 
-var validOutputFormats = []string{"TEXT", "JSON", "CSV", "PDF"}
+const (
+	optionSingleQuotation = iota + 1
+	optionDoubleQuotation
+	optionNoQuotation
+)
+
+var ExportFormats = []string{"TEXT", "JSON", "CSV", "PDF"}
+var punctuationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
+var fullStopOptions = []int{optionInsertFullStop, optionRemoveFullStop}
+var cleaningOptions = []int{optionCleanPrefix, optionCleanPostFix}
+
 var input string
 var formats []string
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
-
 	fmt.Println(message.GetGreeting())
-	src := readSrcPath()
+
+	src := readSourcePath()
 	src = strings.TrimSpace(src)
-	highlights := reader.ReadHighlightFile(src)
+	highlights := reader.ReadHighlights(src)
 	printHighlights(highlights)
+
+	//-------------------------------------------------------------------------------
+
+	cleaningOptions := readCleaning()
+	for _, v := range cleaningOptions {
+		switch v {
+		case optionCleanPrefix:
+			for i, v := range highlights {
+				highlights[i].Text = clean.Prefixes(v.Text)
+			}
+			break
+		case optionCleanPostFix:
+			for i, v := range highlights {
+				highlights[i].Text = clean.PostFixes(v.Text)
+			}
+			break
+		}
+	}
 
 	//-------------------------------------------------------------------------------
 
@@ -52,9 +81,9 @@ func main() {
 		break
 	}
 
-	//-------------------------------------------------------------------------------
+	// -------------------------------------------------------------------------------
 
-	quotationOption := readOptionQuotationMarks()
+	quotationOption := readQuotationMarks()
 	switch quotationOption {
 	case optionSingleQuotation:
 		for _, v := range highlights {
@@ -75,20 +104,21 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	outputFormats := readOutputFormats()
-	fmt.Println("Saving to the following formats: ", outputFormats)
-	for _, v := range outputFormats {
+	exportFormats := readExportFormats()
+	fmt.Println("Exporting with following formats: ", exportFormats)
+	for _, v := range exportFormats {
 		switch v {
 		case "json":
-			save.ToJSON(highlights)
+			export.AsJSON(highlights)
 			break
 		case "text":
-			save.ToTxt(highlights)
+			export.AsTxt(highlights)
 			break
 		case "pdf":
-			save.ToPDF(highlights)
+			export.AsPDF(highlights)
+			break
 		case "csv":
-			save.ToCSV(highlights)
+			export.AsCSV(highlights)
 			break
 		}
 	}
@@ -96,10 +126,33 @@ func main() {
 	//-------------------------------------------------------------------------------
 
 	fmt.Println("File saved to your desktop")
+	//Press X to exit or R to try again
 }
 
-func readSrcPath() string {
-	fmt.Print(message.SetSrcPath)
+func readSourcePath() string {
+	//####
+	src := filefinder.GetMyClippingsFile()
+	if len(src) > 1 {
+		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
+	}
+	for {
+		fmt.Printf("Press C to contiune with that file or X to specify another path")
+		if !scanner.Scan() && scanner.Err() != nil {
+			fmt.Println("Error:", scanner.Err())
+		}
+
+		input = scanner.Text()
+		input = strings.TrimSpace(input)
+		if strings.EqualFold(input, "c") {
+			return src
+		} else if strings.EqualFold(input, "x") {
+			break
+		} else {
+			continue
+		}
+	}
+	//####
+	fmt.Print(message.EnterSource)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -124,40 +177,40 @@ func fileExist(path string) bool {
 	return !info.IsDir()
 }
 
-func readOutputFormats() []string {
-	fmt.Print(message.SetOutputFormats)
+func readExportFormats() []string {
+	fmt.Print(message.EnterExportFormats)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
 			return nil
 		}
 		input := scanner.Text()
-		if validateOutputFormats(input) {
+		if validateExportFormats(input) {
 			formats := strings.Fields(input)
 			if len(formats) > 3 {
-				formats = formats[:len(validOutputFormats)]
+				formats = formats[:len(ExportFormats)]
 				return formats
 			} else {
 				fmt.Println(input + "\n")
 				return formats
 			}
 		} else {
-			fmt.Printf("Error! Invalid output format(s). Try again: ")
+			fmt.Printf("Error! Invalid export format(s). Try again: ")
 		}
 	}
 }
 
-func validateOutputFormats(input string) bool {
+func validateExportFormats(input string) bool {
 	var result = false
 	formats = strings.Fields(input)
 
 	if len(formats) < 1 {
 		return false
 	} else if len(formats) > 3 {
-		formats = formats[0:len(validOutputFormats)]
+		formats = formats[0:len(ExportFormats)]
 	}
 	for _, format := range formats {
-		for _, validFormat := range validOutputFormats {
+		for _, validFormat := range ExportFormats {
 			result = strings.EqualFold(format, validFormat)
 			if result {
 				break
@@ -181,12 +234,12 @@ func printHighlights(highlights []reader.Highlight) {
 			booksCount[v.Title] = 0
 		}
 	}
-	msg := fmt.Sprintf("### Found %d highlights from %d different books ###", highlightsCount, len(booksCount))
-	fmt.Println(msg)
+	stats := fmt.Sprintf("### Found %d highlights from %d different books ###\n", highlightsCount, len(booksCount))
+	fmt.Println(stats)
 }
 
-func readOptionQuotationMarks() int {
-	fmt.Println(message.OptionQuotationMarks)
+func readQuotationMarks() int {
+	fmt.Println(message.EnterQuotationOption)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -206,7 +259,7 @@ func readOptionQuotationMarks() int {
 }
 
 func readFullStop() int {
-	fmt.Println(message.OptionFullstops)
+	fmt.Println(message.EnterFullStopOption)
 	for {
 		if !scanner.Scan() && scanner.Err() != nil {
 			fmt.Println("Error:", scanner.Err())
@@ -222,5 +275,38 @@ func readFullStop() int {
 		} else {
 			return i
 		}
+	}
+}
+
+func readCleaning() []int {
+	fmt.Println(message.EnterCleanOptions)
+	for {
+		if !scanner.Scan() && scanner.Err() != nil {
+			fmt.Println("Error:", scanner.Err())
+		}
+		input := scanner.Text()
+		input = strings.TrimSpace(input)
+		inputs := strings.Fields(input)
+
+		if len(inputs) < 1 || len(inputs) > 3 {
+			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
+			continue
+		}
+
+		for _, v := range inputs {
+			i, _ := strconv.Atoi(v)
+			if i < 1 || i > 3 {
+				fmt.Printf("Error!!!")
+				continue
+			}
+		}
+
+		var result []int
+		for _, v := range inputs {
+			i, _ := strconv.Atoi(v)
+			result = append(result, i)
+		}
+
+		return result
 	}
 }

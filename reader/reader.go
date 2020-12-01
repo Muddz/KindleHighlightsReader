@@ -15,7 +15,7 @@ type Highlight struct {
 	Title  string
 }
 
-func ReadHighlightFile(path string) []Highlight {
+func ReadHighlights(path string) []Highlight {
 	fileContent := getFileContent(path)
 	highlights := highlightsParser(fileContent)
 	return highlights
@@ -54,11 +54,13 @@ func highlightsParser(content string) []Highlight {
 	return highlights
 }
 
+//TODO rename in tests
 func removeAuthorFromTitle(title string) string {
 	result := strings.Split(title, " (")
 	return result[0]
 }
 
+//TODO rename in tests
 func getAuthorFromTitle(title string) string {
 	pattern := `(\(.*\))`
 	match, err := regexp.Compile(pattern)
@@ -70,6 +72,7 @@ func getAuthorFromTitle(title string) string {
 	return author
 }
 
+//TODO rename in tests
 func removeAuthorParentheses(author string) string {
 	if len(author) < 1 {
 		return ""
@@ -84,6 +87,7 @@ func removeAuthorParentheses(author string) string {
 	return string(chars)
 }
 
+//TODO needs test
 func cleanText(text string) string {
 	result := strings.TrimSuffix(text, "\r")
 	result = strings.TrimSuffix(result, "\\")
@@ -91,6 +95,7 @@ func cleanText(text string) string {
 	return result
 }
 
+//TODO needs test
 func removeBOM(text string) string {
 	bom := "\xef\xbb\xbf"
 	b := []byte(text)

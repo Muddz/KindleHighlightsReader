@@ -56,6 +56,7 @@ func ToCSV(highlights []reader.Highlight) []byte {
 		}
 	}
 	writer.Flush()
+
 	if err := writer.Error(); err != nil {
 		log.Println("Failed to flush csv writer,", err)
 		return nil
