@@ -1,4 +1,4 @@
-# KindleHighlightsReader
+# KindleHighlightsReader <img src="https://www.flaticon.com/svg/static/icons/svg/846/846245.svg" width="35">
 
 
 ## License
