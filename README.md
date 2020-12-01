@@ -7,7 +7,7 @@ The Text and PDF formats makes all of your highlights easy and appeling to read 
 
 
 ## Features
-- Clean all highlight texts for words or characters before and after like: "ed. Hello"   =>   "Hello"
+- Clean all highlight texts for words or characters before and after like: `"ed. Hello"`   =>   `"Hello"`
 - Insert full-stop/periods on all highlights.
 - Insert double or single quotations on all highlights.
 - Remove any quotation from all highlights.
@@ -24,7 +24,7 @@ The Text and PDF formats makes all of your highlights easy and appeling to read 
 
 ## License
 
-    Copyright 2018 Muddi Walid
+    Copyright 2020 Muddi Walid
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License
