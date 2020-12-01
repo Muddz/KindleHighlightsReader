@@ -1,4 +1,4 @@
-# KindleHighlightsReader <img width="35px" src=https://www.flaticon.com/svg/static/icons/svg/2883/2883730.svg">
+# KindleHighlightsReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/2883/2883730.svg">
 
 KindleHighlightsReader is a program that reads all of your highlights from the *My Clippings.txt* file found in Kindle devices with options to clean and style all highlights and exports them in the following file formats: Text, Json, CSV or PDF. 
 
