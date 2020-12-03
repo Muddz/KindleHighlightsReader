@@ -5,8 +5,7 @@ KindleHighlightsReader is a program that reads all of your highlights from the *
 
 **JSON**
 
-
-The JSON format is useful for developers who want's to unmarshal the JSON to objects in any langauge to be used in a app, webpage or database. The JSON has the following format:
+The JSON format is useful for developers who want's to unmarshal the JSON to objects in any langauge to be used in for an app, webpage or database. The JSON has the following format:
 
 ```
 [
@@ -20,8 +19,7 @@ The JSON format is useful for developers who want's to unmarshal the JSON to obj
 
 **Text and PDF**
 
-
-The Text and PDF formats makes all of your highlights easy and appeling to read from any device.
+The .txt and PDF formats makes all of your highlights easy and appeling to read from any device.
 
 
 ## Features
