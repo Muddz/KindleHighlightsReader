@@ -1,9 +1,10 @@
-package filefinder
+package finder
 
 import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 )
 
 func GetMyClippingsFile() string {
@@ -15,11 +16,10 @@ func GetMyClippingsFile() string {
 }
 
 func isWindowsOS() bool {
-	if os.DevNull == "NUL" {
+	if runtime.GOOS == "windows" {
 		return true
-	} else {
-		return false
 	}
+	return false
 }
 
 func getMyClippingsWindows() string {
@@ -39,7 +39,7 @@ func getMyClippingsWindows() string {
 }
 
 func getMyClippingsUnix() string {
-	path := fmt.Sprintf("/Kinde/documents/My Clippings.txt")
+	path := fmt.Sprintf("/Kindle/documents/My Clippings.txt")
 	return path
 }
 

@@ -3,12 +3,13 @@ package main
 import (
 	"KindleHighlightsReader/clean"
 	"KindleHighlightsReader/export"
-	"KindleHighlightsReader/filefinder"
+	"KindleHighlightsReader/finder"
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/punctuations"
 	"KindleHighlightsReader/reader"
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -30,18 +31,15 @@ const (
 	optionNoQuotation
 )
 
-var ExportFormats = []string{"TEXT", "JSON", "CSV", "PDF"}
+var exportFormats = []string{"TEXT", "JSON", "CSV", "PDF"}
 var punctuationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
 var fullStopOptions = []int{optionInsertFullStop, optionRemoveFullStop}
 var cleaningOptions = []int{optionCleanPrefix, optionCleanPostFix}
-
-var input string
-var formats []string
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
-	fmt.Println(message.GetGreeting())
 
+	fmt.Println(message.GetGreeting())
 	src := readSourcePath()
 	src = strings.TrimSpace(src)
 	highlights := reader.ReadHighlights(src)
@@ -105,61 +103,68 @@ func main() {
 	//-------------------------------------------------------------------------------
 
 	exportFormats := readExportFormats()
-	fmt.Println("Exporting with following formats: ", exportFormats)
+	var exportPaths []string
 	for _, v := range exportFormats {
 		switch v {
 		case "json":
-			export.AsJSON(highlights)
-			break
+			path, err := export.AsJSON(highlights)
+			if err != nil {
+				log.Print(err)
+				break
+			}
+			exportPaths = append(exportPaths, path)
 		case "text":
-			export.AsTxt(highlights)
-			break
+			path, err := export.AsTxt(highlights)
+			if err != nil {
+				log.Print(err)
+				break
+			}
+			exportPaths = append(exportPaths, path)
 		case "pdf":
-			export.AsPDF(highlights)
-			break
+			path, err := export.AsPDF(highlights)
+			if err != nil {
+				log.Print(err)
+				break
+			}
+			exportPaths = append(exportPaths, path)
 		case "csv":
-			export.AsCSV(highlights)
-			break
+			path, err := export.AsCSV(highlights)
+			if err != nil {
+				log.Print(err)
+				break
+			}
+			exportPaths = append(exportPaths, path)
 		}
 	}
 
-	//-------------------------------------------------------------------------------
+	for _, v := range exportPaths {
+		fmt.Println("Exported to:", v)
+	}
 
-	fmt.Println("File saved to your desktop")
-	//Press X to exit or R to try again
 }
 
 func readSourcePath() string {
-	//####
-	src := filefinder.GetMyClippingsFile()
+
+	//Auto scan
+	src := finder.GetMyClippingsFile()
 	if len(src) > 1 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
-	}
-	for {
-		fmt.Printf("Press C to contiune with that file or X to specify another path")
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
+		for {
+			fmt.Printf("Enter C to continue with that file or X to specify another path: ")
+			input := scanInput()
+			if strings.EqualFold(input, "c") {
+				return src
+			}
+			if strings.EqualFold(input, "x") {
+				break
+			}
 		}
+	}
 
-		input = scanner.Text()
-		input = strings.TrimSpace(input)
-		if strings.EqualFold(input, "c") {
-			return src
-		} else if strings.EqualFold(input, "x") {
-			break
-		} else {
-			continue
-		}
-	}
-	//####
+	//Manuel Scan
 	fmt.Print(message.EnterSource)
 	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-			return ""
-		}
-		input = scanner.Text()
-		input = strings.TrimSpace(input)
+		input := scanInput()
 		if fileExist(input) {
 			fmt.Println(input + "\n")
 			return input
@@ -178,17 +183,13 @@ func fileExist(path string) bool {
 }
 
 func readExportFormats() []string {
-	fmt.Print(message.EnterExportFormats)
+	fmt.Println(message.EnterExportFormats)
 	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-			return nil
-		}
-		input := scanner.Text()
+		input := scanInput()
 		if validateExportFormats(input) {
 			formats := strings.Fields(input)
 			if len(formats) > 3 {
-				formats = formats[:len(ExportFormats)]
+				formats = formats[:len(exportFormats)]
 				return formats
 			} else {
 				fmt.Println(input + "\n")
@@ -202,15 +203,14 @@ func readExportFormats() []string {
 
 func validateExportFormats(input string) bool {
 	var result = false
-	formats = strings.Fields(input)
-
+	formats := strings.Fields(input)
 	if len(formats) < 1 {
 		return false
 	} else if len(formats) > 3 {
-		formats = formats[0:len(ExportFormats)]
+		formats = formats[0:len(exportFormats)]
 	}
 	for _, format := range formats {
-		for _, validFormat := range ExportFormats {
+		for _, validFormat := range exportFormats {
 			result = strings.EqualFold(format, validFormat)
 			if result {
 				break
@@ -241,11 +241,7 @@ func printHighlights(highlights []reader.Highlight) {
 func readQuotationMarks() int {
 	fmt.Println(message.EnterQuotationOption)
 	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-			return -1
-		}
-		input := scanner.Text()
+		input := scanInput()
 		i, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println(err)
@@ -261,11 +257,7 @@ func readQuotationMarks() int {
 func readFullStop() int {
 	fmt.Println(message.EnterFullStopOption)
 	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-			return -1
-		}
-		input := scanner.Text()
+		input := scanInput()
 		i, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println(err)
@@ -281,13 +273,8 @@ func readFullStop() int {
 func readCleaning() []int {
 	fmt.Println(message.EnterCleanOptions)
 	for {
-		if !scanner.Scan() && scanner.Err() != nil {
-			fmt.Println("Error:", scanner.Err())
-		}
-		input := scanner.Text()
-		input = strings.TrimSpace(input)
+		input := scanInput()
 		inputs := strings.Fields(input)
-
 		if len(inputs) < 1 || len(inputs) > 3 {
 			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
 			continue
@@ -309,4 +296,13 @@ func readCleaning() []int {
 
 		return result
 	}
+}
+
+func scanInput() string {
+	if !scanner.Scan() && scanner.Err() != nil {
+		fmt.Println("ERROR! Failed to read input:", scanner.Err())
+		return ""
+	}
+	input := scanner.Text()
+	return strings.TrimSpace(input)
 }

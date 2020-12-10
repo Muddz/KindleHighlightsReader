@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-//Todo* Return error or bool with the bytes?
+//TODO should these methods return the error too?
 func ToJSON(highlights []reader.Highlight) []byte {
 	b, err := json.Marshal(highlights)
 	if err != nil {

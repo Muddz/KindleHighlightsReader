@@ -2,74 +2,61 @@ package convert
 
 import (
 	"KindleHighlightsReader/reader"
-	"encoding/json"
-	"fmt"
-	"reflect"
-	"strings"
 	"testing"
 )
 
 func TestToJSON(t *testing.T) {
-	b := ToJSON(getTestData())
-	ok := json.Valid(b)
-	if !ok {
+	h := getTestHighlights()
+	b := ToJSON(h)
+	c := string(b)
+	validJson := `[{"Text":"text","Author":"author","Title":"title"},{"Text":"text","Author":"author","Title":"title"}]`
+	if c != validJson {
 		t.Errorf("Failed to correctly convert highlights to JSON")
 	}
 }
 
 func TestToText(t *testing.T) {
-	highlights := getTestData()
-	b := ToText(highlights)
-	content := string(b)
-	if len(content) < len(highlights) {
+	h := getTestHighlights()
+	b := ToText(h)
+	c := string(b)
+	validText :=
+		"text\n\nauthor, title\n________________________________\n\n" +
+			"text\n\nauthor, title\n________________________________\n\n"
+
+	if c != validText {
 		t.Error("Failed to convert highlights to text. Data missing")
-	}
-	h := highlights[0]
-	if !strings.Contains(content, h.Text) {
-		t.Error("Failed to convert highlights to text. No matching values was found")
 	}
 }
 
 func TestToCSV(t *testing.T) {
-	highlights := getTestData()
-	b := ToCSV(highlights)
-	content := string(b)
-
-	h := highlights[0]
-	v := reflect.ValueOf(&h).Elem()
-	typeOf := v.Type()
-	for i := 0; i < v.NumField(); i++ {
-		fieldName := typeOf.Field(i).Name
-		fieldValue := v.Field(i).Interface()
-		fieldValueTxt := fmt.Sprintf("%v", fieldValue)
-		if !strings.Contains(content, fieldName) {
-			t.Error("Failed to convert highlights to CSV. No headers was found")
-		}
-		if !strings.Contains(content, fieldValueTxt) {
-			t.Error("Failed to convert highlights to CSV. No values was found")
-		}
+	h := getTestHighlights()
+	b := ToCSV(h)
+	c := string(b)
+	validCSV := "Text,Author,Title\ntext,author,title\ntext,author,title\n"
+	if c != validCSV {
+		t.Error("Failed to convert highlights to CSV. No headers was found")
 	}
 }
 
 func TestToPDF(t *testing.T) {
-	highlights := getTestData()
-	b := ToPDF(highlights)
-	if len(b) < len(highlights) {
+	h := getTestHighlights()
+	b := ToPDF(h)
+	if len(b) < len(h) {
 		t.Error("Failed to convert highlights to PDF. Data missing")
 	}
 }
 
-func getTestData() []reader.Highlight {
+func getTestHighlights() []reader.Highlight {
 	h1 := reader.Highlight{
-		Text:   "Hello World!",
-		Author: "Muddz",
-		Title:  "Developer",
+		Text:   "text",
+		Author: "author",
+		Title:  "title",
 	}
 
 	h2 := reader.Highlight{
-		Text:   "Hello World!",
-		Author: "Muddz",
-		Title:  "Developer",
+		Text:   "text",
+		Author: "author",
+		Title:  "title",
 	}
 	return []reader.Highlight{h1, h2}
 }
