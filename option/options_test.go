@@ -1,6 +1,7 @@
-package punctuations
+package option
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -73,5 +74,40 @@ func TestRemoveFullStop(t *testing.T) {
 	result := RemoveFullStop(testString)
 	if result != "Hello" {
 		t.Errorf("Failed to remove fullstop on %s", testString)
+	}
+}
+
+//TODO make these tests simpler
+
+func TestTrimBeforeWithOneWord(t *testing.T) {
+	testString := "The. The quick brown fox jumps over the lazy dog"
+	result := TrimBefore(testString)
+	if result != "The quick brown fox jumps over the lazy dog" {
+		t.Errorf("Failed to remove prefix of %s", testString)
+	}
+}
+
+func TestTrimAfterWithAPeriod(t *testing.T) {
+	testString := ". The quick brown fox jumps over the lazy dog"
+	result := TrimBefore(testString)
+	if result != "The quick brown fox jumps over the lazy dog" {
+		t.Errorf("Failed to remove prefix of %s", testString)
+	}
+}
+
+func TestTrimAfterWithOneWord(t *testing.T) {
+	testString := "The quick brown fox jumps over the lazy. dog"
+	result := TrimAfter(testString)
+	fmt.Println(testString)
+	if result != "The quick brown fox jumps over the lazy" {
+		t.Errorf("Failed to remove postfix of %s", testString)
+	}
+}
+
+func TestTrimAfterWithALetter(t *testing.T) {
+	testString := "The quick brown fox jumps over the lazy. d"
+	result := TrimAfter(testString)
+	if result != "The quick brown fox jumps over the lazy" {
+		t.Errorf("Failed to remove postfix of %s", testString)
 	}
 }

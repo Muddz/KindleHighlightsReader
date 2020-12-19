@@ -5,7 +5,7 @@ import (
 	"KindleHighlightsReader/export"
 	"KindleHighlightsReader/finder"
 	"KindleHighlightsReader/message"
-	"KindleHighlightsReader/punctuations"
+	"KindleHighlightsReader/option"
 	"KindleHighlightsReader/reader"
 	"bufio"
 	"fmt"
@@ -16,8 +16,8 @@ import (
 )
 
 const (
-	optionCleanPrefix = iota + 1
-	optionCleanPostFix
+	optionTrimBefore = iota + 1
+	optionTrimAfter
 )
 
 const (
@@ -34,7 +34,7 @@ const (
 var exportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
 var punctuationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
 var fullStopOptions = []int{optionInsertFullStop, optionRemoveFullStop}
-var cleanOptions = []int{optionCleanPrefix, optionCleanPostFix}
+var trimOptions = []int{optionTrimBefore, optionTrimAfter}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
@@ -46,17 +46,17 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	cleaningOptions := readCleaning()
+	cleaningOptions := readTrimOption()
 	for _, v := range cleaningOptions {
 		switch v {
-		case optionCleanPrefix:
+		case optionTrimBefore:
 			for i, v := range highlights {
-				highlights[i].Text = clean.Prefixes(v.Text)
+				highlights[i].Text = option.TrimBefore(v.Text)
 			}
 			break
-		case optionCleanPostFix:
+		case optionTrimAfter:
 			for i, v := range highlights {
-				highlights[i].Text = clean.PostFixes(v.Text)
+				highlights[i].Text = option.TrimAfter(v.Text)
 			}
 			break
 		}
@@ -68,12 +68,12 @@ func main() {
 	switch fullStopOption {
 	case optionInsertFullStop:
 		for i, v := range highlights {
-			highlights[i].Text = punctuations.SetFullStop(v.Text)
+			highlights[i].Text = option.SetFullStop(v.Text)
 		}
 		break
 	case optionRemoveFullStop:
 		for i, v := range highlights {
-			highlights[i].Text = punctuations.RemoveFullStop(v.Text)
+			highlights[i].Text = option.RemoveFullStop(v.Text)
 		}
 		break
 	}
@@ -84,17 +84,17 @@ func main() {
 	switch quotationOption {
 	case optionSingleQuotation:
 		for _, v := range highlights {
-			v.Text = punctuations.SetSingleQuotations(v.Text)
+			v.Text = option.SetSingleQuotations(v.Text)
 		}
 		break
 	case optionDoubleQuotation:
 		for _, v := range highlights {
-			v.Text = punctuations.SetDoubleQuotations(v.Text)
+			v.Text = option.SetDoubleQuotations(v.Text)
 		}
 		break
 	case optionNoQuotation:
 		for _, v := range highlights {
-			v.Text = punctuations.RemoveQuotations(v.Text)
+			v.Text = option.RemoveQuotations(v.Text)
 		}
 		break
 	}
@@ -269,12 +269,12 @@ func readFullStop() int {
 	}
 }
 
-func readCleaning() []int {
-	fmt.Println(message.EnterCleanOptions)
+func readTrimOption() []int {
+	fmt.Println(message.EnterTrimOptions)
 	for {
 		input := scanInput()
 		inputs := strings.Fields(input)
-		if len(inputs) < 1 || len(inputs) > len(cleanOptions) {
+		if len(inputs) < 1 || len(inputs) > len(trimOptions) {
 			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
 			continue
 		}

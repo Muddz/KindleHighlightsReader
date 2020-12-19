@@ -1,4 +1,9 @@
-package punctuations
+package option
+
+import (
+	"log"
+	"regexp"
+)
 
 func SetSingleQuotations(text string) string {
 	chars := []rune(text)
@@ -72,4 +77,22 @@ func RemoveFullStop(text string) string {
 		chars = chars[:len(chars)-1]
 	}
 	return string(chars)
+}
+
+func TrimBefore(text string) string {
+	pattern := `^\.\s|^\w+\.\s`
+	match, err := regexp.Compile(pattern)
+	if err != nil {
+		log.Println(err)
+	}
+	return match.ReplaceAllString(text, "")
+}
+
+func TrimAfter(text string) string {
+	pattern := `\.\s\w+$`
+	match, err := regexp.Compile(pattern)
+	if err != nil {
+		log.Println(err)
+	}
+	return match.ReplaceAllString(text, "")
 }
