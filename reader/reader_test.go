@@ -1,6 +1,7 @@
 package reader
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -43,7 +44,7 @@ Quote`
 	}
 }
 
-func TestRemoveAuthor(t *testing.T) {
+func TestRemoveAuthorFromTitle(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	result := removeAuthorFromTitle(testString)
 	if result != "The story of Microsoft" {
@@ -51,7 +52,7 @@ func TestRemoveAuthor(t *testing.T) {
 	}
 }
 
-func TestExtractAuthor(t *testing.T) {
+func TestGetAuthorFromTitle(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	result := getAuthorFromTitle(testString)
 	if result != "Bill Gates" {
@@ -64,5 +65,22 @@ func TestRemoveAuthorParentheses(t *testing.T) {
 	result := removeAuthorParentheses(testString)
 	if result != "Bill Gates" {
 		t.Errorf("Failed to remove parentheses from %s", testString)
+	}
+}
+
+func TestRemoveControlChars(t *testing.T) {
+	testString := "Hello\r"
+	fmt.Println(testString)
+	result := removeControlChars(testString)
+	if result != "Hello" {
+		t.Errorf("Failed to clean text for control characters from %s", testString)
+	}
+}
+
+func TestRemoveBOM(t *testing.T) {
+	testString := " Hello"
+	result := removeBOM(testString)
+	if result != "Hello" {
+		t.Errorf("Failed to clean text for BOM %s", testString)
 	}
 }

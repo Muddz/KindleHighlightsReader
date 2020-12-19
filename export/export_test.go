@@ -3,52 +3,92 @@ package export
 import (
 	"log"
 	"os"
+	"strings"
 	"testing"
 )
 
 func TestAsJSON(t *testing.T) {
 	path, _ := AsJSON(nil)
-	filename := getUserDesktopPath() + "\\My Clippings JSON.txt"
-	if !fileExist(filename) {
-		t.Error("Failed to find JSON file: ", filename)
+
+	if !strings.Contains(path, "JSON.txt") {
+		t.Error("Failed to find JSON title in filename: ", path)
 	}
-	_ = os.Remove(filename)
+
+	if !fileExist(path) {
+		t.Error("Failed to find JSON file: ", path)
+	}
+
+	t.Cleanup(func() {
+		if err := os.Remove(path); err != nil {
+			log.Println(err)
+		}
+	})
 }
 
 func TestAsTxt(t *testing.T) {
-	filename := getUserDesktopPath() + "\\My Clippings Text.txt"
-	ok := AsTxt(nil)
-	if !ok {
-		t.Error("Failed to export to Text. Result was not ok")
+	path, _ := AsTxt(nil)
+
+	if !strings.Contains(path, "TEXT.txt") {
+		t.Error("Failed to find TEXT title in filename: ", path)
 	}
-	if !fileExist(filename) {
-		t.Error("Failed to find Text file: ", filename)
+
+	if !fileExist(path) {
+		t.Error("Failed to find txt file: ", path)
 	}
-	_ = os.Remove(filename)
+	t.Cleanup(func() {
+		if err := os.Remove(path); err != nil {
+			log.Println(err)
+		}
+	})
 }
 
 func TestAsCSV(t *testing.T) {
-	filename := getUserDesktopPath() + "\\My Clippings.csv"
-	ok := AsCSV(nil) //TODO this will throw an error, but still correctly passes the test
-	if !ok {
-		t.Error("Failed to export to csv. Result was not ok")
+	path, _ := AsCSV(nil)
+
+	if !strings.Contains(path, "CSV.txt") {
+		t.Error("Failed to find CSV title in filename: ", path)
 	}
-	if !fileExist(filename) {
-		t.Error("Failed to find csv file: ", filename)
+
+	if !fileExist(path) {
+		t.Error("Failed to find CSV file: ", path)
 	}
-	_ = os.Remove(filename)
+	t.Cleanup(func() {
+		if err := os.Remove(path); err != nil {
+			log.Println(err)
+		}
+	})
 }
 
 func TestAsPDF(t *testing.T) {
-	filename := getUserDesktopPath() + "\\My Clippings.pdf"
-	ok := AsPDF(nil)
-	if !ok {
-		t.Error("Failed to export to PDF. Result was not ok")
+	path, _ := AsPDF(nil)
+
+	if !strings.Contains(path, ".pdf") {
+		t.Error("Failed to find pdf extension in filename: ", path)
 	}
-	if !fileExist(filename) {
-		t.Error("Failed to find PDF file: ", filename)
+
+	if !fileExist(path) {
+		t.Error("Failed to find pdf file: ", path)
 	}
-	_ = os.Remove(filename)
+	t.Cleanup(func() {
+		if err := os.Remove(path); err != nil {
+			log.Println(err)
+		}
+	})
+}
+
+func TestExport(t *testing.T) {
+	filename := "My Clippings Test.pdf"
+	f, _ := export(filename, nil)
+
+	if !fileExist(f) {
+		t.Error("Failed to find test file:", filename)
+	}
+
+	t.Cleanup(func() {
+		if err := os.Remove(filename); err != nil {
+			log.Print("Failed to remove test file: ", filename)
+		}
+	})
 }
 
 func fileExist(path string) bool {
@@ -57,41 +97,4 @@ func fileExist(path string) bool {
 		return false
 	}
 	return !info.IsDir()
-}
-
-func TestCreateNewFile(t *testing.T) {
-	filename := "./testfile.txt"
-	f := createFile(filename)
-	if f == nil {
-		t.Error("Failed to create file:", filename)
-	}
-
-	t.Cleanup(func() {
-		tearDownTestFile(f)
-	})
-}
-
-func TestWriteToFile(t *testing.T) {
-	filename := "./testfile.txt"
-	content := "Hello World!"
-	data := []byte(content)
-	f := createFile(filename)
-	ok := writeToFile(f, data)
-
-	if !ok {
-		t.Error("Failed to write ''Hello World' to file:", filename)
-	}
-
-	t.Cleanup(func() {
-		tearDownTestFile(f)
-	})
-}
-
-func tearDownTestFile(f *os.File) {
-	if err := f.Close(); err != nil {
-		log.Print("Failed to close test file: ", f.Name())
-	}
-	if err := os.Remove(f.Name()); err != nil {
-		log.Print("Failed to remove test file: ", f.Name())
-	}
 }

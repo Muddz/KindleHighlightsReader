@@ -31,14 +31,13 @@ const (
 	optionNoQuotation
 )
 
-var exportFormats = []string{"TEXT", "JSON", "CSV", "PDF"}
+var exportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
 var punctuationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
 var fullStopOptions = []int{optionInsertFullStop, optionRemoveFullStop}
-var cleaningOptions = []int{optionCleanPrefix, optionCleanPostFix}
+var cleanOptions = []int{optionCleanPrefix, optionCleanPostFix}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
-
 	fmt.Println(message.GetGreeting())
 	src := readSourcePath()
 	src = strings.TrimSpace(src)
@@ -145,7 +144,7 @@ func main() {
 
 func readSourcePath() string {
 
-	//Auto scan
+	//TODO) Auto scan
 	src := finder.GetMyClippingsFile()
 	if len(src) > 1 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
@@ -161,7 +160,7 @@ func readSourcePath() string {
 		}
 	}
 
-	//Manuel Scan
+	//TODO) Manuel Scan
 	fmt.Print(message.EnterSource)
 	for {
 		input := scanInput()
@@ -188,8 +187,8 @@ func readExportFormats() []string {
 		input := scanInput()
 		if validateExportFormats(input) {
 			formats := strings.Fields(input)
-			if len(formats) > 3 {
-				formats = formats[:len(exportFormats)]
+			if len(formats) > len(exportOptions) {
+				formats = formats[:len(exportOptions)]
 				return formats
 			} else {
 				fmt.Println(input + "\n")
@@ -207,10 +206,10 @@ func validateExportFormats(input string) bool {
 	if len(formats) < 1 {
 		return false
 	} else if len(formats) > 3 {
-		formats = formats[0:len(exportFormats)]
+		formats = formats[0:len(exportOptions)]
 	}
 	for _, format := range formats {
-		for _, validFormat := range exportFormats {
+		for _, validFormat := range exportOptions {
 			result = strings.EqualFold(format, validFormat)
 			if result {
 				break
@@ -246,7 +245,7 @@ func readQuotationMarks() int {
 		if err != nil {
 			fmt.Println(err)
 		}
-		if i > 4 && i < 1 {
+		if i > len(punctuationsOptions) && i < 1 {
 			fmt.Printf("Error! Choose only one input between 1-4. Try again: ")
 		} else {
 			return i
@@ -262,7 +261,7 @@ func readFullStop() int {
 		if err != nil {
 			fmt.Println(err)
 		}
-		if i > 3 && i < 1 {
+		if i > len(fullStopOptions) && i < 1 {
 			fmt.Printf("Error! Choose only one input between 1-3. Try again: ")
 		} else {
 			return i
@@ -275,7 +274,7 @@ func readCleaning() []int {
 	for {
 		input := scanInput()
 		inputs := strings.Fields(input)
-		if len(inputs) < 1 || len(inputs) > 3 {
+		if len(inputs) < 1 || len(inputs) > len(cleanOptions) {
 			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
 			continue
 		}

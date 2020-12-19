@@ -35,32 +35,30 @@ func highlightsParser(content string) []Highlight {
 	regex := regexp.MustCompile(pattern)
 	matches := regex.FindAllStringSubmatch(content, -1)
 	var highlights []Highlight
-	for _, match := range matches {
-
-		var title = match[2]
-		var text = match[4]
-
-		//TODO make this prettier
+	for _, matchGroups := range matches {
+		var title = matchGroups[2]
+		var text = matchGroups[4]
 
 		title = removeBOM(title)
+		author := getAuthorFromTitle(title)
+		title = removeAuthorFromTitle(title)
 		text = removeBOM(text)
+		text = removeControlChars(text)
 
 		highlights = append(highlights, Highlight{
-			Title:  removeAuthorFromTitle(title),
-			Author: getAuthorFromTitle(title),
-			Text:   cleanText(text),
+			Title:  title,
+			Author: author,
+			Text:   text,
 		})
 	}
 	return highlights
 }
 
-//TODO rename in tests
 func removeAuthorFromTitle(title string) string {
 	result := strings.Split(title, " (")
 	return result[0]
 }
 
-//TODO rename in tests
 func getAuthorFromTitle(title string) string {
 	pattern := `(\(.*\))`
 	match, err := regexp.Compile(pattern)
@@ -72,7 +70,6 @@ func getAuthorFromTitle(title string) string {
 	return author
 }
 
-//TODO rename in tests
 func removeAuthorParentheses(author string) string {
 	if len(author) < 1 {
 		return ""
@@ -88,7 +85,7 @@ func removeAuthorParentheses(author string) string {
 }
 
 //TODO needs test
-func cleanText(text string) string {
+func removeControlChars(text string) string {
 	result := strings.TrimSuffix(text, "\r")
 	result = strings.TrimSuffix(result, "\\")
 	result = strings.TrimSpace(text)
