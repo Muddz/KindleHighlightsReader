@@ -53,25 +53,25 @@ func TestRemoveDoubleQuotations(t *testing.T) {
 	}
 }
 
-func TestSetFullStop(t *testing.T) {
+func TestSetPeriod(t *testing.T) {
 	testString := "Hello"
-	result := SetFullStop(testString)
+	result := SetPeriod(testString)
 	if result != "Hello." {
 		t.Errorf("Failed to set fullstop on %s", testString)
 	}
 }
 
-func TestSetFullStopWitIfPresent(t *testing.T) {
+func TestSetPeriodIfPresent(t *testing.T) {
 	testString := "Hello."
-	result := SetFullStop(testString)
+	result := SetPeriod(testString)
 	if result != "Hello." {
 		t.Errorf("Failed to set fullstop on %s", testString)
 	}
 }
 
-func TestRemoveFullStop(t *testing.T) {
+func TestRemovePeriod(t *testing.T) {
 	testString := "Hello."
-	result := RemoveFullStop(testString)
+	result := RemovePeriod(testString)
 	if result != "Hello" {
 		t.Errorf("Failed to remove fullstop on %s", testString)
 	}

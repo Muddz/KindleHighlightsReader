@@ -61,7 +61,7 @@ func RemoveQuotations(text string) string {
 	return string(chars)
 }
 
-func SetFullStop(text string) string {
+func SetPeriod(text string) string {
 	lastRune := text[len(text)-1]
 	lastChar := string(lastRune)
 	if lastChar != string('.') {
@@ -70,7 +70,7 @@ func SetFullStop(text string) string {
 	return text
 }
 
-func RemoveFullStop(text string) string {
+func RemovePeriod(text string) string {
 	chars := []rune(text)
 	lastChar := string(text[len(text)-1])
 	if lastChar == string('.') {

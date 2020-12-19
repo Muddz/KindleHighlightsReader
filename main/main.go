@@ -1,7 +1,6 @@
 package main
 
 import (
-	"KindleHighlightsReader/clean"
 	"KindleHighlightsReader/export"
 	"KindleHighlightsReader/finder"
 	"KindleHighlightsReader/message"
@@ -21,8 +20,8 @@ const (
 )
 
 const (
-	optionInsertFullStop = iota + 1
-	optionRemoveFullStop
+	optionSetPeriod = iota + 1
+	optionRemovePeriod
 )
 
 const (
@@ -31,10 +30,10 @@ const (
 	optionNoQuotation
 )
 
-var exportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
-var punctuationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
-var fullStopOptions = []int{optionInsertFullStop, optionRemoveFullStop}
-var trimOptions = []int{optionTrimBefore, optionTrimAfter}
+var validExportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
+var validQuotations = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
+var validPeriod = []int{optionSetPeriod, optionRemovePeriod}
+var validTrim = []int{optionTrimBefore, optionTrimAfter}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
@@ -46,8 +45,8 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	cleaningOptions := readTrimOption()
-	for _, v := range cleaningOptions {
+	trimOptions := readTrimOptions()
+	for _, v := range trimOptions {
 		switch v {
 		case optionTrimBefore:
 			for i, v := range highlights {
@@ -64,23 +63,23 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	fullStopOption := readFullStop()
-	switch fullStopOption {
-	case optionInsertFullStop:
+	periodOption := readPeriodOption()
+	switch periodOption {
+	case optionSetPeriod:
 		for i, v := range highlights {
-			highlights[i].Text = option.SetFullStop(v.Text)
+			highlights[i].Text = option.SetPeriod(v.Text)
 		}
 		break
-	case optionRemoveFullStop:
+	case optionRemovePeriod:
 		for i, v := range highlights {
-			highlights[i].Text = option.RemoveFullStop(v.Text)
+			highlights[i].Text = option.RemovePeriod(v.Text)
 		}
 		break
 	}
 
 	// -------------------------------------------------------------------------------
 
-	quotationOption := readQuotationMarks()
+	quotationOption := readQuotationOption()
 	switch quotationOption {
 	case optionSingleQuotation:
 		for _, v := range highlights {
@@ -101,9 +100,9 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	exportFormats := readExportFormats()
+	exportOptions := readExportOptions()
 	var exportPaths []string
-	for _, v := range exportFormats {
+	for _, v := range exportOptions {
 		switch v {
 		case "json":
 			path, err := export.AsJSON(highlights)
@@ -181,14 +180,14 @@ func fileExist(path string) bool {
 	return !info.IsDir()
 }
 
-func readExportFormats() []string {
-	fmt.Println(message.EnterExportFormats)
+func readExportOptions() []string {
+	fmt.Println(message.EnterExportOptions)
 	for {
 		input := scanInput()
 		if validateExportFormats(input) {
 			formats := strings.Fields(input)
-			if len(formats) > len(exportOptions) {
-				formats = formats[:len(exportOptions)]
+			if len(formats) > len(validExportOptions) {
+				formats = formats[:len(validExportOptions)]
 				return formats
 			} else {
 				fmt.Println(input + "\n")
@@ -206,10 +205,10 @@ func validateExportFormats(input string) bool {
 	if len(formats) < 1 {
 		return false
 	} else if len(formats) > 3 {
-		formats = formats[0:len(exportOptions)]
+		formats = formats[0:len(validExportOptions)]
 	}
 	for _, format := range formats {
-		for _, validFormat := range exportOptions {
+		for _, validFormat := range validExportOptions {
 			result = strings.EqualFold(format, validFormat)
 			if result {
 				break
@@ -237,7 +236,7 @@ func printHighlights(highlights []reader.Highlight) {
 	fmt.Println(stats)
 }
 
-func readQuotationMarks() int {
+func readQuotationOption() int {
 	fmt.Println(message.EnterQuotationOption)
 	for {
 		input := scanInput()
@@ -245,7 +244,7 @@ func readQuotationMarks() int {
 		if err != nil {
 			fmt.Println(err)
 		}
-		if i > len(punctuationsOptions) && i < 1 {
+		if i > len(validQuotations) && i < 1 {
 			fmt.Printf("Error! Choose only one input between 1-4. Try again: ")
 		} else {
 			return i
@@ -253,15 +252,15 @@ func readQuotationMarks() int {
 	}
 }
 
-func readFullStop() int {
-	fmt.Println(message.EnterFullStopOption)
+func readPeriodOption() int {
+	fmt.Println(message.EnterPeriodOption)
 	for {
 		input := scanInput()
 		i, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println(err)
 		}
-		if i > len(fullStopOptions) && i < 1 {
+		if i > len(validPeriod) && i < 1 {
 			fmt.Printf("Error! Choose only one input between 1-3. Try again: ")
 		} else {
 			return i
@@ -269,12 +268,12 @@ func readFullStop() int {
 	}
 }
 
-func readTrimOption() []int {
+func readTrimOptions() []int {
 	fmt.Println(message.EnterTrimOptions)
 	for {
 		input := scanInput()
 		inputs := strings.Fields(input)
-		if len(inputs) < 1 || len(inputs) > len(trimOptions) {
+		if len(inputs) < 1 || len(inputs) > len(validTrim) {
 			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
 			continue
 		}
