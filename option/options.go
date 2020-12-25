@@ -89,7 +89,7 @@ func TrimBefore(text string) string {
 }
 
 func TrimAfter(text string) string {
-	pattern := `\.\s\w+$`
+	pattern := `\s\w+$`
 	match, err := regexp.Compile(pattern)
 	if err != nil {
 		log.Println(err)

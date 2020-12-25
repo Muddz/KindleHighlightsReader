@@ -1,7 +1,6 @@
 package reader
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -33,7 +32,7 @@ Book title (Author)
 
 Quote`
 
-	highlights := highlightsParser(testString)
+	highlights := parseHighlights(testString)
 	if len(highlights) != 2 {
 		t.Errorf("Failed to parse the correct amount of highlight objects")
 	}
@@ -48,7 +47,7 @@ func TestRemoveAuthorFromTitle(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	result := removeAuthorFromTitle(testString)
 	if result != "The story of Microsoft" {
-		t.Errorf("Failed to remove author from title %s", testString)
+		t.Errorf("Failed to remove author from title '%s'", testString)
 	}
 }
 
@@ -56,7 +55,7 @@ func TestGetAuthorFromTitle(t *testing.T) {
 	testString := "The story of Microsoft (Bill Gates)"
 	result := getAuthorFromTitle(testString)
 	if result != "Bill Gates" {
-		t.Errorf("Failed to extract author's name from %s", testString)
+		t.Errorf("Failed to extract author's name from '%s'", testString)
 	}
 }
 
@@ -64,23 +63,22 @@ func TestRemoveAuthorParentheses(t *testing.T) {
 	testString := "(Bill Gates)"
 	result := removeAuthorParentheses(testString)
 	if result != "Bill Gates" {
-		t.Errorf("Failed to remove parentheses from %s", testString)
+		t.Errorf("Failed to remove parentheses from '%s'", testString)
 	}
 }
 
 func TestRemoveControlChars(t *testing.T) {
 	testString := "Hello\r"
-	fmt.Println(testString)
-	result := removeControlChars(testString)
+	result := removeCarriageReturn(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to clean text for control characters from %s", testString)
+		t.Errorf("Failed to clean text for control characters from '%s'", testString)
 	}
 }
 
 func TestRemoveBOM(t *testing.T) {
-	testString := " Hello"
+	testString := "\xef\xbb\xbfHello"
 	result := removeBOM(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to clean text for BOM %s", testString)
+		t.Errorf("Failed to clean text for BOM '%s'", testString)
 	}
 }

@@ -45,19 +45,18 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
+	//TODO fix the error message
 	trimOptions := readTrimOptions()
 	for _, v := range trimOptions {
-		switch v {
-		case optionTrimBefore:
+		if v == optionTrimBefore {
 			for i, v := range highlights {
 				highlights[i].Text = option.TrimBefore(v.Text)
 			}
-			break
-		case optionTrimAfter:
+		}
+		if v == optionTrimAfter {
 			for i, v := range highlights {
 				highlights[i].Text = option.TrimAfter(v.Text)
 			}
-			break
 		}
 	}
 
