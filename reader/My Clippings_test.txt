@@ -2,9 +2,9 @@
 Book title (Author)
 - Highlight information
 
-Quote
+Text
 ==========
 Book title (Author)
 - Highlight information
 
-Quote
+Text

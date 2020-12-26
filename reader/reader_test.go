@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+//Todo refactor this test
 func TestReadHighlightFile(t *testing.T) {
 	highlights := ReadHighlights("./My Clippings_test.txt")
 	if len(highlights) != 2 {
@@ -11,6 +12,7 @@ func TestReadHighlightFile(t *testing.T) {
 	}
 }
 
+//Todo refactor this test
 func TestGetFileContent(t *testing.T) {
 	testFile := "My Clippings_test.txt"
 	content := getFileContent(testFile)
@@ -19,35 +21,24 @@ func TestGetFileContent(t *testing.T) {
 	}
 }
 
+//Todo refactor this test/Should we just read the testfile?
 func TestHighlightParser(t *testing.T) {
 	testString :=
 		`==========
 Book title (Author)
 - Highlight information
 
-Quote
+Text
 ==========
 Book title (Author)
 - Highlight information
 
-Quote`
-
+Text`
 	highlights := parseHighlights(testString)
-	if len(highlights) != 2 {
-		t.Errorf("Failed to parse the correct amount of highlight objects")
-	}
-	for _, highlight := range highlights {
-		if len(highlight.Title) == 0 || len(highlight.Author) == 0 || len(highlight.Text) == 0 {
-			t.Errorf("Failed to parse fields from highlight objects")
+	for _, v := range highlights {
+		if v.Title != "Book title" && v.Author != "Author" && v.Text != "Text" {
+			t.Error("Failed to parse highlights to struct")
 		}
-	}
-}
-
-func TestRemoveAuthorParentheses(t *testing.T) {
-	testString := "(Bill Gates)"
-	result := removeParentheses(testString)
-	if result != "Bill Gates" {
-		t.Errorf("Failed to remove parentheses from '%s'", testString)
 	}
 }
 

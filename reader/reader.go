@@ -31,38 +31,23 @@ func getFileContent(path string) string {
 }
 
 func parseHighlights(content string) []Highlight {
-	pattern := `(?m)(^.*)(\(.*\))\r?\n(^.*)\r?\n\r?\n(^.*)`
+	pattern := `(?m)(^.*)\((.*)\)\r?\n(^.*)\r?\n\r?\n(^.*)`
 	regex := regexp.MustCompile(pattern)
 	matches := regex.FindAllStringSubmatch(content, -1)
 	var highlights []Highlight
 	for _, matchGroups := range matches {
-
 		var title = matchGroups[1]
 		var author = matchGroups[2]
 		var text = matchGroups[4]
 
 		title = removeBOM(title)
-		author = removeParentheses(author)
 		text = removeBOM(text)
 		text = removeCarriageReturn(text)
 
-		highlights = append(highlights, Highlight{
-			Title:  title,
-			Author: author,
-			Text:   text,
-		})
+		h := Highlight{Text: title, Author: author, Title: text}
+		highlights = append(highlights, h)
 	}
 	return highlights
-}
-
-func removeParentheses(author string) string {
-	hasStartParenthesis := strings.Contains(author, "(")
-	hasEndParenthesis := strings.Contains(author, ")")
-	if hasStartParenthesis && hasEndParenthesis {
-		author = strings.ReplaceAll(author, "(", "")
-		author = strings.ReplaceAll(author, ")", "")
-	}
-	return author
 }
 
 func removeCarriageReturn(text string) string {
