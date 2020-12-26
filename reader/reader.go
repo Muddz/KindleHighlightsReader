@@ -56,16 +56,12 @@ func parseHighlights(content string) []Highlight {
 }
 
 func removeParentheses(author string) string {
-	if len(author) < 1 {
-		return ""
-	}
 	hasStartParenthesis := strings.Contains(author, "(")
 	hasEndParenthesis := strings.Contains(author, ")")
 	if hasStartParenthesis && hasEndParenthesis {
 		author = strings.ReplaceAll(author, "(", "")
 		author = strings.ReplaceAll(author, ")", "")
 	}
-
 	return author
 }
 
