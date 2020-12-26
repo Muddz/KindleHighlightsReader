@@ -43,25 +43,9 @@ Quote`
 	}
 }
 
-func TestRemoveAuthorFromTitle(t *testing.T) {
-	testString := "The story of Microsoft (Bill Gates)"
-	result := removeAuthorFromTitle(testString)
-	if result != "The story of Microsoft" {
-		t.Errorf("Failed to remove author from title '%s'", testString)
-	}
-}
-
-func TestGetAuthorFromTitle(t *testing.T) {
-	testString := "The story of Microsoft (Bill Gates)"
-	result := getAuthorFromTitle(testString)
-	if result != "Bill Gates" {
-		t.Errorf("Failed to extract author's name from '%s'", testString)
-	}
-}
-
 func TestRemoveAuthorParentheses(t *testing.T) {
 	testString := "(Bill Gates)"
-	result := removeAuthorParentheses(testString)
+	result := removeParentheses(testString)
 	if result != "Bill Gates" {
 		t.Errorf("Failed to remove parentheses from '%s'", testString)
 	}

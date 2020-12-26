@@ -31,17 +31,18 @@ func getFileContent(path string) string {
 }
 
 func parseHighlights(content string) []Highlight {
-	pattern := `(?m)(^=+)\r?\n(^.*)\r?\n(^.*)\r?\n\r?\n(^.*)`
+	pattern := `(?m)(^.*)(\(.*\))\r?\n(^.*)\r?\n\r?\n(^.*)`
 	regex := regexp.MustCompile(pattern)
 	matches := regex.FindAllStringSubmatch(content, -1)
 	var highlights []Highlight
 	for _, matchGroups := range matches {
-		var title = matchGroups[2]
+
+		var title = matchGroups[1]
+		var author = matchGroups[2]
 		var text = matchGroups[4]
 
 		title = removeBOM(title)
-		author := getAuthorFromTitle(title)
-		title = removeAuthorFromTitle(title)
+		author = removeParentheses(author)
 		text = removeBOM(text)
 		text = removeCarriageReturn(text)
 
@@ -54,34 +55,18 @@ func parseHighlights(content string) []Highlight {
 	return highlights
 }
 
-func removeAuthorFromTitle(title string) string {
-	result := strings.Split(title, " (")
-	return result[0]
-}
-
-func getAuthorFromTitle(title string) string {
-	pattern := `(\(.*\))`
-	match, err := regexp.Compile(pattern)
-	if err != nil {
-		log.Println(err)
-	}
-	author := match.FindString(title)
-	author = removeAuthorParentheses(author)
-	return author
-}
-
-func removeAuthorParentheses(author string) string {
+func removeParentheses(author string) string {
 	if len(author) < 1 {
 		return ""
 	}
-	chars := []rune(author)
-	firstChar := string(author[0])
-	lastChar := string(author[len(author)-1])
-
-	if firstChar == string('(') || lastChar == string(')') {
-		chars = append(chars[1 : len(chars)-1])
+	hasStartParenthesis := strings.Contains(author, "(")
+	hasEndParenthesis := strings.Contains(author, ")")
+	if hasStartParenthesis && hasEndParenthesis {
+		author = strings.ReplaceAll(author, "(", "")
+		author = strings.ReplaceAll(author, ")", "")
 	}
-	return string(chars)
+
+	return author
 }
 
 func removeCarriageReturn(text string) string {
