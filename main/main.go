@@ -2,7 +2,7 @@ package main
 
 import (
 	"KindleHighlightsReader/export"
-	"KindleHighlightsReader/finder"
+	"KindleHighlightsReader/filefinder"
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/option"
 	"KindleHighlightsReader/reader"
@@ -143,7 +143,7 @@ func main() {
 func readSourcePath() string {
 
 	//TODO) Auto scan
-	src := finder.GetMyClippingsFile()
+	src := filefinder.GetMyClippingsFile()
 	if len(src) > 1 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
 		for {

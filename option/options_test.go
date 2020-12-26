@@ -56,7 +56,7 @@ func TestSetPeriod(t *testing.T) {
 	testString := "Hello"
 	result := SetPeriod(testString)
 	if result != "Hello." {
-		t.Errorf("Failed to set fullstop on '%s'", testString)
+		t.Errorf("Failed to set period on '%s'", testString)
 	}
 }
 
@@ -64,7 +64,7 @@ func TestSetPeriodIfPresent(t *testing.T) {
 	testString := "Hello."
 	result := SetPeriod(testString)
 	if result != "Hello." {
-		t.Errorf("Failed to set fullstop on '%s'", testString)
+		t.Errorf("Failed to set period on '%s'", testString)
 	}
 }
 
@@ -72,7 +72,7 @@ func TestRemovePeriod(t *testing.T) {
 	testString := "Hello."
 	result := RemovePeriod(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to remove fullstop on '%s'", testString)
+		t.Errorf("Failed to remove period on '%s'", testString)
 	}
 }
 
@@ -80,7 +80,7 @@ func TestTrimBeforeWithOneWord(t *testing.T) {
 	testString := "The. The quick brown fox jumps over the lazy dog"
 	result := TrimBefore(testString)
 	if result != "The quick brown fox jumps over the lazy dog" {
-		t.Errorf("Failed to remove prefix of '%s'", testString)
+		t.Errorf("Failed to trim-before of '%s'", testString)
 	}
 }
 
@@ -88,7 +88,7 @@ func TestTrimAfterWithAPeriod(t *testing.T) {
 	testString := ". The quick brown fox jumps over the lazy dog"
 	result := TrimBefore(testString)
 	if result != "The quick brown fox jumps over the lazy dog" {
-		t.Errorf("Failed to remove prefix of '%s'", testString)
+		t.Errorf("Failed to trim-before of '%s'", testString)
 	}
 }
 
@@ -96,14 +96,6 @@ func TestTrimAfterWithOneWord(t *testing.T) {
 	testString := "The quick brown fox jumps over the lazy. dog"
 	result := TrimAfter(testString)
 	if result != "The quick brown fox jumps over the lazy." {
-		t.Errorf("Failed to remove postfix of '%s'", testString)
-	}
-}
-
-func TestTrimAfterWithALetter(t *testing.T) {
-	testString := "The quick brown fox jumps over the lazy. d"
-	result := TrimAfter(testString)
-	if result != "The quick brown fox jumps over the lazy." {
-		t.Errorf("Failed to remove postfix of '%s'", testString)
+		t.Errorf("Failed to trim-after of '%s'", testString)
 	}
 }

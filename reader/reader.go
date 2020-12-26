@@ -2,7 +2,6 @@ package reader
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"regexp"
@@ -26,8 +25,7 @@ func getFileContent(path string) string {
 	if err != nil {
 		log.Println(err)
 	}
-	content := fmt.Sprintf("=\n%s", string(data))
-	return content
+	return string(data)
 }
 
 func parseHighlights(content string) []Highlight {

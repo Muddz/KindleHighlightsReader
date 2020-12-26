@@ -4,24 +4,21 @@ import (
 	"testing"
 )
 
-//Todo refactor this test
 func TestReadHighlightFile(t *testing.T) {
-	highlights := ReadHighlights("./My Clippings_test.txt")
+	highlights := ReadHighlights("My Clippings_test.txt")
 	if len(highlights) != 2 {
-		t.Error("Failed to read all highlights from file")
+		t.Error("Failed to read correct amount of highlights")
 	}
 }
 
-//Todo refactor this test
 func TestGetFileContent(t *testing.T) {
 	testFile := "My Clippings_test.txt"
 	content := getFileContent(testFile)
 	if len(content) < 1 {
-		t.Errorf("Failed to get any content of from file %s", testFile)
+		t.Errorf("Failed to get content of from file %s", testFile)
 	}
 }
 
-//Todo refactor this test/Should we just read the testfile?
 func TestHighlightParser(t *testing.T) {
 	testString :=
 		`==========
