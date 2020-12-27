@@ -272,7 +272,6 @@ OUTER:
 				continue OUTER
 			}
 		}
-
 		var result []int
 		for _, v := range inputs {
 			i, _ := strconv.Atoi(v)
