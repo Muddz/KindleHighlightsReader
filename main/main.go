@@ -31,9 +31,9 @@ const (
 )
 
 var validExportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
-var validQuotations = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
-var validPeriod = []int{optionSetPeriod, optionRemovePeriod}
-var validTrim = []int{optionTrimBefore, optionTrimAfter}
+var validQuotationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
+var validPeriodOptions = []int{optionSetPeriod, optionRemovePeriod}
+var validTrimOptions = []int{optionTrimBefore, optionTrimAfter}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
@@ -45,7 +45,6 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	//TODO fix the error message
 	trimOptions := readTrimOptions()
 	for _, v := range trimOptions {
 		if v == optionTrimBefore {
@@ -100,48 +99,45 @@ func main() {
 	//-------------------------------------------------------------------------------
 
 	exportOptions := readExportOptions()
-	var exportPaths []string
-	for _, v := range exportOptions {
-		switch v {
-		case "json":
+	var exportResults []string
+	for k, _ := range exportOptions {
+		switch k {
+		case "json", "JSON":
 			path, err := export.AsJSON(highlights)
 			if err != nil {
 				log.Print(err)
 				break
 			}
-			exportPaths = append(exportPaths, path)
-		case "text":
+			exportResults = append(exportResults, path)
+		case "text", "TEXT":
 			path, err := export.AsTxt(highlights)
 			if err != nil {
 				log.Print(err)
 				break
 			}
-			exportPaths = append(exportPaths, path)
-		case "pdf":
+			exportResults = append(exportResults, path)
+		case "pdf", "PDF":
 			path, err := export.AsPDF(highlights)
 			if err != nil {
 				log.Print(err)
 				break
 			}
-			exportPaths = append(exportPaths, path)
-		case "csv":
+			exportResults = append(exportResults, path)
+		case "csv", "CSV":
 			path, err := export.AsCSV(highlights)
 			if err != nil {
 				log.Print(err)
 				break
 			}
-			exportPaths = append(exportPaths, path)
+			exportResults = append(exportResults, path)
 		}
 	}
-
-	for _, v := range exportPaths {
+	for _, v := range exportResults {
 		fmt.Println("Exported to:", v)
 	}
-
 }
 
 func readSourcePath() string {
-
 	//TODO) Auto scan
 	src := filefinder.GetMyClippingsFile()
 	if len(src) > 1 {
@@ -157,7 +153,6 @@ func readSourcePath() string {
 			}
 		}
 	}
-
 	//TODO) Manuel Scan
 	fmt.Print(message.EnterSource)
 	for {
@@ -179,33 +174,30 @@ func fileExist(path string) bool {
 	return !info.IsDir()
 }
 
-func readExportOptions() []string {
+func readExportOptions() map[string]string {
 	fmt.Println(message.EnterExportOptions)
 	for {
 		input := scanInput()
-		if validateExportFormats(input) {
-			formats := strings.Fields(input)
-			if len(formats) > len(validExportOptions) {
-				formats = formats[:len(validExportOptions)]
-				return formats
-			} else {
-				fmt.Println(input + "\n")
-				return formats
-			}
-		} else {
-			fmt.Printf("Error! Invalid export format(s). Try again: ")
+		inputs := strings.Fields(input)
+		formats := make(map[string]string)
+		for _, v := range inputs {
+			formats[v] = v
 		}
+		if len(formats) < 1 || len(formats) > len(validExportOptions) {
+			fmt.Printf("Error! Choose between 1 to 4 options. Try again: ")
+			continue
+		}
+		if !isExportFormatsValid(formats) {
+			fmt.Printf("Error! Invalid export inputs. Try again: ")
+			continue
+		}
+		fmt.Println(input + "\n")
+		return formats
 	}
 }
 
-func validateExportFormats(input string) bool {
+func isExportFormatsValid(formats map[string]string) bool {
 	var result = false
-	formats := strings.Fields(input)
-	if len(formats) < 1 {
-		return false
-	} else if len(formats) > 3 {
-		formats = formats[0:len(validExportOptions)]
-	}
 	for _, format := range formats {
 		for _, validFormat := range validExportOptions {
 			result = strings.EqualFold(format, validFormat)
@@ -239,15 +231,12 @@ func readQuotationOption() int {
 	fmt.Println(message.EnterQuotationOption)
 	for {
 		input := scanInput()
-		i, err := strconv.Atoi(input)
-		if err != nil {
-			fmt.Println(err)
+		i, _ := strconv.Atoi(input)
+		if i < 1 || i > len(validQuotationsOptions) {
+			fmt.Printf("Error! Choose one option between 1-4. Try again: ")
+			continue
 		}
-		if i > len(validQuotations) && i < 1 {
-			fmt.Printf("Error! Choose only one input between 1-4. Try again: ")
-		} else {
-			return i
-		}
+		return i
 	}
 }
 
@@ -255,33 +244,32 @@ func readPeriodOption() int {
 	fmt.Println(message.EnterPeriodOption)
 	for {
 		input := scanInput()
-		i, err := strconv.Atoi(input)
-		if err != nil {
-			fmt.Println(err)
+		n, _ := strconv.Atoi(input)
+		if n < 1 || n > len(validPeriodOptions) {
+			fmt.Print("Error! Choose one option between 1-3. Try again: ")
+			continue
 		}
-		if i > len(validPeriod) && i < 1 {
-			fmt.Printf("Error! Choose only one input between 1-3. Try again: ")
-		} else {
-			return i
-		}
+		return n
 	}
 }
 
 func readTrimOptions() []int {
 	fmt.Println(message.EnterTrimOptions)
+OUTER:
 	for {
 		input := scanInput()
 		inputs := strings.Fields(input)
-		if len(inputs) < 1 || len(inputs) > len(validTrim) {
-			fmt.Printf("Error! Minimum 1 and Maxiumum 3 options. Try again: ")
+
+		if len(inputs) < 1 || len(inputs) > len(validTrimOptions) {
+			fmt.Printf("Error! Choose 1-%d options. Try again: ", len(validTrimOptions))
 			continue
 		}
 
 		for _, v := range inputs {
-			i, _ := strconv.Atoi(v)
-			if i < 1 || i > 3 {
-				fmt.Printf("Error!!!")
-				continue
+			n, _ := strconv.Atoi(v)
+			if n < 1 || n > 3 {
+				fmt.Printf("Error! Option not valid. Try again: ")
+				continue OUTER
 			}
 		}
 
@@ -290,7 +278,6 @@ func readTrimOptions() []int {
 			i, _ := strconv.Atoi(v)
 			result = append(result, i)
 		}
-
 		return result
 	}
 }

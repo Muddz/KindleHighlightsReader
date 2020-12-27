@@ -90,7 +90,7 @@ func ToPDF(highlights []reader.Highlight) []byte {
 	return b.Bytes()
 }
 
-func utfToWindows(text string) string {
+func utfToCP1252(text string) string {
 	//https://github.com/djimenez/iconv-go
 	//https://github.com/signintech/gopdf
 	//https://godoc.org/github.com/jung-kurt/gofpdf#example-Fpdf-CellFormat-Codepage
