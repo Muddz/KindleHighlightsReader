@@ -78,7 +78,7 @@ func TestAsPDF(t *testing.T) {
 }
 
 func TestExport(t *testing.T) {
-	filename := "My Clippings Test.pdf"
+	filename := "My Clippings_Test.pdf"
 	f, _ := export(filename, nil)
 
 	if !fileExist(f) {
@@ -86,7 +86,7 @@ func TestExport(t *testing.T) {
 	}
 
 	t.Cleanup(func() {
-		if err := os.Remove(filename); err != nil {
+		if err := os.Remove(f); err != nil {
 			log.Print("Failed to remove test file: ", filename)
 		}
 	})
