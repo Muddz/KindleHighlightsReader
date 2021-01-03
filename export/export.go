@@ -8,21 +8,21 @@ import (
 	"runtime"
 )
 
-func AsJSON(highlights []reader.Highlight) (string, error) {
-	b := convert.ToJSON(highlights)
-	path, err := export("My Clippings JSON.txt", b)
+func AsTxt(highlights []reader.Highlight) (string, error) {
+	b := convert.ToText(highlights)
+	path, err := export("My Clippings new.txt", b)
 	return path, err
 }
 
-func AsTxt(highlights []reader.Highlight) (string, error) {
-	b := convert.ToText(highlights)
-	path, err := export("My Clippings TEXT.txt", b)
+func AsJSON(highlights []reader.Highlight) (string, error) {
+	b := convert.ToJSON(highlights)
+	path, err := export("My Clippings.json", b)
 	return path, err
 }
 
 func AsCSV(highlights []reader.Highlight) (string, error) {
 	b := convert.ToCSV(highlights)
-	path, err := export("My Clippings CSV.txt", b)
+	path, err := export("My Clippings.csv", b)
 	return path, err
 }
 

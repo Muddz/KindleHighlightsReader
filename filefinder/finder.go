@@ -39,7 +39,14 @@ func getMyClippingsWindows() string {
 }
 
 func getMyClippingsUnix() string {
-	path := fmt.Sprintf("/Kindle/documents/My Clippings.txt")
+	path := fmt.Sprintf("%s\\My Clippings.txt", getUserDesktopPath())
+	if fileExist(path) {
+		return path
+	}
+	path = fmt.Sprintf("%s:\\documents\\My Clippings.txt", "Kindle")
+	if fileExist(path) {
+		return path
+	}
 	return path
 }
 

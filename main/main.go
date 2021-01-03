@@ -17,23 +17,26 @@ import (
 const (
 	optionTrimBefore = iota + 1
 	optionTrimAfter
+	optionTrimSkip
 )
 
 const (
 	optionSetPeriod = iota + 1
 	optionRemovePeriod
+	optionSkipPeriod
 )
 
 const (
 	optionSingleQuotation = iota + 1
 	optionDoubleQuotation
 	optionNoQuotation
+	optionSkipQuotation
 )
 
 var validExportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
-var validQuotationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation}
-var validPeriodOptions = []int{optionSetPeriod, optionRemovePeriod}
-var validTrimOptions = []int{optionTrimBefore, optionTrimAfter}
+var validQuotationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation, optionSkipQuotation}
+var validPeriodOptions = []int{optionSetPeriod, optionRemovePeriod, optionSkipPeriod}
+var validTrimOptions = []int{optionTrimBefore, optionTrimAfter, optionTrimSkip}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
@@ -41,7 +44,10 @@ func main() {
 	src := readSourcePath()
 	src = strings.TrimSpace(src)
 	highlights := reader.ReadHighlights(src)
-	printHighlights(highlights)
+
+	if len(highlights) > 0 {
+		printHighlights(highlights)
+	}
 
 	//-------------------------------------------------------------------------------
 
@@ -80,18 +86,18 @@ func main() {
 	quotationOption := readQuotationOption()
 	switch quotationOption {
 	case optionSingleQuotation:
-		for _, v := range highlights {
-			v.Text = option.SetSingleQuotations(v.Text)
+		for i, v := range highlights {
+			highlights[i].Text = option.SetSingleQuotations(v.Text)
 		}
 		break
 	case optionDoubleQuotation:
-		for _, v := range highlights {
-			v.Text = option.SetDoubleQuotations(v.Text)
+		for i, v := range highlights {
+			highlights[i].Text = option.SetDoubleQuotations(v.Text)
 		}
 		break
 	case optionNoQuotation:
-		for _, v := range highlights {
-			v.Text = option.RemoveQuotations(v.Text)
+		for i, v := range highlights {
+			highlights[i].Text = option.RemoveQuotations(v.Text)
 		}
 		break
 	}
@@ -143,9 +149,9 @@ func readSourcePath() string {
 	if len(src) > 1 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
 		for {
-			fmt.Printf("Enter C to continue with that file or X to specify another path: ")
+			fmt.Printf("Press ENTER to continue with that file or X to specify another path: ")
 			input := scanInput()
-			if strings.EqualFold(input, "c") {
+			if len(input) == 0 {
 				return src
 			}
 			if strings.EqualFold(input, "x") {
@@ -158,7 +164,7 @@ func readSourcePath() string {
 	for {
 		input := scanInput()
 		if fileExist(input) {
-			fmt.Println(input + "\n")
+			fmt.Println(input + "\n\n")
 			return input
 		} else {
 			fmt.Print("Error! Couldn't find text file. Try again: ")
@@ -174,7 +180,65 @@ func fileExist(path string) bool {
 	return !info.IsDir()
 }
 
+func readTrimOptions() []int {
+	fmt.Println("")
+	fmt.Println(message.EnterTrimOptions)
+OUTER:
+	for {
+		input := scanInput()
+		inputs := strings.Fields(input)
+
+		if len(inputs) < 1 || len(inputs) > len(validTrimOptions) {
+			fmt.Printf("Error! Choose 1-%d options. Try again: ", len(validTrimOptions))
+			continue
+		}
+
+		for _, v := range inputs {
+			n, _ := strconv.Atoi(v)
+			if n < 1 || n > 3 {
+				fmt.Printf("Error! Option not valid. Try again: ")
+				continue OUTER
+			}
+		}
+		var result []int
+		for _, v := range inputs {
+			i, _ := strconv.Atoi(v)
+			result = append(result, i)
+		}
+		return result
+	}
+}
+
+func readPeriodOption() int {
+	fmt.Println("")
+	fmt.Println(message.EnterPeriodOption)
+	for {
+		input := scanInput()
+		n, _ := strconv.Atoi(input)
+		if n < 1 || n > len(validPeriodOptions) {
+			fmt.Print("Error! Choose one option between 1-3. Try again: ")
+			continue
+		}
+		return n
+	}
+}
+
+func readQuotationOption() int {
+	fmt.Println("")
+	fmt.Println(message.EnterQuotationOption)
+	for {
+		input := scanInput()
+		i, _ := strconv.Atoi(input)
+		if i < 1 || i > len(validQuotationsOptions) {
+			fmt.Printf("Error! Choose one option between 1-4. Try again: ")
+			continue
+		}
+		return i
+	}
+}
+
 func readExportOptions() map[string]string {
+	fmt.Println("")
 	fmt.Println(message.EnterExportOptions)
 	for {
 		input := scanInput()
@@ -191,7 +255,7 @@ func readExportOptions() map[string]string {
 			fmt.Printf("Error! Invalid export inputs. Try again: ")
 			continue
 		}
-		fmt.Println(input + "\n")
+		fmt.Println(input)
 		return formats
 	}
 }
@@ -225,60 +289,6 @@ func printHighlights(highlights []reader.Highlight) {
 	}
 	stats := fmt.Sprintf("### Found %d highlights from %d different books ###\n", highlightsCount, len(booksCount))
 	fmt.Println(stats)
-}
-
-func readQuotationOption() int {
-	fmt.Println(message.EnterQuotationOption)
-	for {
-		input := scanInput()
-		i, _ := strconv.Atoi(input)
-		if i < 1 || i > len(validQuotationsOptions) {
-			fmt.Printf("Error! Choose one option between 1-4. Try again: ")
-			continue
-		}
-		return i
-	}
-}
-
-func readPeriodOption() int {
-	fmt.Println(message.EnterPeriodOption)
-	for {
-		input := scanInput()
-		n, _ := strconv.Atoi(input)
-		if n < 1 || n > len(validPeriodOptions) {
-			fmt.Print("Error! Choose one option between 1-3. Try again: ")
-			continue
-		}
-		return n
-	}
-}
-
-func readTrimOptions() []int {
-	fmt.Println(message.EnterTrimOptions)
-OUTER:
-	for {
-		input := scanInput()
-		inputs := strings.Fields(input)
-
-		if len(inputs) < 1 || len(inputs) > len(validTrimOptions) {
-			fmt.Printf("Error! Choose 1-%d options. Try again: ", len(validTrimOptions))
-			continue
-		}
-
-		for _, v := range inputs {
-			n, _ := strconv.Atoi(v)
-			if n < 1 || n > 3 {
-				fmt.Printf("Error! Option not valid. Try again: ")
-				continue OUTER
-			}
-		}
-		var result []int
-		for _, v := range inputs {
-			i, _ := strconv.Atoi(v)
-			result = append(result, i)
-		}
-		return result
-	}
 }
 
 func scanInput() string {

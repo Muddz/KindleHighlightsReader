@@ -8,10 +8,27 @@ import (
 	"testing"
 )
 
+func TestAsTxt(t *testing.T) {
+	path, _ := AsTxt(getTestHighlights())
+
+	if !strings.Contains(path, "new.txt") {
+		t.Error("Failed to find TEXT title in filename: ", path)
+	}
+
+	if !fileExist(path) {
+		t.Error("Failed to find txt file: ", path)
+	}
+	t.Cleanup(func() {
+		if err := os.Remove(path); err != nil {
+			log.Println(err)
+		}
+	})
+}
+
 func TestAsJSON(t *testing.T) {
 	path, _ := AsJSON(getTestHighlights())
 
-	if !strings.Contains(path, "JSON.txt") {
+	if !strings.Contains(path, ".json") {
 		t.Error("Failed to find JSON title in filename: ", path)
 	}
 
@@ -26,27 +43,10 @@ func TestAsJSON(t *testing.T) {
 	})
 }
 
-func TestAsTxt(t *testing.T) {
-	path, _ := AsTxt(getTestHighlights())
-
-	if !strings.Contains(path, "TEXT.txt") {
-		t.Error("Failed to find TEXT title in filename: ", path)
-	}
-
-	if !fileExist(path) {
-		t.Error("Failed to find txt file: ", path)
-	}
-	t.Cleanup(func() {
-		if err := os.Remove(path); err != nil {
-			log.Println(err)
-		}
-	})
-}
-
 func TestAsCSV(t *testing.T) {
 	path, _ := AsCSV(getTestHighlights())
 
-	if !strings.Contains(path, "CSV.txt") {
+	if !strings.Contains(path, ".csv") {
 		t.Error("Failed to find CSV title in filename: ", path)
 	}
 

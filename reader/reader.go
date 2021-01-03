@@ -9,9 +9,9 @@ import (
 )
 
 type Highlight struct {
-	Text   string
-	Author string
 	Title  string
+	Author string
+	Text   string
 }
 
 func ReadHighlights(path string) []Highlight {
@@ -42,7 +42,7 @@ func parseHighlights(content string) []Highlight {
 		text = removeBOM(text)
 		text = removeCarriageReturn(text)
 
-		h := Highlight{Text: title, Author: author, Title: text}
+		h := Highlight{Title: title, Author: author, Text: text}
 		highlights = append(highlights, h)
 	}
 	return highlights
