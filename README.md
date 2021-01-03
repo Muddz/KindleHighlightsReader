@@ -28,11 +28,13 @@ The JSON format is useful for developers who want's to unmarshal the JSON to obj
 
 **Windows:** 
 
-Run the `KindleHighlightReader.exe`. The program will open in a CMD window and can automatically find the `My Clippings.txt` file if its on the *Desktop* or if your Kindle device is plugged into your Windows computer. 
+Run the `KindleHighlightReader.exe`. The program will open in a CMD window and can automatically find the `My Clippings.txt` file if its on the *Desktop* or if your Kindle device is plugged into your Windows computer.
+
 [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
 
 **MacOs:**
-On Mac you just need to run the binary by. 
+On Mac you just need to run the binary by.
+
 [Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
 
 
