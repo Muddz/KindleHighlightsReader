@@ -20,3 +20,4 @@
 .idea/*
 .builds/
 !.idea/runConfigurations
+main/rsrc.syso
