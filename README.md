@@ -32,7 +32,7 @@ The .txt and PDF formats makes all of your highlights easy and appeling to read 
 [Download the windows .exe program](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
 
 **MacOs:**
-[Download the MacOS program](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReader)
+[Download the MacOS program](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
 
 
 ## Roadmap
