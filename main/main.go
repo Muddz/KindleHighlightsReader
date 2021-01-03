@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -138,9 +139,13 @@ func main() {
 			exportResults = append(exportResults, path)
 		}
 	}
+
+	fmt.Println(" ")
 	for _, v := range exportResults {
 		fmt.Println("Exported to:", v)
 	}
+
+	time.Sleep(time.Second * 15)
 }
 
 func readSourcePath() string {
@@ -255,7 +260,6 @@ func readExportOptions() map[string]string {
 			fmt.Printf("Error! Invalid export inputs. Try again: ")
 			continue
 		}
-		fmt.Println(input)
 		return formats
 	}
 }
