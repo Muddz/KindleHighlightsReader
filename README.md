@@ -8,9 +8,9 @@ The JSON format is useful for developers who want's to unmarshal the JSON to obj
 ```
 [
   {
-    "Text": "",
+    "Title": "",
     "Author": "",
-    "Title": ""
+     "Text": ""
   }
 ]
 ```
