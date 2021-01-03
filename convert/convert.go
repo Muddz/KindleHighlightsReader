@@ -14,14 +14,6 @@ import (
 )
 
 //TODO should these methods return the error too?
-func ToJSON(highlights []reader.Highlight) []byte {
-	b, err := json.Marshal(highlights)
-	if err != nil {
-		log.Println(err)
-	}
-	return b
-}
-
 func ToText(highlights []reader.Highlight) []byte {
 	layout := "%s\n\n%s, %s\n________________________________\n\n"
 	sb := strings.Builder{}
@@ -30,6 +22,14 @@ func ToText(highlights []reader.Highlight) []byte {
 		sb.WriteString(highlight)
 	}
 	b := []byte(sb.String())
+	return b
+}
+
+func ToJSON(highlights []reader.Highlight) []byte {
+	b, err := json.Marshal(highlights)
+	if err != nil {
+		log.Println(err)
+	}
 	return b
 }
 

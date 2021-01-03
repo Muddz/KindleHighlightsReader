@@ -108,13 +108,6 @@ func main() {
 	var exportResults []string
 	for k, _ := range exportOptions {
 		switch k {
-		case "json", "JSON":
-			path, err := export.AsJSON(highlights)
-			if err != nil {
-				log.Print(err)
-				break
-			}
-			exportResults = append(exportResults, path)
 		case "text", "TEXT":
 			path, err := export.AsTxt(highlights)
 			if err != nil {
@@ -122,8 +115,8 @@ func main() {
 				break
 			}
 			exportResults = append(exportResults, path)
-		case "pdf", "PDF":
-			path, err := export.AsPDF(highlights)
+		case "json", "JSON":
+			path, err := export.AsJSON(highlights)
 			if err != nil {
 				log.Print(err)
 				break
@@ -131,6 +124,13 @@ func main() {
 			exportResults = append(exportResults, path)
 		case "csv", "CSV":
 			path, err := export.AsCSV(highlights)
+			if err != nil {
+				log.Print(err)
+				break
+			}
+			exportResults = append(exportResults, path)
+		case "pdf", "PDF":
+			path, err := export.AsPDF(highlights)
 			if err != nil {
 				log.Print(err)
 				break

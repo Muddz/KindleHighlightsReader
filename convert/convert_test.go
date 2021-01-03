@@ -5,16 +5,6 @@ import (
 	"testing"
 )
 
-func TestToJSON(t *testing.T) {
-	h := getTestHighlights()
-	b := ToJSON(h)
-	c := string(b)
-	validJson := `[{"Text":"text","Author":"author","Title":"title"},{"Text":"text","Author":"author","Title":"title"}]`
-	if c != validJson {
-		t.Errorf("Failed to correctly convert highlights to JSON")
-	}
-}
-
 func TestToText(t *testing.T) {
 	h := getTestHighlights()
 	b := ToText(h)
@@ -25,6 +15,16 @@ func TestToText(t *testing.T) {
 
 	if c != validText {
 		t.Error("Failed to convert highlights to text. Data missing")
+	}
+}
+
+func TestToJSON(t *testing.T) {
+	h := getTestHighlights()
+	b := ToJSON(h)
+	c := string(b)
+	validJson := `[{"Text":"text","Author":"author","Title":"title"},{"Text":"text","Author":"author","Title":"title"}]`
+	if c != validJson {
+		t.Errorf("Failed to correctly convert highlights to JSON")
 	}
 }
 
