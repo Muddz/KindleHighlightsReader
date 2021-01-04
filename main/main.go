@@ -28,14 +28,13 @@ const (
 )
 
 const (
-	optionSingleQuotation = iota + 1
-	optionDoubleQuotation
+	optionDoubleQuotation = iota + 1
 	optionNoQuotation
 	optionSkipQuotation
 )
 
 var validExportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
-var validQuotationsOptions = []int{optionSingleQuotation, optionDoubleQuotation, optionNoQuotation, optionSkipQuotation}
+var validQuotationsOptions = []int{optionDoubleQuotation, optionNoQuotation, optionSkipQuotation}
 var validPeriodOptions = []int{optionSetPeriod, optionRemovePeriod, optionSkipPeriod}
 var validTrimOptions = []int{optionTrimBefore, optionTrimAfter, optionTrimSkip}
 var scanner = bufio.NewScanner(os.Stdin)
@@ -86,11 +85,6 @@ func main() {
 
 	quotationOption := readQuotationOption()
 	switch quotationOption {
-	case optionSingleQuotation:
-		for i, v := range highlights {
-			highlights[i].Text = option.SetSingleQuotations(v.Text)
-		}
-		break
 	case optionDoubleQuotation:
 		for i, v := range highlights {
 			highlights[i].Text = option.SetDoubleQuotations(v.Text)

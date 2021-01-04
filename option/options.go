@@ -5,57 +5,36 @@ import (
 	"regexp"
 )
 
-func SetSingleQuotations(text string) string {
-	chars := []rune(text)
-	firstChar := string(text[0])
-	lastChar := string(text[len(text)-1])
-
-	if firstChar == "\"" {
-		chars[0] = '\''
-	} else if firstChar != "'" {
-		chars = append(chars, 0)
-		copy(chars[1:], chars[0:])
-		chars[0] = '\''
-	}
-
-	if lastChar == "\"" {
-		chars[len(chars)-1] = '\''
-	} else if lastChar != "'" {
-		chars = append(chars, '\'')
-	}
-	return string(chars)
-}
-
 func SetDoubleQuotations(text string) string {
 	chars := []rune(text)
-	firstChar := string(text[0])
-	lastChar := string(text[len(text)-1])
+	firstChar := string(chars[0])
+	lastChar := string(chars[len(chars)-1])
 
-	if firstChar == "'" {
-		chars[0] = '"'
-	} else if firstChar != "\"" {
+	if firstChar == "'" || firstChar == "\"" {
+		chars[0] = '“'
+	} else if firstChar != "“" {
 		chars = append(chars, 0)
 		copy(chars[1:], chars[0:])
-		chars[0] = '"'
+		chars[0] = '“'
 	}
 
-	if lastChar == "'" {
-		chars[len(chars)-1] = '"'
-	} else if lastChar != "\"" {
-		chars = append(chars, '"')
+	if lastChar == "'" || lastChar == "\"" {
+		chars[len(chars)-1] = '”'
+	} else if lastChar != "”" {
+		chars = append(chars, '”')
 	}
 	return string(chars)
 }
 
 func RemoveQuotations(text string) string {
 	chars := []rune(text)
-	firstChar := string(text[0])
-	lastChar := string(text[len(text)-1])
+	firstChar := string(chars[0])
+	lastChar := string(chars[len(chars)-1])
 
-	if firstChar == "'" || firstChar == "\"" {
+	if firstChar == "'" || firstChar == "\"" || firstChar == "“" {
 		chars = append(chars[1:])
 	}
-	if lastChar == "'" || lastChar == "\"" {
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" {
 		chars = append(chars[:len(chars)-1])
 	}
 	return string(chars)
