@@ -19,8 +19,8 @@ The JSON format is useful for developers who want's to unmarshal the JSON to obj
 ## Features in v1.0.0
 - Trim all highlights for words or characters before and after like: `"ed. Hello"`   =>   `"Hello"`
 - Insert periods on all highlights.
-- Insert double or single quotations on all highlights.
-- Remove all quotation from all highlights.
+- Insert double quotations on all highlights.
+- Remove any quotation from all highlights.
 - Export as *.txt*  *.json*  *.csv* or *.pdf* files.
 - Works on Windows and MacOS
 
