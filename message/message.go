@@ -10,21 +10,20 @@ const EnterSource = `Enter the path for "My Clippings.txt" which can be found in
 
 const EnterExportOptions = `Enter one or more of the following export formats: text, json, csv, pdf, separated by spaces: `
 
-const EnterTrimOptions = `Choose trimming options for highlight texts:
-[1] Trim 1-5 characters before the texts: "the. Hello"  "th. Hello"  "e. Hello" 
-[2] Trim 1-5 characters after the texts: "Hello. the"  "Hello. th"  "Hello." 
+const EnterTrimOptions = `Choose trimming options for every highlight text:
+[1] Trim 1-5 characters before the texts: “the. Hello”  “th. Hello”  “e. Hello”
+[2] Trim 1-5 characters after the texts: “Hello. the”  “Hello. th”  “Hello.”
 [3] Skip`
 
-const EnterPeriodOption = `Choose a period option for highlight texts:
+const EnterPeriodOption = `Choose a period option for every highlight text:
 [1] Insert periods
 [2] Remove periods
 [3] Skip`
 
-const EnterQuotationOption = `Choose a quotation marks option for highlight texts:
-[1] Single quotation 'Hi'
-[2] Double quotation "Hi"
-[3] Remove all quotations
-[4] Skip`
+const EnterQuotationOption = `Choose a quotation marks option for every highlight text:
+[1] Insert double quotations
+[2] Remove all quotations
+[3] Skip`
 
 func GetGreeting() string {
 	return fmt.Sprintf("%s\n", Greeting)

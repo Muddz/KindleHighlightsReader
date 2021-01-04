@@ -4,49 +4,34 @@ import (
 	"testing"
 )
 
-func TestSetSingleQuotations(t *testing.T) {
-	testString := "Hello"
-	result := SetSingleQuotations(testString)
-	if result != "'Hello'" {
-		t.Errorf("Failed to set single quotations on %s", testString)
-	}
-}
-func TestSetSingleQuotationsIfPresent(t *testing.T) {
-	testString := "'Hello'"
-	result := SetSingleQuotations(testString)
-	if result != "'Hello'" {
-		t.Errorf("Failed to set single quotations on %s", testString)
-	}
-}
-
-func TestSetSingleQuotationsIfDoubleIsPresent(t *testing.T) {
-	testString := "\"Hello\""
-	result := SetSingleQuotations(testString)
-	if result != "'Hello'" {
-		t.Errorf("Failed to set single quotations on %s", testString)
-	}
-}
-
-func TestSetDoubleQuotations(t *testing.T) {
+func TestSetDoubleQuotationsIfNotPresent(t *testing.T) {
 	testString := "Hello"
 	result := SetDoubleQuotations(testString)
-	if result != "\"Hello\"" {
+	if result != "“Hello”" {
 		t.Errorf("Failed to set double quotations on %s", testString)
 	}
 }
 
 func TestSetDoubleQuotationsIfPresent(t *testing.T) {
-	testString := "\"Hello\""
+	testString := "“Hello”"
 	result := SetDoubleQuotations(testString)
-	if result != "\"Hello\"" {
+	if result != "“Hello”" {
 		t.Errorf("Failed to set double quotations on %s", testString)
 	}
 }
 
-func TestSetDoubleQuotationsIfSingleIsPresent(t *testing.T) {
+func TestSetDoubleQuotationsIfPrimePresent(t *testing.T) {
+	testString := "\"Hello\""
+	result := SetDoubleQuotations(testString)
+	if result != "“Hello”" {
+		t.Errorf("Failed to set double quotations on %s", testString)
+	}
+}
+
+func TestSetDoubleQuotationsIfSinglePresent(t *testing.T) {
 	testString := "'Hello'"
 	result := SetDoubleQuotations(testString)
-	if result != "\"Hello\"" {
+	if result != "“Hello”" {
 		t.Errorf("Failed to set double quotations on %s", testString)
 	}
 }
@@ -59,8 +44,16 @@ func TestRemoveSingleQuotations(t *testing.T) {
 	}
 }
 
-func TestRemoveDoubleQuotations(t *testing.T) {
+func TestRemoveDoublePrimeQuotations(t *testing.T) {
 	testString := "\"Hello\""
+	result := RemoveQuotations(testString)
+	if result != "Hello" {
+		t.Errorf("Failed to remove double quotations on %s", testString)
+	}
+}
+
+func TestRemoveDoubleQuotations(t *testing.T) {
+	testString := "“Hello”"
 	result := RemoveQuotations(testString)
 	if result != "Hello" {
 		t.Errorf("Failed to remove double quotations on %s", testString)
