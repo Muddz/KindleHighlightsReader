@@ -1,5 +1,7 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
+**Development status: BETA**
+
 KindleHighlightReader is a program that reads all of your highlights from the *My Clippings.txt* file found in your Kindle device with options to clean and style all highlights and exports them in the following file formats: `Text`, `Json`, `CSV` or `PDF`. 
 
 
