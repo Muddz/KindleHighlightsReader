@@ -47,7 +47,7 @@ func getMyClippingsUnix() string {
 	if fileExist(path) {
 		return path
 	}
-	return path
+	return ""
 }
 
 func getUserDesktopPath() string {

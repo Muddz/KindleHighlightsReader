@@ -3,6 +3,7 @@ package option
 import (
 	"log"
 	"regexp"
+	"strings"
 )
 
 func SetDoubleQuotations(text string) string {
@@ -74,4 +75,13 @@ func TrimAfter(text string) string {
 		log.Println(err)
 	}
 	return match.ReplaceAllString(text, "")
+}
+
+func Capitalize(text string) string {
+	pattern := `(^\W*)([a-z])`
+	regex := regexp.MustCompile(pattern)
+	firstLetter := regex.FindString(text)
+	uppercase := strings.ToUpper(firstLetter)
+	result := regex.ReplaceAllString(text, uppercase)
+	return result
 }

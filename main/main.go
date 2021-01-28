@@ -28,23 +28,32 @@ const (
 )
 
 const (
-	optionDoubleQuotation = iota + 1
-	optionNoQuotation
-	optionSkipQuotation
+	optionDoubleQuotations = iota + 1
+	optionRemoveQuotations
+	optionSkipQuotations
+)
+
+const (
+	optionCapitalize = iota + 1
+	optionSkipCapitalize
 )
 
 var validExportOptions = []string{"TEXT", "JSON", "CSV", "PDF"}
-var validQuotationsOptions = []int{optionDoubleQuotation, optionNoQuotation, optionSkipQuotation}
+var validQuotationsOptions = []int{optionDoubleQuotations, optionRemoveQuotations, optionSkipQuotations}
 var validPeriodOptions = []int{optionSetPeriod, optionRemovePeriod, optionSkipPeriod}
 var validTrimOptions = []int{optionTrimBefore, optionTrimAfter, optionTrimSkip}
+var validCapitalizationOptions = []int{optionCapitalize, optionSkipCapitalize}
 var scanner = bufio.NewScanner(os.Stdin)
 
 func main() {
 	fmt.Println(message.GetGreeting())
-	src := readSourcePath()
-	src = strings.TrimSpace(src)
-	highlights := reader.ReadHighlights(src)
 
+	src := findSource()
+	if len(src) == 0 {
+		src = readSource()
+	}
+
+	highlights := reader.ReadHighlights(src)
 	if len(highlights) > 0 {
 		printHighlights(highlights)
 	}
@@ -85,18 +94,28 @@ func main() {
 
 	quotationOption := readQuotationOption()
 	switch quotationOption {
-	case optionDoubleQuotation:
+	case optionDoubleQuotations:
 		for i, v := range highlights {
 			highlights[i].Text = option.SetDoubleQuotations(v.Text)
 		}
 		break
-	case optionNoQuotation:
+	case optionRemoveQuotations:
 		for i, v := range highlights {
 			highlights[i].Text = option.RemoveQuotations(v.Text)
 		}
 		break
 	}
 
+	//-------------------------------------------------------------------------------
+
+	capitalizeOption := readCapitalizeOption()
+	switch capitalizeOption {
+	case optionCapitalize:
+		for i, v := range highlights {
+			highlights[i].Text = option.Capitalize(v.Text)
+		}
+		break
+	}
 	//-------------------------------------------------------------------------------
 
 	exportOptions := readExportOptions()
@@ -142,33 +161,52 @@ func main() {
 	time.Sleep(time.Second * 15)
 }
 
-func readSourcePath() string {
-	//TODO) Auto scan
+func findSource() string {
 	src := filefinder.GetMyClippingsFile()
-	if len(src) > 1 {
+	var input string
+	if len(src) > 0 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
+		fmt.Printf("Press ENTER to continue with that file or specify another path: ")
 		for {
-			fmt.Printf("Press ENTER to continue with that file or X to specify another path: ")
-			input := scanInput()
+			input = scanInput()
 			if len(input) == 0 {
 				return src
 			}
-			if strings.EqualFold(input, "x") {
-				break
+			break
+		}
+
+		for {
+			input = scanInput()
+			input = trimSrc(input)
+			if fileExist(input) {
+				return input
+			} else {
+				fmt.Printf("Couldn't find file: %s. Try again: ", input)
 			}
 		}
 	}
-	//TODO) Manuel Scan
-	fmt.Print(message.EnterSource)
+
+	return ""
+}
+
+func readSource() string {
+	fmt.Println(message.EnterSource)
 	for {
 		input := scanInput()
+		input = trimSrc(input)
 		if fileExist(input) {
-			fmt.Println(input + "\n\n")
 			return input
 		} else {
-			fmt.Print("Error! Couldn't find text file. Try again: ")
+			fmt.Printf("Couldn't find file: %s. Try again: ", input)
 		}
 	}
+}
+
+func trimSrc(src string) string {
+	if strings.ContainsAny(src, "\"") {
+		src = strings.ReplaceAll(src, "\"", "")
+	}
+	return strings.TrimSpace(src)
 }
 
 func fileExist(path string) bool {
@@ -230,6 +268,20 @@ func readQuotationOption() int {
 		i, _ := strconv.Atoi(input)
 		if i < 1 || i > len(validQuotationsOptions) {
 			fmt.Printf("Error! Choose one option between 1-4. Try again: ")
+			continue
+		}
+		return i
+	}
+}
+
+func readCapitalizeOption() int {
+	fmt.Println("")
+	fmt.Println(message.EnterCapitalizationOption)
+	for {
+		input := scanInput()
+		i, _ := strconv.Atoi(input)
+		if i < 1 || i > len(validCapitalizationOptions) {
+			fmt.Printf("Error! Choose one option between the valid options. Try again: ")
 			continue
 		}
 		return i
