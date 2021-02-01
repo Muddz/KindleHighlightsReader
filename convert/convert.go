@@ -50,7 +50,7 @@ func ToCSV(highlights []reader.Highlight) []byte {
 	}
 
 	for _, v := range highlights {
-		row := []string{v.Text, v.Author, v.Title}
+		row := []string{v.Title, v.Author, v.Text}
 		if err := writer.Write(row); err != nil {
 			log.Println("Failed to write csv values:", err)
 		}

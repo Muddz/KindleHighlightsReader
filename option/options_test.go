@@ -110,7 +110,7 @@ func TestTrimAfterWithOneWord(t *testing.T) {
 
 func TestCapitalize(t *testing.T) {
 	testString := "hello"
-	result := capitalize(testString)
+	result := Capitalize(testString)
 	if result != "Hello" {
 		t.Errorf("Failed to capitalize '%s'", testString)
 	}
@@ -118,7 +118,7 @@ func TestCapitalize(t *testing.T) {
 
 func TestCapitalizeWithChars(t *testing.T) {
 	testString := "'hello'"
-	result := capitalize(testString)
+	result := Capitalize(testString)
 	if result != "'Hello'" {
 		t.Errorf("Failed to capitalize '%s'", testString)
 	}
@@ -126,7 +126,7 @@ func TestCapitalizeWithChars(t *testing.T) {
 
 func TestCapitalizeWithWhiteSpace(t *testing.T) {
 	testString := " hello"
-	result := capitalize(testString)
+	result := Capitalize(testString)
 	if result != " Hello" {
 		t.Errorf("Failed to capitalize '%s'", testString)
 	}
