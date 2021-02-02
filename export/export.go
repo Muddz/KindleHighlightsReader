@@ -2,32 +2,32 @@ package export
 
 import (
 	"KindleHighlightsReader/convert"
-	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/highlight"
 	"fmt"
 	"os"
 	"runtime"
 )
 
-func AsTxt(highlights []reader.Highlight) (string, error) {
-	b := convert.ToText(highlights)
+func AsTxt(h []highlight.Highlight) (string, error) {
+	b := convert.ToText(h)
 	path, err := export("My Clippings new.txt", b)
 	return path, err
 }
 
-func AsJSON(highlights []reader.Highlight) (string, error) {
-	b := convert.ToJSON(highlights)
+func AsJSON(h []highlight.Highlight) (string, error) {
+	b := convert.ToJSON(h)
 	path, err := export("My Clippings.json", b)
 	return path, err
 }
 
-func AsCSV(highlights []reader.Highlight) (string, error) {
-	b := convert.ToCSV(highlights)
+func AsCSV(h []highlight.Highlight) (string, error) {
+	b := convert.ToCSV(h)
 	path, err := export("My Clippings.csv", b)
 	return path, err
 }
 
-func AsPDF(highlights []reader.Highlight) (string, error) {
-	b := convert.ToPDF(highlights)
+func AsPDF(h []highlight.Highlight) (string, error) {
+	b := convert.ToPDF(h)
 	path, err := export("My Clippings.pdf", b)
 	return path, err
 }

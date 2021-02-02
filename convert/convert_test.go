@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/highlight"
 	"testing"
 )
 
@@ -46,17 +46,8 @@ func TestToPDF(t *testing.T) {
 	}
 }
 
-func getTestHighlights() []reader.Highlight {
-	h1 := reader.Highlight{
-		Title:  "title",
-		Author: "author",
-		Text:   "text",
-	}
-
-	h2 := reader.Highlight{
-		Title:  "title",
-		Author: "author",
-		Text:   "text",
-	}
-	return []reader.Highlight{h1, h2}
+func getTestHighlights() []highlight.Highlight {
+	h1 := highlight.New("title", "author", "text")
+	h2 := highlight.New("title", "author", "text")
+	return []highlight.Highlight{h1, h2}
 }

@@ -27,7 +27,6 @@ func getMyClippingsWindows() string {
 	if fileExist(path) {
 		return path
 	}
-
 	drivers := []string{"D", "E", "F", "G", "H", "I"}
 	for _, v := range drivers {
 		path := fmt.Sprintf("%s:\\documents\\My Clippings.txt", v)

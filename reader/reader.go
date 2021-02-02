@@ -1,6 +1,7 @@
 package reader
 
 import (
+	"KindleHighlightsReader/highlight"
 	"bytes"
 	"io/ioutil"
 	"log"
@@ -8,13 +9,7 @@ import (
 	"strings"
 )
 
-type Highlight struct {
-	Title  string
-	Author string
-	Text   string
-}
-
-func ReadHighlights(path string) []Highlight {
+func ReadHighlights(path string) []highlight.Highlight {
 	fileContent := getFileContent(path)
 	highlights := parseHighlights(fileContent)
 	return highlights
@@ -28,11 +23,11 @@ func getFileContent(path string) string {
 	return string(data)
 }
 
-func parseHighlights(content string) []Highlight {
+func parseHighlights(content string) []highlight.Highlight {
 	pattern := `(?m)(^.*)\((.*)\)\r?\n(^.*)\r?\n\r?\n(^.*)`
 	regex := regexp.MustCompile(pattern)
 	matches := regex.FindAllStringSubmatch(content, -1)
-	var highlights []Highlight
+	var highlights []highlight.Highlight
 	for _, matchGroups := range matches {
 		var title = matchGroups[1]
 		var author = matchGroups[2]
@@ -41,8 +36,7 @@ func parseHighlights(content string) []Highlight {
 		title = removeBOM(title)
 		text = removeBOM(text)
 		text = removeCarriageReturn(text)
-
-		h := Highlight{Title: title, Author: author, Text: text}
+		h := highlight.New(title, author, text)
 		highlights = append(highlights, h)
 	}
 	return highlights

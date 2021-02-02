@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func setupTestFileForDesktop() (*os.File, error) {
+func makeTestFileForDesktop() (*os.File, error) {
 	userDir, err := os.UserHomeDir()
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func setupTestFileForDesktop() (*os.File, error) {
 }
 
 func TestGetMyClippingsFile(t *testing.T) {
-	f, err := setupTestFileForDesktop()
+	f, err := makeTestFileForDesktop()
 	if err != nil {
 		t.Error("Failed to setup test file")
 	}

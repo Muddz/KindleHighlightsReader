@@ -3,6 +3,7 @@ package main
 import (
 	"KindleHighlightsReader/export"
 	"KindleHighlightsReader/filefinder"
+	"KindleHighlightsReader/highlight"
 	"KindleHighlightsReader/message"
 	"KindleHighlightsReader/option"
 	"KindleHighlightsReader/reader"
@@ -325,7 +326,7 @@ func isExportFormatsValid(formats map[string]string) bool {
 }
 
 //TODO is the argument passing correct?
-func printHighlights(highlights []reader.Highlight) {
+func printHighlights(highlights []highlight.Highlight) {
 	highlightsCount := 0
 	booksCount := make(map[string]int)
 	for _, v := range highlights {

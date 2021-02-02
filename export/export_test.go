@@ -1,7 +1,7 @@
 package export
 
 import (
-	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/highlight"
 	"log"
 	"os"
 	"strings"
@@ -100,17 +100,8 @@ func fileExist(path string) bool {
 	return !info.IsDir()
 }
 
-func getTestHighlights() []reader.Highlight {
-	h1 := reader.Highlight{
-		Text:   "text",
-		Author: "author",
-		Title:  "title",
-	}
-
-	h2 := reader.Highlight{
-		Text:   "text",
-		Author: "author",
-		Title:  "title",
-	}
-	return []reader.Highlight{h1, h2}
+func getTestHighlights() []highlight.Highlight {
+	h1 := highlight.New("title", "author", "title")
+	h2 := highlight.New("title", "author", "title")
+	return []highlight.Highlight{h1, h2}
 }

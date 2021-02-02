@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"KindleHighlightsReader/reader"
+	"KindleHighlightsReader/highlight"
 	"bufio"
 	"bytes"
 	"encoding/csv"
@@ -14,26 +14,28 @@ import (
 )
 
 //TODO should these methods return the error too?
-func ToText(highlights []reader.Highlight) []byte {
+func ToText(h []highlight.Highlight) []byte {
 	layout := "%s\n\n%s, %s\n________________________________\n\n"
 	sb := strings.Builder{}
-	for _, v := range highlights {
-		highlight := fmt.Sprintf(layout, v.Text, v.Author, v.Title)
-		sb.WriteString(highlight)
+	for _, v := range h {
+		h := fmt.Sprintf(layout, v.Text, v.Author, v.Title)
+		sb.WriteString(h)
 	}
 	b := []byte(sb.String())
 	return b
 }
 
-func ToJSON(highlights []reader.Highlight) []byte {
-	b, err := json.Marshal(highlights)
+//TODO should these methods return the error too?
+func ToJSON(h []highlight.Highlight) []byte {
+	b, err := json.Marshal(h)
 	if err != nil {
 		log.Println(err)
 	}
 	return b
 }
 
-func ToCSV(highlights []reader.Highlight) []byte {
+//TODO should these methods return the error too?
+func ToCSV(highlights []highlight.Highlight) []byte {
 	var headers []string
 	h := highlights[0]
 	v := reflect.ValueOf(&h).Elem()
@@ -64,9 +66,10 @@ func ToCSV(highlights []reader.Highlight) []byte {
 	return b.Bytes()
 }
 
-func ToPDF(highlights []reader.Highlight) []byte {
+//TODO should these methods return the error too?
+func ToPDF(h []highlight.Highlight) []byte {
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	for i, v := range highlights {
+	for i, v := range h {
 		if i%5 == 0 {
 			pdf.AddPage()
 		}
