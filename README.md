@@ -29,7 +29,7 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-Download and run the `KindleHighlightsReader.exe`. The program will open in a command prompt window and will automatically find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your Windows computer.
+No installation is required. Download and run the program which will open in a command prompt window and will automatically find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your computer. 
 
 - [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
 - [Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
