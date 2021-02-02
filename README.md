@@ -11,7 +11,7 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 - Remove any quotation from all highlights.
 - Capitalize first letter on all highlights.
 - Export as .txt .json .csv or .pdf files.
-- Works for Windows and MacOS
+- Works on Windows and MacOS
 
 #### JSON
 
