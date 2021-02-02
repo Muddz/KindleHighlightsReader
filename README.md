@@ -1,11 +1,21 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
-**Development status: BETA**
 
-KindleHighlightsReader is a program that reads your highlights from your Kindle device with options to clean and style the highlights and exports them in the following formats: Text, Json, CSV or PDF.
+KindleHighlightsReader is a program that reads your highlights from your Kindle device with options to clean and style the highlights and exports them in the following formats: text, json, csv or pdf.
 
 
-The JSON format is useful for developers who want's to unmarshal the JSON to objects in any langauge to be used in for an app, webpage or database. The JSON has the following format:
+## Features in 1.0.0
+- Trim all highlights for redundant characters before and after like: `"ed. Hello"` > `"Hello"`
+- Insert periods on all highlights.
+- Insert double quotations on all highlights.
+- Remove any quotation from all highlights.
+- Capialize first letter on all highlights.
+- Export as .txt .json .csv or .pdf files.
+- Works for Windows and MacOS
+
+#### JSON
+
+The JSON format is useful for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in an `.json` file and has the following output format:
 
 ```
 [
@@ -17,23 +27,14 @@ The JSON format is useful for developers who want's to unmarshal the JSON to obj
 ]
 ```
 
-
-## Features in 1.0.0
-- Trim all highlights for redundant characters before and after like: `"ed. Hello"` > `"Hello"`
-- Insert periods on all highlights.
-- Insert double quotations on all highlights.
-- Remove any quotation from all highlights.
-- Capialize first letter on all highlights.
-- Export as *.txt*  *.json*  *.csv* or *.pdf* files.
-- Works for Windows and MacOS
-
-## Usage
+## Installation & Usage
 
 **Windows** 
 
-Run the `KindleHighlightReader.exe`. The program will open in a CMD window and can automatically find the `My Clippings.txt` file if its on the Desktop or if your Kindle device is plugged into your Windows computer.
+Run the `KindleHighlightsReader.exe`. The program will open in a command prompt window and will automatically find your `My Clippings.txt` file if its already on the Desktop or if your Kindle device is plugged into your Windows computer.
 
-[Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
+[Download .exe for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
+or clone the project and run it from your IDE
 
 **MacOs**
 
