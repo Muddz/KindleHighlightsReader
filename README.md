@@ -5,17 +5,17 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 
 
 ## Features in 1.0.0
-- Trim all highlights for redundant characters before and after like: `"ed. Hello"` > `"Hello"`
+- Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
 - Insert periods on all highlights.
 - Insert double quotations on all highlights.
 - Remove any quotation from all highlights.
-- Capialize first letter on all highlights.
+- Capitalize first letter on all highlights.
 - Export as .txt .json .csv or .pdf files.
 - Works for Windows and MacOS
 
 #### JSON
 
-The JSON format is useful for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in an `.json` file and has the following output format:
+The JSON format is useful for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in a `.json` file and has the following format:
 
 ```
 [
@@ -23,24 +23,17 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
     "Title": "",
     "Author": "",
     "Text": ""
-  }
+  },
 ]
 ```
 
-## Installation & Usage
+## Usage
 
-**Windows** 
+Download and run the `KindleHighlightsReader.exe`. The program will open in a command prompt window and will automatically find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your Windows computer.
 
-Run the `KindleHighlightsReader.exe`. The program will open in a command prompt window and will automatically find your `My Clippings.txt` file if its already on the Desktop or if your Kindle device is plugged into your Windows computer.
-
-[Download .exe for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
-or clone the project and run it from your IDE
-
-**MacOs**
-
-On Mac you just need to run the binary by.
-
-[Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
+- [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
+- [Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
+-  Or clone the project and run it from your IDE.
 
 
 ## License
