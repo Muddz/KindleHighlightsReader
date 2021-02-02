@@ -29,7 +29,8 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-Download and run the program which will open in a command prompt window and automatically 
+Download and run the program which will open in a command prompt window and automatically  
+
 find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your computer. 
 
 - [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
