@@ -325,7 +325,6 @@ func isExportFormatsValid(formats map[string]string) bool {
 	return result
 }
 
-//TODO is the argument passing correct?
 func printHighlights(highlights []highlight.Highlight) {
 	highlightsCount := 0
 	booksCount := make(map[string]int)
