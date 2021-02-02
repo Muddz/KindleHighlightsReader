@@ -4,7 +4,7 @@
 KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the highlights and exports them in the following formats: text, json, csv or pdf.
 
 
-## Features in 1.0.0
+## Features
 - Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
 - Insert periods on all highlights.
 - Insert double quotations on all highlights.
