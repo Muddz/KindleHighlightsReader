@@ -2,8 +2,7 @@
 
 **Development status: BETA**
 
-KindleHighlightsReader is a program that reads all of your highlights from the "My Clippings.txt" file 
-found in your Kindle device with options to clean and style highlights and exports them in file formats such as: Text, Json, CSV or PDF.
+KindleHighlightsReader is a program that reads your highlights from your Kindle device with options to clean and style the highlights and exports them in the following formats: Text, Json, CSV or PDF.
 
 
 The JSON format is useful for developers who want's to unmarshal the JSON to objects in any langauge to be used in for an app, webpage or database. The JSON has the following format:
