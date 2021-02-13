@@ -1,6 +1,7 @@
 package option
 
 import (
+	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -32,31 +33,36 @@ func RemoveQuotations(text string) string {
 	firstChar := string(chars[0])
 	lastChar := string(chars[len(chars)-1])
 
-	if firstChar == "'" || firstChar == "\"" || firstChar == "“" {
+	if firstChar == "'" || firstChar == "\"" || firstChar == "“" { //Make this as an array
 		chars = append(chars[1:])
 	}
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" {
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
 		chars = append(chars[:len(chars)-1])
 	}
 	return string(chars)
 }
 
 func SetPeriod(text string) string {
-	lastRune := text[len(text)-1]
-	lastChar := string(lastRune)
-	if lastChar != "." {
+	lastChar := string(text[len(text)-1])
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
+		content := text[:len(text)-1]
+		quotation := text[len(text)-1:]
+		return fmt.Sprintf("%s.%s", content, quotation)
+	} else {
 		return text + "."
 	}
-	return text
 }
 
 func RemovePeriod(text string) string {
 	chars := []rune(text)
-	lastChar := string(text[len(text)-1])
-	if lastChar == "." {
-		chars = chars[:len(chars)-1]
+	lastChar := string(chars[len(chars)-1])
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
+		content := text[:len(text)-2]
+		quotation := text[len(text)-1:]
+		return fmt.Sprintf("%s%s", content, quotation)
+	} else {
+		return text[:len(text)-1]
 	}
-	return string(chars)
 }
 
 func TrimBefore(text string) string {

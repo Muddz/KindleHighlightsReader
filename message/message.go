@@ -3,14 +3,14 @@ package message
 import "fmt"
 
 const Greeting = `KindleHighlightsReader 1.0.0 is a program that reads your highlights 
-from your Kindle with options to clean and style the highlights 
-and exports them in the following formats: Text, Json, CSV or PDF.`
+from your Kindle with options to clean and style the them and 
+exports them in any of the following formats: Text, Json, CSV or PDF.`
 
 const EnterSource = `Enter the path for "My Clippings.txt" or drag the file into the window: `
 
 const EnterTrimOptions = `Choose trimming options for highlights separated by spaces:
-[1] Trim 1-5 redundant characters before the text ('the. Hello' > 'Hello') 
-[2] Trim 1-5 redundant characters after the text  ('Hello. the' > 'Hello')
+[1] Trim redundant characters before the text ('the. Hello' > 'Hello') 
+[2] Trim redundant characters after the text  ('Hello. the' > 'Hello')
 [3] Skip`
 
 const EnterPeriodOption = `Choose a period option for highlights:

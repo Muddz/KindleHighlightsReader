@@ -77,22 +77,6 @@ func main() {
 
 	//-------------------------------------------------------------------------------
 
-	periodOption := readPeriodOption()
-	switch periodOption {
-	case optionSetPeriod:
-		for i, v := range highlights {
-			highlights[i].Text = option.SetPeriod(v.Text)
-		}
-		break
-	case optionRemovePeriod:
-		for i, v := range highlights {
-			highlights[i].Text = option.RemovePeriod(v.Text)
-		}
-		break
-	}
-
-	// -------------------------------------------------------------------------------
-
 	quotationOption := readQuotationOption()
 	switch quotationOption {
 	case optionDoubleQuotations:
@@ -103,6 +87,22 @@ func main() {
 	case optionRemoveQuotations:
 		for i, v := range highlights {
 			highlights[i].Text = option.RemoveQuotations(v.Text)
+		}
+		break
+	}
+
+	// -------------------------------------------------------------------------------
+
+	periodOption := readPeriodOption()
+	switch periodOption {
+	case optionSetPeriod:
+		for i, v := range highlights {
+			highlights[i].Text = option.SetPeriod(v.Text)
+		}
+		break
+	case optionRemovePeriod:
+		for i, v := range highlights {
+			highlights[i].Text = option.RemovePeriod(v.Text)
 		}
 		break
 	}
