@@ -7,12 +7,12 @@ import (
 	"strings"
 )
 
-func SetDoubleQuotations(text string) string {
+func SetQuotations(text string) string {
 	chars := []rune(text)
 	firstChar := string(chars[0])
 	lastChar := string(chars[len(chars)-1])
 
-	if firstChar == "'" || firstChar == "\"" {
+	if firstChar == "'" || firstChar == "\"" || firstChar == "‘" { //Make this as an array
 		chars[0] = '“'
 	} else if firstChar != "“" {
 		chars = append(chars, 0)
@@ -20,7 +20,7 @@ func SetDoubleQuotations(text string) string {
 		chars[0] = '“'
 	}
 
-	if lastChar == "'" || lastChar == "\"" {
+	if lastChar == "'" || lastChar == "\"" || lastChar == "’" { //Make this as an array
 		chars[len(chars)-1] = '”'
 	} else if lastChar != "”" {
 		chars = append(chars, '”')
@@ -33,20 +33,22 @@ func RemoveQuotations(text string) string {
 	firstChar := string(chars[0])
 	lastChar := string(chars[len(chars)-1])
 
-	if firstChar == "'" || firstChar == "\"" || firstChar == "“" { //Make this as an array
+	if firstChar == "'" || firstChar == "\"" || firstChar == "“" || firstChar == "‘" { //Make this as an array
 		chars = append(chars[1:])
 	}
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
 		chars = append(chars[:len(chars)-1])
 	}
 	return string(chars)
 }
 
 func SetPeriod(text string) string {
-	lastChar := string(text[len(text)-1])
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
-		content := text[:len(text)-1]
-		quotation := text[len(text)-1:]
+	runes := []rune(text)
+	lastPos := len(runes)
+	lastChar := string(runes[lastPos-1])
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
+		content := string(runes[:lastPos-1])
+		quotation := string(runes[lastPos-1])
 		return fmt.Sprintf("%s.%s", content, quotation)
 	} else {
 		return text + "."
@@ -54,12 +56,13 @@ func SetPeriod(text string) string {
 }
 
 func RemovePeriod(text string) string {
-	chars := []rune(text)
-	lastChar := string(chars[len(chars)-1])
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" { //Make this as an array
-		content := text[:len(text)-2]
-		quotation := text[len(text)-1:]
-		return fmt.Sprintf("%s%s", content, quotation)
+	runes := []rune(text)
+	lastPos := len(runes)
+	lastChar := string(runes[lastPos-1])
+	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
+		content := string(runes[:lastPos-2])
+		quotation := string(runes[lastPos-1])
+		return fmt.Sprintf("%v%s", content, quotation)
 	} else {
 		return text[:len(text)-1]
 	}

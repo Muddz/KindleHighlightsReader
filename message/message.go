@@ -19,7 +19,7 @@ const EnterPeriodOption = `Choose a period option for highlights:
 [3] Skip`
 
 const EnterQuotationOption = `Choose a quotations option for highlights:
-[1] Insert double quotations
+[1] Insert quotations
 [2] Remove all quotations
 [3] Skip`
 

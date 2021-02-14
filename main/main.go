@@ -81,7 +81,7 @@ func main() {
 	switch quotationOption {
 	case optionDoubleQuotations:
 		for i, v := range highlights {
-			highlights[i].Text = option.SetDoubleQuotations(v.Text)
+			highlights[i].Text = option.SetQuotations(v.Text)
 		}
 		break
 	case optionRemoveQuotations:
