@@ -10,25 +10,25 @@ import (
 
 func AsTxt(h []highlight.Highlight) (string, error) {
 	b := convert.ToText(h)
-	path, err := export("My Clippings new.txt", b)
+	path, err := export("MyClippings.txt", b)
 	return path, err
 }
 
 func AsJSON(h []highlight.Highlight) (string, error) {
 	b := convert.ToJSON(h)
-	path, err := export("My Clippings.json", b)
+	path, err := export("MyClippings.json", b)
 	return path, err
 }
 
 func AsCSV(h []highlight.Highlight) (string, error) {
 	b := convert.ToCSV(h)
-	path, err := export("My Clippings.csv", b)
+	path, err := export("MyClippings.csv", b)
 	return path, err
 }
 
 func AsPDF(h []highlight.Highlight) (string, error) {
 	b := convert.ToPDF(h)
-	path, err := export("My Clippings.pdf", b)
+	path, err := export("MyClippings.pdf", b)
 	return path, err
 }
 

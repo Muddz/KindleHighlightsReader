@@ -38,11 +38,11 @@ func getMyClippingsWindows() string {
 }
 
 func getMyClippingsUnix() string {
-	path := fmt.Sprintf("%s\\My Clippings.txt", getUserDesktopPath())
+	path := fmt.Sprintf("%s/My Clippings.txt", getUserDesktopPath())
 	if fileExist(path) {
 		return path
 	}
-	path = fmt.Sprintf("%s:\\documents\\My Clippings.txt", "Kindle")
+	path = "/Volumes/Kindle/documents/My Clippings.txt"
 	if fileExist(path) {
 		return path
 	}
@@ -54,7 +54,10 @@ func getUserDesktopPath() string {
 	if err != nil {
 		log.Println(err)
 	}
-	return fmt.Sprintf("%s\\Desktop", homeDir)
+	if isWindowsOS() {
+		return fmt.Sprintf("%s\\Desktop", homeDir)
+	}
+	return fmt.Sprintf("%s/Desktop", homeDir)
 }
 
 func fileExist(path string) bool {
