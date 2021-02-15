@@ -7,9 +7,9 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 ## Features
 - Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
 - Insert periods on all highlights.
-- Insert double quotations on all highlights.
-- Remove any quotation from all highlights.
-- Capitalize first letter on all highlights.
+- Insert quotations on all highlights.
+- Remove quotation from all highlights.
+- Capitalize first letters on all highlights.
 - Export as .txt .json .csv or .pdf files.
 - Works on Windows and MacOS
 
@@ -29,12 +29,15 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-Download and run the program which will open in a command prompt window and automatically  
-find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your computer. 
+**Windows:**
+Download and run the .exe file which will open the program in a command prompt Window. It will automatically  
+find your `My Clippings.txt` file upon start if its already on the Desktop or if your Kindle is plugged to your computer. 
 
-- [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
-- [Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
-- Or clone the project and run it from your IDE.
+[Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
+
+**MacOS:**
+Download the binary file and right click on it and *open with terminal* only the first time.
+[Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
 
 
 ## License
