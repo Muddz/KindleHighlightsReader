@@ -38,7 +38,6 @@ Download and just run the .exe file which will open the program in a command pro
 **MacOS:**
 
 Download the binary file, right click on it and 'open with' -> 'terminal'. 
-
 This is only necessary the first time, any other time just double-click on the file itself.
 
 [Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS)
