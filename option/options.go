@@ -46,13 +46,18 @@ func SetPeriod(text string) string {
 	runes := []rune(text)
 	lastPos := len(runes)
 	lastChar := string(runes[lastPos-1])
+
 	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
-		content := string(runes[:lastPos-1])
-		quotation := string(runes[lastPos-1])
-		return fmt.Sprintf("%s.%s", content, quotation)
-	} else {
+		isPeriod := string(runes[lastPos-2])
+		if isPeriod != "." {
+			text := string(runes[:lastPos-1])
+			quotation := string(runes[lastPos-1])
+			return fmt.Sprintf("%s.%s", text, quotation)
+		}
+	} else if lastChar != "." {
 		return text + "."
 	}
+	return text
 }
 
 func RemovePeriod(text string) string {

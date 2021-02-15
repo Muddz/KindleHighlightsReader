@@ -122,6 +122,14 @@ func TestSetPeriodWithSinglePrimeQuotations(t *testing.T) {
 	}
 }
 
+func TestSetPeriodIfPresentWithQuotations(t *testing.T) {
+	testString := "“Hello.”"
+	result := SetPeriod(testString)
+	if result != "“Hello.”" {
+		t.Errorf("Failed to set period on: %s", testString)
+	}
+}
+
 //------ Test for removing periods
 
 func TestRemovePeriodWithNoQuotations(t *testing.T) {
