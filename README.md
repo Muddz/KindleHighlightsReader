@@ -29,8 +29,7 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-**Windows**
-
+**Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
 
 [Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader.exe)
