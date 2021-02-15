@@ -38,7 +38,7 @@ find your `My Clippings.txt` file upon start if its already on the Desktop or if
 
 **MacOS:**
 
-Download the binary file and right click on it and *open with terminal* only the first time.
+Download the binary file, right click on it and 'open with' -> 'terminal'. This is only necessary the first time.
 
 [Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS)
 
