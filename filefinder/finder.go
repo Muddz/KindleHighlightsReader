@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"runtime"
 )
 
@@ -23,7 +24,7 @@ func isWindowsOS() bool {
 }
 
 func getMyClippingsWindows() string {
-	path := fmt.Sprintf("%s\\My Clippings.txt", getUserDesktopPath())
+	path := fmt.Sprintf("%s\\My Clippings.txt", getDesktopPath())
 	if fileExist(path) {
 		return path
 	}
@@ -38,7 +39,7 @@ func getMyClippingsWindows() string {
 }
 
 func getMyClippingsUnix() string {
-	path := fmt.Sprintf("%s/My Clippings.txt", getUserDesktopPath())
+	path := fmt.Sprintf("%s/My Clippings.txt", getDesktopPath())
 	if fileExist(path) {
 		return path
 	}
@@ -49,15 +50,13 @@ func getMyClippingsUnix() string {
 	return ""
 }
 
-func getUserDesktopPath() string {
+func getDesktopPath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Println(err)
 	}
-	if isWindowsOS() {
-		return fmt.Sprintf("%s\\Desktop", homeDir)
-	}
-	return fmt.Sprintf("%s/Desktop", homeDir)
+	fs := string(filepath.Separator)
+	return fmt.Sprintf("%s%sDesktop", homeDir, fs)
 }
 
 func fileExist(path string) bool {

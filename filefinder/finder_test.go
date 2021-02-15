@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -12,13 +13,9 @@ func makeTestFileForDesktop() (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	var fn string
-	if isWindowsOS() {
-		fn = fmt.Sprintf("%s\\Desktop\\My Clippings.txt", userDir)
-	} else {
-		fn = fmt.Sprintf("%s/Desktop/My Clippings.txt", userDir)
-	}
 
+	fs := string(filepath.Separator)
+	fn := fmt.Sprintf("%s%sDesktop%sMy Clippings.txt", userDir, fs, fs)
 	f, err := os.OpenFile(fn, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
 	if err != nil {
 		return nil, err
@@ -29,12 +26,11 @@ func makeTestFileForDesktop() (*os.File, error) {
 func TestGetMyClippingsFile(t *testing.T) {
 	f, err := makeTestFileForDesktop()
 	if err != nil {
-		t.Error("Failed to setup test file")
+		t.Error("Failed to setup test file:", err)
 	}
 
-	cf := GetMyClippingsFile()
-
-	if cf != f.Name() {
+	mcf := GetMyClippingsFile()
+	if mcf != f.Name() {
 		t.Error("Failed to automatically test file: ", f.Name())
 	}
 
