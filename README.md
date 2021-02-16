@@ -30,7 +30,7 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 ## Usage
 
 The program will automatically find the `My Clippings.txt` file if its already on your desktop 
-or if your Kindle is plugged in to your computer via USB.
+or if your Kindle is plugged in to your computer via USB or you can specify the path yourself. 
 
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
