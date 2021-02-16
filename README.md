@@ -26,10 +26,11 @@ The JSON format is made for developers and is exported as an .json file and has 
 ]
 ```
 
-## Usage
+## Download and Usage
 
 The program will automatically find your Kindle's `My Clippings.txt` file if its already on your desktop 
-or if your Kindle is plugged in to your computer via USB. You can also specify the path to the file yourself. 
+or if your Kindle is plugged in to your computer via USB. You can also specify the path to the file yourself.
+The file can be found at the following path: `/Kindle/documents/my clippings.txt`
 
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
