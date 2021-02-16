@@ -14,7 +14,7 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 
 #### JSON
 
-The JSON format is made for developers and is exported as an .json file and has the following output:
+The JSON format is made for developers and is exported as an .json file and has the following output format:
 
 ```
 [
