@@ -35,13 +35,13 @@ or if your Kindle is plugged in to your computer via USB. You can also specify t
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
 
-[Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader.exe)
+[Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_v1.0.0.exe)
 
 **MacOS**  
 Download the binary file, right click on it and 'open with' -> 'terminal'.   
 This is only necessary the first time, any other time just double click on the file itself.
 
-[Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS)
+[Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS_v1.0.0)
 
 
 ## License
