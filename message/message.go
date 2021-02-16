@@ -2,7 +2,7 @@ package message
 
 import "fmt"
 
-const Greeting = `KindleHighlightsReader 1.0.0 is a program that reads your highlights 
+const Greeting = `KindleHighlightsReader v1.0.0 is a program that reads your highlights 
 from your Kindle with options to clean and style the them and 
 exports them in any of the following formats: Text, Json, CSV or PDF.`
 
