@@ -29,6 +29,8 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
+The program will automatically find and read your highlights if the My Clippings.txt file is already on your desktop or if your Kindle is plugged in to your computer via USB.
+
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
 
