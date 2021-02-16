@@ -20,7 +20,7 @@ func TestToText(t *testing.T) {
 
 func TestToJSON(t *testing.T) {
 	h := getTestHighlights()
-	b := ToJSON(h)
+	b, _ := ToJSON(h)
 	result := string(b)
 	validJson := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
 	if result != validJson {
@@ -30,7 +30,7 @@ func TestToJSON(t *testing.T) {
 
 func TestToCSV(t *testing.T) {
 	h := getTestHighlights()
-	b := ToCSV(h)
+	b, _ := ToCSV(h)
 	result := string(b)
 	validCSV := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
 	if result != validCSV {
@@ -40,7 +40,7 @@ func TestToCSV(t *testing.T) {
 
 func TestToPDF(t *testing.T) {
 	h := getTestHighlights()
-	b := ToPDF(h)
+	b, _ := ToPDF(h)
 	if len(b) < len(h) {
 		t.Error("Failed to convert highlights to PDF. Data missing")
 	}

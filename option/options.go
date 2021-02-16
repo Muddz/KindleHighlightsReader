@@ -93,7 +93,7 @@ func TrimAfter(text string) string {
 
 func Capitalize(text string) string {
 	pattern := `(^\W*)([a-z])`
-	regex := regexp.MustCompile(pattern)
+	regex, _ := regexp.Compile(pattern)
 	firstLetter := regex.FindString(text)
 	uppercase := strings.ToUpper(firstLetter)
 	result := regex.ReplaceAllString(text, uppercase)

@@ -8,34 +8,30 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/phpdave11/gofpdf"
-	"log"
 	"reflect"
 	"strings"
 )
 
-//TODO should these methods return the error too?
 func ToText(h []highlight.Highlight) []byte {
 	layout := "%s\n\n%s, %s\n________________________________\n\n"
 	sb := strings.Builder{}
 	for _, v := range h {
-		h := fmt.Sprintf(layout, v.Text, v.Author, v.Title)
-		sb.WriteString(h)
+		row := fmt.Sprintf(layout, v.Text, v.Author, v.Title)
+		sb.WriteString(row)
 	}
 	b := []byte(sb.String())
 	return b
 }
 
-//TODO should these methods return the error too?
-func ToJSON(h []highlight.Highlight) []byte {
+func ToJSON(h []highlight.Highlight) ([]byte, error) {
 	b, err := json.Marshal(h)
 	if err != nil {
-		log.Println(err)
+		return nil, fmt.Errorf("failed to marshal highlights to json: %v", err)
 	}
-	return b
+	return b, nil
 }
 
-//TODO should these methods return the error too?
-func ToCSV(highlights []highlight.Highlight) []byte {
+func ToCSV(highlights []highlight.Highlight) ([]byte, error) {
 	var headers []string
 	h := highlights[0]
 	v := reflect.ValueOf(&h).Elem()
@@ -48,26 +44,24 @@ func ToCSV(highlights []highlight.Highlight) []byte {
 	var b bytes.Buffer
 	writer := csv.NewWriter(&b)
 	if err := writer.Write(headers); err != nil {
-		log.Println("Failed to write csv headers", err)
+		return nil, fmt.Errorf("failed to write csv headers: %v error: %v", headers, err)
 	}
 
 	for _, v := range highlights {
 		row := []string{v.Title, v.Author, v.Text}
 		if err := writer.Write(row); err != nil {
-			log.Println("Failed to write csv values:", err)
+			return nil, fmt.Errorf("failed to write csv row: %v error: %v", row, err)
 		}
 	}
-	writer.Flush()
 
+	writer.Flush()
 	if err := writer.Error(); err != nil {
-		log.Println("Failed to flush csv writer,", err)
-		return nil
+		return nil, fmt.Errorf("failed to flush csv writer: %v", err)
 	}
-	return b.Bytes()
+	return b.Bytes(), nil
 }
 
-//TODO should these methods return the error too?
-func ToPDF(h []highlight.Highlight) []byte {
+func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	for i, v := range h {
 		if i%5 == 0 {
@@ -85,12 +79,12 @@ func ToPDF(h []highlight.Highlight) []byte {
 	var b bytes.Buffer
 	w := bufio.NewWriter(&b)
 	if err := pdf.Output(w); err != nil {
-		log.Println("Failed to output PDF")
+		return nil, fmt.Errorf("failed to write pdf: %v", err)
 	}
 	if err := w.Flush(); err != nil {
-		log.Println("Failed to flush PDF writer")
+		return nil, fmt.Errorf("failed to flush pdf writer: %v", err)
 	}
-	return b.Bytes()
+	return b.Bytes(), nil
 }
 
 func utfToCP1252(text string) string {

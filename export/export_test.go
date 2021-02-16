@@ -11,7 +11,7 @@ import (
 func TestAsTxt(t *testing.T) {
 	path, _ := AsTxt(getTestHighlights())
 
-	if !strings.Contains(path, "new.txt") {
+	if !strings.Contains(path, ".txt") {
 		t.Error("Failed to find TEXT title in filename: ", path)
 	}
 

@@ -5,41 +5,46 @@ import (
 	"KindleHighlightsReader/highlight"
 	"fmt"
 	"os"
-	"runtime"
+	"path/filepath"
 )
 
 func AsTxt(h []highlight.Highlight) (string, error) {
 	b := convert.ToText(h)
-	path, err := export("MyClippings.txt", b)
-	return path, err
+	return export("MyClippings.txt", b)
 }
 
 func AsJSON(h []highlight.Highlight) (string, error) {
-	b := convert.ToJSON(h)
-	path, err := export("MyClippings.json", b)
-	return path, err
+	b, err := convert.ToJSON(h)
+	if err != nil {
+		return "", err
+	}
+	return export("MyClippings.json", b)
 }
 
 func AsCSV(h []highlight.Highlight) (string, error) {
-	b := convert.ToCSV(h)
-	path, err := export("MyClippings.csv", b)
-	return path, err
+	b, err := convert.ToCSV(h)
+	if err != nil {
+		return "", err
+	}
+	return export("MyClippings.csv", b)
 }
 
 func AsPDF(h []highlight.Highlight) (string, error) {
-	b := convert.ToPDF(h)
-	path, err := export("MyClippings.pdf", b)
-	return path, err
+	b, err := convert.ToPDF(h)
+	if err != nil {
+		return "", err
+	}
+	return export("MyClippings.pdf", b)
 }
 
 func export(filename string, b []byte) (string, error) {
 	path := makePath(filename)
 	f, err := createFile(path)
 	if err != nil {
-		return "", fmt.Errorf("failed to create file at %s", path)
+		return "", fmt.Errorf("failed to create file at %s error: %v", path, err)
 	}
 	if err = writeToFile(f, b); err != nil {
-		return "", fmt.Errorf("failed writing to file at %s", path)
+		return "", fmt.Errorf("failed writing to file %s error: %v", path, err)
 	}
 	return f.Name(), nil
 }
@@ -54,11 +59,8 @@ func createFile(path string) (*os.File, error) {
 
 func makePath(filename string) string {
 	homeDir, _ := os.UserHomeDir()
-	if runtime.GOOS == "windows" {
-		return fmt.Sprintf("%s\\Desktop\\%s", homeDir, filename)
-	} else {
-		return fmt.Sprintf("%s/Desktop/%s", homeDir, filename)
-	}
+	fs := string(filepath.Separator)
+	return fmt.Sprintf("%s%sDesktop%s%s", homeDir, fs, fs, filename)
 }
 
 func writeToFile(f *os.File, b []byte) error {

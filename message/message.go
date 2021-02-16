@@ -2,9 +2,9 @@ package message
 
 import "fmt"
 
-const Greeting = `KindleHighlightsReader v1.0.0 is a program that reads your highlights 
-from your Kindle with options to clean and style the them and 
-exports them in any of the following formats: Text, Json, CSV or PDF.`
+const Greeting = `KindleHighlightsReader v.1.0.0 is a program that reads your highlights from your Kindle 
+with options to clean and format your highlights before exporting them 
+in any of following formats: text, json, csv or pdf.`
 
 const EnterSource = `Enter the path for "My Clippings.txt" or drag the file into the window: `
 
