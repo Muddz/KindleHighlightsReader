@@ -1,17 +1,17 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
 
-KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the highlights and exports them in the following formats: text, json, csv or pdf.
+KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the them and exports them in any of following formats: text, json, csv or pdf.
 
 
 ## Features
 - Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
 - Insert periods on all highlights.
-- Insert double quotations on all highlights.
-- Remove any quotation from all highlights.
-- Capitalize first letter on all highlights.
+- Insert quotations on all highlights.
+- Remove quotation from all highlights.
+- Capitalize first letters on all highlights.
 - Export as .txt .json .csv or .pdf files.
-- Works for Windows and MacOS
+- Works on Windows and MacOS
 
 #### JSON
 
@@ -29,12 +29,16 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-Download and run the program which will open in a command prompt window and automatically  
-find your `My Clippings.txt` file if its already on the Desktop or if your Kindle is plugged into your computer. 
+**Windows**  
+Download and just run the .exe file which will open the program in a command prompt window.
 
-- [Download for Windows](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReade.exe)
-- [Download for MacOS](https://github.com/Muddz/KindleHighlightReader/raw/master/KindleHighlightsReaderMacOS)
-- Or clone the project and run it from your IDE.
+[Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader.exe)
+
+**MacOS**  
+Download the binary file, right click on it and 'open with' -> 'terminal'.   
+This is only necessary the first time, any other time just double click on the file itself.
+
+[Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS)
 
 
 ## License
