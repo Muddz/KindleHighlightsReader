@@ -168,9 +168,11 @@ func findSource() string {
 	var input string
 	if len(src) > 0 {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
-		fmt.Printf("Press ENTER to continue with that file or specify another path: ")
+		fmt.Printf("Press ENTER to continue with that file or specify another path:")
+
 		for {
 			input = scanInput()
+			input = trimSrc(input)
 			if len(input) == 0 {
 				return src
 			}
@@ -178,16 +180,15 @@ func findSource() string {
 		}
 
 		for {
-			input = scanInput()
-			input = trimSrc(input)
 			if fileExist(input) {
 				return input
 			} else {
 				fmt.Printf("Couldn't find file: %s. Try again: ", input)
+				input = scanInput()
+				input = trimSrc(input)
 			}
 		}
 	}
-
 	return ""
 }
 
@@ -329,7 +330,7 @@ func printHighlights(highlights []highlight.Highlight) {
 	highlightsCount := 0
 	booksCount := make(map[string]int)
 	for _, v := range highlights {
-		msg := fmt.Sprintf("Title: %s\nAuthor: %s\nText: %s\n", v.Title, v.Author, v.Text)
+		msg := fmt.Sprintf("\nTitle: %s\nAuthor: %s\nText: %s\n", v.Title, v.Author, v.Text)
 		fmt.Println(msg)
 		if len(v.Text) > 0 {
 			highlightsCount++
