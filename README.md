@@ -15,7 +15,7 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 
 #### JSON
 
-The JSON format is useful for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in a `.json` file and has the following format:
+The JSON format is for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in a `.json` file and has the following format:
 
 ```
 [
