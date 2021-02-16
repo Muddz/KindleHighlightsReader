@@ -165,18 +165,13 @@ func main() {
 
 func findSource() string {
 	src := filefinder.GetMyClippingsFile()
-	var input string
-	if len(src) > 0 {
+	if fileExist(src) {
 		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
 		fmt.Printf("Press ENTER to continue with that file or specify another path:")
-
-		for {
-			input = scanInput()
-			input = trimSrc(input)
-			if len(input) == 0 {
-				return src
-			}
-			break
+		input := scanInput()   //merge this method
+		input = trimSrc(input) //with this method
+		if len(input) == 0 {
+			return src
 		}
 
 		for {
