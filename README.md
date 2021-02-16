@@ -1,11 +1,11 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
 
-KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the them and exports them in any of following formats: text, json, csv or pdf.
+KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the them before exporting them in any of following formats: text, json, csv or pdf.
 
 
 ## Features
-- Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
+- Trim highlights for redundant characters before and after: `ed. Hello` > `Hello`
 - Insert periods on all highlights.
 - Insert quotations on all highlights.
 - Remove quotation from all highlights.
@@ -29,8 +29,8 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 
 ## Usage
 
-The program will automatically find the `My Clippings.txt` file if its already on your desktop 
-or if your Kindle is plugged in to your computer via USB or you can specify the path yourself. 
+The program will automatically find your Kindle's `My Clippings.txt` file if its already on your desktop 
+or if your Kindle is plugged in to your computer via USB. You can also specify the path yourself. 
 
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
