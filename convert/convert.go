@@ -26,7 +26,7 @@ func ToText(h []highlight.Highlight) []byte {
 func ToJSON(h []highlight.Highlight) ([]byte, error) {
 	b, err := json.Marshal(h)
 	if err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	return b, nil
 }
@@ -44,19 +44,19 @@ func ToCSV(highlights []highlight.Highlight) ([]byte, error) {
 	var b bytes.Buffer
 	writer := csv.NewWriter(&b)
 	if err := writer.Write(headers); err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 
 	for _, v := range highlights {
 		row := []string{v.Title, v.Author, v.Text}
 		if err := writer.Write(row); err != nil {
-			return nil, fmt.Errorf("%w\n", err)
+			return nil, fmt.Errorf("\n%w", err)
 		}
 	}
 
 	writer.Flush()
 	if err := writer.Error(); err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	return b.Bytes(), nil
 }
@@ -79,10 +79,10 @@ func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	var b bytes.Buffer
 	w := bufio.NewWriter(&b)
 	if err := pdf.Output(w); err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	if err := w.Flush(); err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	return b.Bytes(), nil
 }

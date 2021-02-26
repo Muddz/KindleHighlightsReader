@@ -12,11 +12,11 @@ import (
 func ReadHighlights(path string) ([]highlight.Highlight, error) {
 	c, err := getFileContent(path)
 	if err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	h, err := parseHighlights(c)
 	if err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	return h, nil
 }
@@ -24,7 +24,7 @@ func ReadHighlights(path string) ([]highlight.Highlight, error) {
 func getFileContent(path string) (string, error) {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
-		return "", fmt.Errorf("%w\n", err)
+		return "", fmt.Errorf("\n%w", err)
 	}
 	return string(b), nil
 }
@@ -33,7 +33,7 @@ func parseHighlights(content string) ([]highlight.Highlight, error) {
 	p := `(?m)(^.*)\((.*)\)\r?\n(^.*)\r?\n\r?\n(^.*)`
 	r, err := regexp.Compile(p)
 	if err != nil {
-		return nil, fmt.Errorf("%w\n", err)
+		return nil, fmt.Errorf("\n%w", err)
 	}
 	matches := r.FindAllStringSubmatch(content, -1)
 	var highlights []highlight.Highlight

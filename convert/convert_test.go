@@ -2,20 +2,8 @@ package convert
 
 import (
 	"KindleHighlightsReader/highlight"
-	"fmt"
 	"testing"
 )
-
-func TestError(t *testing.T) {
-
-	err1 := fmt.Errorf("failed converting highlights to json\n")
-	err2 := fmt.Errorf("failed at marsheling highlights to json string\n > %w", err1)
-	err3 := fmt.Errorf("couldn't find file /Muddz/Desktop/my_clippings.txt\n > %w", err2)
-	err4 := fmt.Errorf("failed at loading user file\n > %w", err3)
-
-	fmt.Print(err4)
-
-}
 
 func TestToText(t *testing.T) {
 	h := getTestHighlights()
