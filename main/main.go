@@ -9,7 +9,6 @@ import (
 	"KindleHighlightsReader/reader"
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -54,7 +53,10 @@ func main() {
 		src = readSource()
 	}
 
-	highlights := reader.ReadHighlights(src)
+	highlights, err := reader.ReadHighlights(src)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if len(highlights) > 0 {
 		printHighlights(highlights)
 	}
@@ -122,33 +124,34 @@ func main() {
 
 	exportOptions := readExportOptions()
 	var exportResults []string
+
 	for k, _ := range exportOptions {
-		switch k {
-		case "text", "TEXT":
+		switch true {
+		case strings.EqualFold("text", k):
 			path, err := export.AsTxt(highlights)
 			if err != nil {
-				log.Print(err)
+				fmt.Printf("failed at exporting highlights as .txt file\n%v", err)
 				break
 			}
 			exportResults = append(exportResults, path)
-		case "json", "JSON":
+		case strings.EqualFold("json", k):
 			path, err := export.AsJSON(highlights)
 			if err != nil {
-				log.Print(err)
+				fmt.Printf("failed at exporting highlights as .json file\n%v", err)
 				break
 			}
 			exportResults = append(exportResults, path)
-		case "csv", "CSV":
+		case strings.EqualFold("csv", k):
 			path, err := export.AsCSV(highlights)
 			if err != nil {
-				log.Print(err)
+				fmt.Printf("failed at exporting highlights as .csv file\n%v", err)
 				break
 			}
 			exportResults = append(exportResults, path)
-		case "pdf", "PDF":
+		case strings.EqualFold("pdf", k):
 			path, err := export.AsPDF(highlights)
 			if err != nil {
-				log.Print(err)
+				fmt.Printf("failed at exporting highlights as .pdf file\n%v", err)
 				break
 			}
 			exportResults = append(exportResults, path)

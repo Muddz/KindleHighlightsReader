@@ -5,7 +5,10 @@ import (
 )
 
 func TestReadHighlightFile(t *testing.T) {
-	highlights := ReadHighlights("My Clippings_test.txt")
+	highlights, err := ReadHighlights("My Clippings_test.txt")
+	if err != nil {
+		t.Error(err)
+	}
 	if len(highlights) != 2 {
 		t.Error("Failed to read correct amount of highlights")
 	}
@@ -13,7 +16,10 @@ func TestReadHighlightFile(t *testing.T) {
 
 func TestGetFileContent(t *testing.T) {
 	testFile := "My Clippings_test.txt"
-	content := getFileContent(testFile)
+	content, err := getFileContent(testFile)
+	if err != nil {
+		t.Error(err)
+	}
 	if len(content) < 1 {
 		t.Errorf("Failed to get content of from file %s", testFile)
 	}
@@ -31,7 +37,7 @@ Book title (Author)
 - Highlight information
 
 Text`
-	highlights := parseHighlights(testString)
+	highlights, _ := parseHighlights(testString)
 	for _, v := range highlights {
 		if v.Title != "Book title" && v.Author != "Author" && v.Text != "Text" {
 			t.Error("Failed to parse highlights to struct")

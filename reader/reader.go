@@ -3,30 +3,39 @@ package reader
 import (
 	"KindleHighlightsReader/highlight"
 	"bytes"
+	"fmt"
 	"io/ioutil"
-	"log"
 	"regexp"
 	"strings"
 )
 
-func ReadHighlights(path string) []highlight.Highlight {
-	fileContent := getFileContent(path)
-	highlights := parseHighlights(fileContent)
-	return highlights
-}
-
-func getFileContent(path string) string {
-	data, err := ioutil.ReadFile(path)
+func ReadHighlights(path string) ([]highlight.Highlight, error) {
+	c, err := getFileContent(path)
 	if err != nil {
-		log.Println(err)
+		return nil, fmt.Errorf("%w\n", err)
 	}
-	return string(data)
+	h, err := parseHighlights(c)
+	if err != nil {
+		return nil, fmt.Errorf("%w\n", err)
+	}
+	return h, nil
 }
 
-func parseHighlights(content string) []highlight.Highlight {
-	pattern := `(?m)(^.*)\((.*)\)\r?\n(^.*)\r?\n\r?\n(^.*)`
-	regex := regexp.MustCompile(pattern)
-	matches := regex.FindAllStringSubmatch(content, -1)
+func getFileContent(path string) (string, error) {
+	b, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", fmt.Errorf("%w\n", err)
+	}
+	return string(b), nil
+}
+
+func parseHighlights(content string) ([]highlight.Highlight, error) {
+	p := `(?m)(^.*)\((.*)\)\r?\n(^.*)\r?\n\r?\n(^.*)`
+	r, err := regexp.Compile(p)
+	if err != nil {
+		return nil, fmt.Errorf("%w\n", err)
+	}
+	matches := r.FindAllStringSubmatch(content, -1)
 	var highlights []highlight.Highlight
 	for _, matchGroups := range matches {
 		var title = matchGroups[1]
@@ -39,12 +48,11 @@ func parseHighlights(content string) []highlight.Highlight {
 		h := highlight.New(title, author, text)
 		highlights = append(highlights, h)
 	}
-	return highlights
+	return highlights, nil
 }
 
 func removeCarriageReturn(text string) string {
-	result := strings.TrimSuffix(text, "\r")
-	return result
+	return strings.TrimSuffix(text, "\r")
 }
 
 func removeBOM(text string) string {

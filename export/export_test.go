@@ -9,8 +9,10 @@ import (
 )
 
 func TestAsTxt(t *testing.T) {
-	path, _ := AsTxt(getTestHighlights())
-
+	path, err := AsTxt(getTestHighlights())
+	if err != nil {
+		t.Error(err)
+	}
 	if !strings.Contains(path, ".txt") {
 		t.Error("Failed to find TEXT title in filename: ", path)
 	}
@@ -26,8 +28,10 @@ func TestAsTxt(t *testing.T) {
 }
 
 func TestAsJSON(t *testing.T) {
-	path, _ := AsJSON(getTestHighlights())
-
+	path, err := AsJSON(getTestHighlights())
+	if err != nil {
+		t.Error(err)
+	}
 	if !strings.Contains(path, ".json") {
 		t.Error("Failed to find JSON title in filename: ", path)
 	}
@@ -44,8 +48,10 @@ func TestAsJSON(t *testing.T) {
 }
 
 func TestAsCSV(t *testing.T) {
-	path, _ := AsCSV(getTestHighlights())
-
+	path, err := AsCSV(getTestHighlights())
+	if err != nil {
+		t.Error(err)
+	}
 	if !strings.Contains(path, ".csv") {
 		t.Error("Failed to find CSV title in filename: ", path)
 	}
@@ -61,8 +67,10 @@ func TestAsCSV(t *testing.T) {
 }
 
 func TestAsPDF(t *testing.T) {
-	path, _ := AsPDF(getTestHighlights())
-
+	path, err := AsPDF(getTestHighlights())
+	if err != nil {
+		t.Error(err)
+	}
 	if !strings.Contains(path, ".pdf") {
 		t.Error("Failed to find pdf extension in filename: ", path)
 	}
@@ -79,8 +87,10 @@ func TestAsPDF(t *testing.T) {
 
 func TestExport(t *testing.T) {
 	filename := "My Clippings_Test.pdf"
-	f, _ := export(filename, nil)
-
+	f, err := export(filename, nil)
+	if err != nil {
+		t.Error(err)
+	}
 	if !fileExist(f) {
 		t.Error("Failed to find test file:", filename)
 	}

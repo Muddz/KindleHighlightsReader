@@ -2,8 +2,20 @@ package convert
 
 import (
 	"KindleHighlightsReader/highlight"
+	"fmt"
 	"testing"
 )
+
+func TestError(t *testing.T) {
+
+	err1 := fmt.Errorf("failed converting highlights to json\n")
+	err2 := fmt.Errorf("failed at marsheling highlights to json string\n > %w", err1)
+	err3 := fmt.Errorf("couldn't find file /Muddz/Desktop/my_clippings.txt\n > %w", err2)
+	err4 := fmt.Errorf("failed at loading user file\n > %w", err3)
+
+	fmt.Print(err4)
+
+}
 
 func TestToText(t *testing.T) {
 	h := getTestHighlights()
@@ -20,7 +32,11 @@ func TestToText(t *testing.T) {
 
 func TestToJSON(t *testing.T) {
 	h := getTestHighlights()
-	b, _ := ToJSON(h)
+	b, err := ToJSON(h)
+	if err != nil {
+		t.Error(err)
+	}
+
 	result := string(b)
 	validJson := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
 	if result != validJson {
@@ -30,7 +46,10 @@ func TestToJSON(t *testing.T) {
 
 func TestToCSV(t *testing.T) {
 	h := getTestHighlights()
-	b, _ := ToCSV(h)
+	b, err := ToCSV(h)
+	if err != nil {
+		t.Error(err)
+	}
 	result := string(b)
 	validCSV := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
 	if result != validCSV {
@@ -40,7 +59,10 @@ func TestToCSV(t *testing.T) {
 
 func TestToPDF(t *testing.T) {
 	h := getTestHighlights()
-	b, _ := ToPDF(h)
+	b, err := ToPDF(h)
+	if err != nil {
+		t.Error(err)
+	}
 	if len(b) < len(h) {
 		t.Error("Failed to convert highlights to PDF. Data missing")
 	}
