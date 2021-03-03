@@ -9,12 +9,9 @@ func TestToText(t *testing.T) {
 	h := getTestHighlights()
 	b := ToText(h)
 	result := string(b)
-	validText :=
-		"text\n\nauthor, title\n________________________________\n\n" +
-			"text\n\nauthor, title\n________________________________\n\n"
-
-	if result != validText {
-		t.Error("Failed to convert highlights to text. Data missing")
+	expected := "text\n\nauthor, title\n________________________________\n\ntext\n\nauthor, title\n________________________________\n\n"
+	if result != expected {
+		t.Error("failed to convert highlights to text.")
 	}
 }
 
@@ -24,11 +21,10 @@ func TestToJSON(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 	result := string(b)
-	validJson := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
-	if result != validJson {
-		t.Errorf("Failed to correctly convert highlights to JSON")
+	expected := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
+	if result != expected {
+		t.Errorf("failed to correctly convert highlights to JSON")
 	}
 }
 
@@ -39,9 +35,9 @@ func TestToCSV(t *testing.T) {
 		t.Error(err)
 	}
 	result := string(b)
-	validCSV := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
-	if result != validCSV {
-		t.Error("Failed to convert highlights to CSV. No headers was found")
+	expected := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
+	if result != expected {
+		t.Error("failed to convert highlights to CSV")
 	}
 }
 
@@ -52,7 +48,7 @@ func TestToPDF(t *testing.T) {
 		t.Error(err)
 	}
 	if len(b) < len(h) {
-		t.Error("Failed to convert highlights to PDF. Data missing")
+		t.Error("failed to convert highlights to PDF")
 	}
 }
 

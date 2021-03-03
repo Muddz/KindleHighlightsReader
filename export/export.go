@@ -59,23 +59,16 @@ func export(filename string, b []byte) (string, error) {
 		return "", fmt.Errorf("\n%w", err)
 	}
 
-	f, err := createFile(path)
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		return "", fmt.Errorf("\n%w", err)
 	}
+	defer f.Close()
 
 	if err = writeToFile(f, b); err != nil {
 		return "", fmt.Errorf("\n%w", err)
 	}
 	return f.Name(), nil
-}
-
-func createFile(path string) (*os.File, error) {
-	f, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
-	if err != nil {
-		return nil, fmt.Errorf("\n%w", err)
-	}
-	return f, nil
 }
 
 func makePath(filename string) (string, error) {
@@ -92,8 +85,6 @@ func writeToFile(f *os.File, b []byte) error {
 	if err != nil {
 		return fmt.Errorf("\n%w", err)
 	}
-	defer func() {
-		err = f.Close()
-	}()
+	defer f.Close()
 	return nil
 }

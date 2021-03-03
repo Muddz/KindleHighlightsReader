@@ -9,25 +9,29 @@ import (
 )
 
 func GetMyClippingsFile() string {
-	if isWindowsOS() {
-		return getMyClippingsWindows()
-	} else {
-		return getMyClippingsUnix()
+	if p := searchInDesktop(); p != "" {
+		return p
 	}
+	return searchInDevice()
 }
 
-func isWindowsOS() bool {
+func searchInDesktop() string {
+	fs := string(filepath.Separator)
+	p := fmt.Sprintf("%s%sMy Clippings.txt", getDesktopPath(), fs)
+	if fileExist(p) {
+		return p
+	}
+	return ""
+}
+
+func searchInDevice() string {
 	if runtime.GOOS == "windows" {
-		return true
+		return searchInDeviceWindows()
 	}
-	return false
+	return searchInDeviceUnix()
 }
 
-func getMyClippingsWindows() string {
-	path := fmt.Sprintf("%s\\My Clippings.txt", getDesktopPath())
-	if fileExist(path) {
-		return path
-	}
+func searchInDeviceWindows() string {
 	drivers := []string{"D", "E", "F", "G", "H", "I"}
 	for _, v := range drivers {
 		path := fmt.Sprintf("%s:\\documents\\My Clippings.txt", v)
@@ -38,14 +42,10 @@ func getMyClippingsWindows() string {
 	return ""
 }
 
-func getMyClippingsUnix() string {
-	path := fmt.Sprintf("%s/My Clippings.txt", getDesktopPath())
-	if fileExist(path) {
-		return path
-	}
-	path = "/Volumes/Kindle/documents/My Clippings.txt"
-	if fileExist(path) {
-		return path
+func searchInDeviceUnix() string {
+	p := "/Volumes/Kindle/documents/My Clippings.txt"
+	if fileExist(p) {
+		return p
 	}
 	return ""
 }

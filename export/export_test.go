@@ -14,11 +14,10 @@ func TestAsTxt(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".txt") {
-		t.Error("Failed to find TEXT title in filename: ", path)
+		t.Error("couldn't find .txt extension in filename:", path)
 	}
-
 	if !fileExist(path) {
-		t.Error("Failed to find txt file: ", path)
+		t.Error("couldn't find test .txt file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -33,11 +32,11 @@ func TestAsJSON(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".json") {
-		t.Error("Failed to find JSON title in filename: ", path)
+		t.Error("couldn't find .json extension in filename:", path)
 	}
 
 	if !fileExist(path) {
-		t.Error("Failed to find JSON file: ", path)
+		t.Error("couldn't find test .json file:", path)
 	}
 
 	t.Cleanup(func() {
@@ -53,11 +52,11 @@ func TestAsCSV(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".csv") {
-		t.Error("Failed to find CSV title in filename: ", path)
+		t.Error("couldn't find .csv extension in filename:", path)
 	}
 
 	if !fileExist(path) {
-		t.Error("Failed to find CSV file: ", path)
+		t.Error("couldn't find test .csv file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -72,11 +71,11 @@ func TestAsPDF(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".pdf") {
-		t.Error("Failed to find pdf extension in filename: ", path)
+		t.Error("couldn't find .pdf extension in filename:", path)
 	}
 
 	if !fileExist(path) {
-		t.Error("Failed to find pdf file: ", path)
+		t.Error("couldn't find test .pdf file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -86,18 +85,18 @@ func TestAsPDF(t *testing.T) {
 }
 
 func TestExport(t *testing.T) {
-	filename := "My Clippings_Test.pdf"
+	filename := "MyClippingsTest.pdf"
 	f, err := export(filename, nil)
 	if err != nil {
 		t.Error(err)
 	}
 	if !fileExist(f) {
-		t.Error("Failed to find test file:", filename)
+		t.Error("failed to find test file:", filename)
 	}
 
 	t.Cleanup(func() {
 		if err := os.Remove(f); err != nil {
-			log.Print("Failed to remove test file: ", filename)
+			log.Print("failed to remove test file:", filename)
 		}
 	})
 }

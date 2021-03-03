@@ -76,6 +76,7 @@ func ToPDF(h []highlight.Highlight) ([]byte, error) {
 		pdf.SetFont("Arial", "i", 10)
 		pdf.MultiCell(0, 10, author, "0", "0", false)
 	}
+
 	var b bytes.Buffer
 	w := bufio.NewWriter(&b)
 	if err := pdf.Output(w); err != nil {
@@ -84,6 +85,7 @@ func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	if err := w.Flush(); err != nil {
 		return nil, fmt.Errorf("\n%w", err)
 	}
+
 	return b.Bytes(), nil
 }
 

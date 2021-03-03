@@ -168,26 +168,27 @@ func main() {
 
 func findSource() string {
 	src := filefinder.GetMyClippingsFile()
-	if fileExist(src) {
-		fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
-		fmt.Printf("Press ENTER to continue with that file or specify another path:")
-		input := scanInput()   //merge this method
-		input = trimSrc(input) //with this method
-		if len(input) == 0 {
-			return src
-		}
+	if src == "" {
+		return ""
+	}
 
-		for {
-			if fileExist(input) {
-				return input
-			} else {
-				fmt.Printf("Couldn't find file: %s. Try again: ", input)
-				input = scanInput()
-				input = trimSrc(input)
-			}
+	fmt.Printf("Found a 'My Clippings.txt' file at %s\n", src)
+	fmt.Printf("Press ENTER to continue with that file or specify another path:")
+	input := scanInput()   //merge this method
+	input = trimSrc(input) //with this method
+	if len(input) == 0 {
+		return src
+	}
+
+	for {
+		if fileExist(input) {
+			return input
+		} else {
+			fmt.Printf("Couldn't find file: %s. Try again: ", input)
+			input = scanInput()
+			input = trimSrc(input)
 		}
 	}
-	return ""
 }
 
 func readSource() string {
@@ -343,7 +344,7 @@ func printHighlights(highlights []highlight.Highlight) {
 
 func scanInput() string {
 	if !scanner.Scan() && scanner.Err() != nil {
-		fmt.Println("ERROR! Failed to read input:", scanner.Err())
+		fmt.Println("failed with reading input:", scanner.Err())
 		return ""
 	}
 	input := scanner.Text()
