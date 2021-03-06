@@ -8,9 +8,9 @@ import (
 func TestToText(t *testing.T) {
 	h := getTestHighlights()
 	b := ToText(h)
-	result := string(b)
+	actual := string(b)
 	expected := "text\n\nauthor, title\n________________________________\n\ntext\n\nauthor, title\n________________________________\n\n"
-	if result != expected {
+	if actual != expected {
 		t.Error("failed to convert highlights to text.")
 	}
 }
@@ -21,9 +21,9 @@ func TestToJSON(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	result := string(b)
+	actual := string(b)
 	expected := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
-	if result != expected {
+	if actual != expected {
 		t.Errorf("failed to correctly convert highlights to JSON")
 	}
 }
@@ -34,9 +34,9 @@ func TestToCSV(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	result := string(b)
+	actual := string(b)
 	expected := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
-	if result != expected {
+	if actual != expected {
 		t.Error("failed to convert highlights to CSV")
 	}
 }
