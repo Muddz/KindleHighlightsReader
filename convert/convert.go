@@ -63,15 +63,15 @@ func ToCSV(highlights []highlight.Highlight) ([]byte, error) {
 
 func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	for i, v := range h {
+	for i, highlight := range h {
 		if i%5 == 0 {
 			pdf.AddPage()
 		}
-		text := fmt.Sprintf("\n%s", v.Text)
+		text := fmt.Sprintf("\n%s", highlight.Text)
 		pdf.SetFont("Arial", "", 14)
 		pdf.MultiCell(0, 10, text, "0", "0", false)
 
-		author := fmt.Sprintf("%s, %s\n\n", v.Author, v.Title)
+		author := fmt.Sprintf("%s, %s\n\n", highlight.Author, highlight.Title)
 		author = strings.TrimRight(author, "\r\n")
 		pdf.SetFont("Arial", "i", 10)
 		pdf.MultiCell(0, 10, author, "0", "0", false)
