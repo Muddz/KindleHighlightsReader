@@ -43,12 +43,12 @@ func TestToCSV(t *testing.T) {
 
 func TestToPDF(t *testing.T) {
 	h := getTestHighlights()
-	b, err := ToPDF(h)
+	actual, err := ToPDF(h)
 	if err != nil {
 		t.Error(err)
 	}
-	if len(b) < len(h) {
-		t.Error("failed to convert highlights to PDF")
+	if len(actual) < len(h) {
+		t.Error("Some PDF content was missing")
 	}
 }
 

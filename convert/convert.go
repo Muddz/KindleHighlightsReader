@@ -63,16 +63,19 @@ func ToCSV(highlights []highlight.Highlight) ([]byte, error) {
 
 func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	for i, highlight := range h {
-		if i%5 == 0 {
+	unicodeTranslator := pdf.UnicodeTranslatorFromDescriptor("")
+	for i, v := range h {
+		if i%4 == 0 {
 			pdf.AddPage()
 		}
-		text := fmt.Sprintf("\n%s", highlight.Text)
+
+		//https://github.com/jung-kurt/gofpdf/issues/80 understand this!!
+		text := unicodeTranslator(v.Text)
+		text = fmt.Sprintf("\n%s", text)
 		pdf.SetFont("Arial", "", 14)
 		pdf.MultiCell(0, 10, text, "0", "0", false)
 
-		author := fmt.Sprintf("%s, %s\n\n", highlight.Author, highlight.Title)
-		author = strings.TrimRight(author, "\r\n")
+		author := fmt.Sprintf("%s, %s\n\n", v.Author, v.Title)
 		pdf.SetFont("Arial", "i", 10)
 		pdf.MultiCell(0, 10, author, "0", "0", false)
 	}
@@ -85,13 +88,5 @@ func ToPDF(h []highlight.Highlight) ([]byte, error) {
 	if err := w.Flush(); err != nil {
 		return nil, fmt.Errorf("\n%w", err)
 	}
-
 	return b.Bytes(), nil
-}
-
-func utfToCP1252(text string) string {
-	//https://github.com/djimenez/iconv-go
-	//https://github.com/signintech/gopdf
-	//https://godoc.org/github.com/jung-kurt/gofpdf#example-Fpdf-CellFormat-Codepage
-	return ""
 }
