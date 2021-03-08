@@ -6,12 +6,15 @@ import (
 	"strings"
 )
 
+var quotationsMarks = "'\"“”‘’"
+
 func SetQuotations(text string) string {
 	chars := []rune(text)
 	firstChar := string(chars[0])
 	lastChar := string(chars[len(chars)-1])
+	quotations := "'\"‘’"
 
-	if firstChar == "'" || firstChar == "\"" || firstChar == "‘" { //Make this as an array
+	if strings.ContainsAny(firstChar, quotations) {
 		chars[0] = '“'
 	} else if firstChar != "“" {
 		chars = append(chars, 0)
@@ -19,7 +22,7 @@ func SetQuotations(text string) string {
 		chars[0] = '“'
 	}
 
-	if lastChar == "'" || lastChar == "\"" || lastChar == "’" { //Make this as an array
+	if strings.ContainsAny(lastChar, quotations) {
 		chars[len(chars)-1] = '”'
 	} else if lastChar != "”" {
 		chars = append(chars, '”')
@@ -31,11 +34,10 @@ func RemoveQuotations(text string) string {
 	chars := []rune(text)
 	firstChar := string(chars[0])
 	lastChar := string(chars[len(chars)-1])
-
-	if firstChar == "'" || firstChar == "\"" || firstChar == "“" || firstChar == "‘" { //Make this as an array
+	if strings.ContainsAny(firstChar, quotationsMarks) {
 		chars = append(chars[1:])
 	}
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
+	if strings.ContainsAny(lastChar, quotationsMarks) {
 		chars = append(chars[:len(chars)-1])
 	}
 	return string(chars)
@@ -45,8 +47,7 @@ func SetPeriod(text string) string {
 	runes := []rune(text)
 	lastPos := len(runes)
 	lastChar := string(runes[lastPos-1])
-
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
+	if strings.ContainsAny(lastChar, quotationsMarks) {
 		isPeriod := string(runes[lastPos-2])
 		if isPeriod != "." {
 			text := string(runes[:lastPos-1])
@@ -63,7 +64,7 @@ func RemovePeriod(text string) string {
 	runes := []rune(text)
 	lastPos := len(runes)
 	lastChar := string(runes[lastPos-1])
-	if lastChar == "'" || lastChar == "\"" || lastChar == "”" || lastChar == "’" { //Make this as an array
+	if strings.ContainsAny(lastChar, quotationsMarks) {
 		content := string(runes[:lastPos-2])
 		quotation := string(runes[lastPos-1])
 		return fmt.Sprintf("%v%s", content, quotation)

@@ -4,13 +4,13 @@ import (
 	"testing"
 )
 
-//------ Test for setting quotations
+//------ Test for setting quotationsMarks
 
 func TestSetQuotationsIfNotPresent(t *testing.T) {
 	testString := "Hello"
 	result := SetQuotations(testString)
 	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotations on: %s", testString)
+		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -18,7 +18,7 @@ func TestSetQuotationsIfPresent(t *testing.T) {
 	testString := "“Hello”"
 	result := SetQuotations(testString)
 	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotations on: %s", testString)
+		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -26,7 +26,7 @@ func TestSetQuotationsIfSinglesPresent(t *testing.T) {
 	testString := "‘Hello’"
 	result := SetQuotations(testString)
 	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotations on: %s", testString)
+		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -34,7 +34,7 @@ func TestSetQuotationsIfPrimesPresent(t *testing.T) {
 	testString := "\"Hello\""
 	result := SetQuotations(testString)
 	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotations on: %s", testString)
+		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -42,17 +42,17 @@ func TestSetQuotationsIfSinglePrimesPresent(t *testing.T) {
 	testString := "'Hello'"
 	result := SetQuotations(testString)
 	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotations on: %s", testString)
+		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
 	}
 }
 
-//------ Test for removing quotations
+//------ Test for removing quotationsMarks
 
 func TestRemoveQuotations(t *testing.T) {
 	testString := "“Hello”"
 	result := RemoveQuotations(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to remove double quotations on: %s", testString)
+		t.Errorf("Failed to remove double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -60,7 +60,7 @@ func TestRemoveSingleQuotations(t *testing.T) {
 	testString := "‘Hello’"
 	result := RemoveQuotations(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to remove single quotations on: %s", testString)
+		t.Errorf("Failed to remove single quotationsMarks on: %s", testString)
 	}
 }
 
@@ -68,7 +68,7 @@ func TestRemovePrimeQuotations(t *testing.T) {
 	testString := "\"Hello\""
 	result := RemoveQuotations(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to remove double quotations on: %s", testString)
+		t.Errorf("Failed to remove double quotationsMarks on: %s", testString)
 	}
 }
 
@@ -76,7 +76,7 @@ func TestRemoveSinglePrimeQuotations(t *testing.T) {
 	testString := "'Hello'"
 	result := RemoveQuotations(testString)
 	if result != "Hello" {
-		t.Errorf("Failed to remove single quotations on: %s", testString)
+		t.Errorf("Failed to remove single quotationsMarks on: %s", testString)
 	}
 }
 
