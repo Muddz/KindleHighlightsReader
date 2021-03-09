@@ -4,238 +4,108 @@ import (
 	"testing"
 )
 
-//------ Test for setting quotationsMarks
-
-func TestSetQuotationsIfNotPresent(t *testing.T) {
-	testString := "Hello"
-	result := SetQuotations(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
-	}
+type TestCase struct {
+	input    string
+	expected string
 }
 
-func TestSetQuotationsIfPresent(t *testing.T) {
-	testString := "“Hello”"
-	result := SetQuotations(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
+func TestSetQuotations(t *testing.T) {
+	expected := "“Hello”"
+	c1 := TestCase{input: "Hello", expected: expected}
+	c2 := TestCase{input: "“Hello”", expected: expected}
+	c3 := TestCase{input: "“Hello", expected: expected}
+	c4 := TestCase{input: "Hello”", expected: expected}
+	c5 := TestCase{input: "\"Hello\"", expected: expected}
+	cases := []TestCase{c1, c2, c3, c4, c5}
+	for i, v := range cases {
+		actual := SetQuotations(v.input)
+		if actual != v.expected {
+			t.Errorf("test case %d failed with actual: %s expected: %s", i+1, actual, v.expected)
+		}
 	}
 }
-
-func TestSetQuotationsIfSinglesPresent(t *testing.T) {
-	testString := "‘Hello’"
-	result := SetQuotations(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
-	}
-}
-
-func TestSetQuotationsIfPrimesPresent(t *testing.T) {
-	testString := "\"Hello\""
-	result := SetQuotations(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
-	}
-}
-
-func TestSetQuotationsIfSinglePrimesPresent(t *testing.T) {
-	testString := "'Hello'"
-	result := SetQuotations(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to set double quotationsMarks on: %s", testString)
-	}
-}
-
-//------ Test for removing quotationsMarks
 
 func TestRemoveQuotations(t *testing.T) {
-	testString := "“Hello”"
-	result := RemoveQuotations(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to remove double quotationsMarks on: %s", testString)
+	expected := "Hello"
+	c1 := TestCase{input: "Hello", expected: expected}
+	c2 := TestCase{input: "“Hello”", expected: expected}
+	c3 := TestCase{input: "“Hello", expected: expected}
+	c4 := TestCase{input: "Hello”", expected: expected}
+	c5 := TestCase{input: "\"Hello\"", expected: expected}
+	cases := []TestCase{c1, c2, c3, c4, c5}
+	for i, v := range cases {
+		actual := RemoveQuotations(v.input)
+		if actual != v.expected {
+			t.Errorf("test case %d failed with actual: %s expected: %s", i+1, actual, v.expected)
+		}
 	}
 }
 
-func TestRemoveSingleQuotations(t *testing.T) {
-	testString := "‘Hello’"
-	result := RemoveQuotations(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to remove single quotationsMarks on: %s", testString)
+func TestSetPeriod(t *testing.T) {
+	c1 := TestCase{input: "Hello", expected: "Hello."}
+	c2 := TestCase{input: "“Hello”", expected: "“Hello.”"}
+	c3 := TestCase{input: "Hello.", expected: "Hello."}
+	c4 := TestCase{input: "“Hello.”", expected: "“Hello.”"}
+	cases := []TestCase{c1, c2, c3, c4}
+	for i, v := range cases {
+		actual := SetPeriod(v.input)
+		if actual != v.expected {
+			t.Errorf("test case %d failed with actual: %s expected: %s", i+1, actual, v.expected)
+		}
 	}
 }
 
-func TestRemovePrimeQuotations(t *testing.T) {
-	testString := "\"Hello\""
-	result := RemoveQuotations(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to remove double quotationsMarks on: %s", testString)
+func TestRemovePeriod(t *testing.T) {
+	c1 := TestCase{input: "Hello", expected: "Hello"}
+	c2 := TestCase{input: "“Hello”", expected: "“Hello”"}
+	c3 := TestCase{input: "Hello.", expected: "Hello"}
+	c4 := TestCase{input: "“Hello.”", expected: "“Hello”"}
+	cases := []TestCase{c1, c2, c3, c4}
+	for i, v := range cases {
+		actual := RemovePeriod(v.input)
+		if actual != v.expected {
+			t.Errorf("test case %d failed with actual: %s expected: %s", i+1, actual, v.expected)
+		}
 	}
 }
-
-func TestRemoveSinglePrimeQuotations(t *testing.T) {
-	testString := "'Hello'"
-	result := RemoveQuotations(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to remove single quotationsMarks on: %s", testString)
-	}
-}
-
-//------ Test for setting periods
-
-func TestSetPeriodWithNoQuotations(t *testing.T) {
-	testString := "Hello"
-	result := SetPeriod(testString)
-	if result != "Hello." {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-func TestSetPeriodWithQuotations(t *testing.T) {
-	testString := "“Hello”"
-	result := SetPeriod(testString)
-	if result != "“Hello.”" {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-func TestSetPeriodWithSingleQuotations(t *testing.T) {
-	testString := "‘Hello’"
-	result := SetPeriod(testString)
-	if result != "‘Hello.’" {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-func TestSetPeriodWithPrimeQuotations(t *testing.T) {
-	testString := "\"Hello\""
-	result := SetPeriod(testString)
-	if result != "\"Hello.\"" {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-func TestSetPeriodWithSinglePrimeQuotations(t *testing.T) {
-	testString := "'Hello'"
-	result := SetPeriod(testString)
-	if result != "'Hello.'" {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-func TestSetPeriodIfPresentWithQuotations(t *testing.T) {
-	testString := "“Hello.”"
-	result := SetPeriod(testString)
-	if result != "“Hello.”" {
-		t.Errorf("Failed to set period on: %s", testString)
-	}
-}
-
-//------ Test for removing periods
-
-func TestRemovePeriodWithNoQuotations(t *testing.T) {
-	testString := "Hello."
-	result := RemovePeriod(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to remove period on: %s", testString)
-	}
-}
-
-func TestRemovePeriodWithQuotations(t *testing.T) {
-	testString := "“Hello.”"
-	result := RemovePeriod(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to remove period on: %s", testString)
-	}
-}
-
-func TestRemovePeriodWithSingleQuotations(t *testing.T) {
-	testString := "‘Hello.’"
-	result := RemovePeriod(testString)
-	if result != "‘Hello’" {
-		t.Errorf("Failed to remove period on: %s", testString)
-	}
-}
-
-func TestRemovePeriodWithPrimeQuotations(t *testing.T) {
-	testString := "\"Hello.\""
-	result := RemovePeriod(testString)
-	if result != "\"Hello\"" {
-		t.Errorf("Failed to remove period on: %s", testString)
-	}
-}
-
-func TestRemovePeriodWithSinglePrimeQuotations(t *testing.T) {
-	testString := "'Hello.'"
-	result := RemovePeriod(testString)
-	if result != "'Hello'" {
-		t.Errorf("Failed to remove period on: %s", testString)
-	}
-}
-
-//------ Test for trimming for redundant chars/words
 
 func TestTrimBefore(t *testing.T) {
-	testString := "The. The quick brown fox jumps over the lazy dog"
-	result := TrimBefore(testString)
-	if result != "The quick brown fox jumps over the lazy dog" {
-		t.Errorf("Failed to trim-before of: %s", testString)
+	c1 := TestCase{input: "the. Quick brown fox jumps", expected: "Quick brown fox jumps"}
+	c2 := TestCase{input: "the. “Quick brown fox jumps”", expected: "“Quick brown fox jumps”"}
+	c3 := TestCase{input: ". Quick brown fox jumps", expected: "Quick brown fox jumps"}
+	c4 := TestCase{input: "Quick brown fox jumps", expected: "Quick brown fox jumps"}
+	cases := []TestCase{c1, c2, c3, c4}
+	for _, v := range cases {
+		actual := TrimBefore(v.input)
+		if actual != v.expected {
+			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+		}
 	}
 }
 
-func TestTrimAfterWithAPeriod(t *testing.T) {
-	testString := ". The quick brown fox jumps over the lazy dog"
-	result := TrimBefore(testString)
-	if result != "The quick brown fox jumps over the lazy dog" {
-		t.Errorf("Failed to trim-before of: %s", testString)
+func TestTrimAfter(t *testing.T) {
+	c1 := TestCase{input: "Quick brown fox", expected: "Quick brown fox"}
+	c2 := TestCase{input: "Quick brown fox. Jumps", expected: "Quick brown fox."}
+	c3 := TestCase{input: "“Quick brown fox.” Jumps", expected: "“Quick brown fox.”"}
+	cases := []TestCase{c1, c2, c3}
+	for _, v := range cases {
+		actual := TrimAfter(v.input)
+		if actual != v.expected {
+			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+		}
 	}
 }
-
-func TestTrimAfterWithOneWord(t *testing.T) {
-	testString := "The quick brown fox jumps over the lazy. dog"
-	result := TrimAfter(testString)
-	if result != "The quick brown fox jumps over the lazy." {
-		t.Errorf("Failed to trim-after of: %s", testString)
-	}
-}
-
-//------ Test for capitalizing first letter in texts
 
 func TestCapitalize(t *testing.T) {
-	testString := "hello"
-	result := Capitalize(testString)
-	if result != "Hello" {
-		t.Errorf("Failed to capitalize: %s", testString)
-	}
-}
-
-func TestCapitalizeWithQuotations(t *testing.T) {
-	testString := "“hello”"
-	result := Capitalize(testString)
-	if result != "“Hello”" {
-		t.Errorf("Failed to capitalize: %s", testString)
-	}
-}
-
-func TestCapitalizeWithSingleQuotations(t *testing.T) {
-	testString := "‘hello’"
-	result := Capitalize(testString)
-	if result != "‘Hello’" {
-		t.Errorf("Failed to capitalize: %s", testString)
-	}
-}
-
-func TestCapitalizeWithPrimeQuotations(t *testing.T) {
-	testString := "\"hello\""
-	result := Capitalize(testString)
-	if result != "\"Hello\"" {
-		t.Errorf("Failed to capitalize: %s", testString)
-	}
-}
-
-func TestCapitalizeWithSinglePrimeQuotations(t *testing.T) {
-	testString := "'hello'"
-	result := Capitalize(testString)
-	if result != "'Hello'" {
-		t.Errorf("Failed to capitalize: %s", testString)
+	c1 := TestCase{input: "Hello", expected: "Hello"}
+	c2 := TestCase{input: "hello", expected: "Hello"}
+	c3 := TestCase{input: "“hello”", expected: "“Hello”"}
+	c4 := TestCase{input: "“Hello”", expected: "“Hello”"}
+	cases := []TestCase{c1, c2, c3, c4}
+	for _, v := range cases {
+		actual := Capitalize(v.input)
+		if actual != v.expected {
+			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+		}
 	}
 }

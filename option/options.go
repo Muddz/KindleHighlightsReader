@@ -62,15 +62,19 @@ func SetPeriod(text string) string {
 
 func RemovePeriod(text string) string {
 	runes := []rune(text)
-	lastPos := len(runes)
-	lastChar := string(runes[lastPos-1])
+	lastRunePos := len(runes)
+	lastChar := string(runes[lastRunePos-1])
 	if strings.ContainsAny(lastChar, quotationsMarks) {
-		content := string(runes[:lastPos-2])
-		quotation := string(runes[lastPos-1])
-		return fmt.Sprintf("%v%s", content, quotation)
+		isPeriod := string(runes[lastRunePos-2])
+		if isPeriod == "." {
+			content := string(runes[:lastRunePos-2])
+			quotation := string(runes[lastRunePos-1])
+			return fmt.Sprintf("%v%s", content, quotation)
+		}
 	} else {
-		return text[:len(text)-1]
+		return strings.TrimRight(text, ".")
 	}
+	return text
 }
 
 func TrimBefore(text string) string {
@@ -80,7 +84,7 @@ func TrimBefore(text string) string {
 }
 
 func TrimAfter(text string) string {
-	pattern := `\s\w+$`
+	pattern := `\s[A-Z]\w+$`
 	match, _ := regexp.Compile(pattern)
 	return match.ReplaceAllString(text, "")
 }
