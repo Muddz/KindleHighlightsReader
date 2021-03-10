@@ -9,24 +9,24 @@ import (
 )
 
 func TestGetMyClippingsFile(t *testing.T) {
-	f, err := makeTestFileForDesktop()
+	testFile, err := getDesktopTestFile()
 	if err != nil {
 		t.Error("failed to setup test file:", err)
 	}
 
-	cf := GetMyClippingsFile()
-	if cf != f.Name() {
-		t.Error("failed to automatically find test file:", f.Name())
+	f := GetMyClippingsFile()
+	if f != testFile.Name() {
+		t.Errorf("failed to find file: %s, found instead: %s", testFile.Name(), f)
 	}
 
 	t.Cleanup(func() {
-		if err := os.Remove(f.Name()); err != nil {
-			log.Print("failed to remove test file: ", f.Name())
+		if err := os.Remove(testFile.Name()); err != nil {
+			log.Print("failed to remove test file: ", testFile.Name())
 		}
 	})
 }
 
-func makeTestFileForDesktop() (*os.File, error) {
+func getDesktopTestFile() (*os.File, error) {
 	userDir, err := os.UserHomeDir()
 	if err != nil {
 		return nil, err
