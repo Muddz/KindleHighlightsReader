@@ -1,10 +1,10 @@
 ==========
-Book title (Author)
+Title (Author)
 - Highlight information
 
 Text
 ==========
-Book title (Author)
+Title (Author)
 - Highlight information
 
 Text

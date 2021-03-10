@@ -44,15 +44,13 @@ func parseHighlights(content string) ([]highlight.Highlight, error) {
 
 		title = removeBOM(title)
 		text = removeBOM(text)
-		text = removeCarriageReturn(text)
+		title = strings.TrimSpace(title)
+		text = strings.TrimRight(text, "\r")
+
 		h := highlight.New(title, author, text)
 		highlights = append(highlights, h)
 	}
 	return highlights, nil
-}
-
-func removeCarriageReturn(text string) string {
-	return strings.TrimSuffix(text, "\r")
 }
 
 func removeBOM(text string) string {
