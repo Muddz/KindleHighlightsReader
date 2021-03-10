@@ -11,7 +11,7 @@ func TestToText(t *testing.T) {
 	actual := string(b)
 	expected := "text\n\nauthor, title\n________________________________\n\ntext\n\nauthor, title\n________________________________\n\n"
 	if actual != expected {
-		t.Errorf("failed to convert highlights to the correct text layout. actual was:\n%s", actual)
+		t.Errorf("failed to convert highlights to the correct text layout, actual was:\n%s", actual)
 	}
 }
 
@@ -24,7 +24,7 @@ func TestToJSON(t *testing.T) {
 	actual := string(b)
 	expected := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
 	if actual != expected {
-		t.Errorf("failed to correctly convert highlights to JSON. actual was:\n%s", actual)
+		t.Errorf("failed to correctly convert highlights to JSON, actual was:\n%s", actual)
 	}
 }
 
@@ -37,7 +37,7 @@ func TestToCSV(t *testing.T) {
 	actual := string(b)
 	expected := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
 	if actual != expected {
-		t.Errorf("failed to convert highlights to CSV. actual was:\n%s", actual)
+		t.Errorf("failed to convert highlights to CSV, actual was:\n%s", actual)
 	}
 }
 

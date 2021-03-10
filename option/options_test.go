@@ -75,10 +75,10 @@ func TestTrimBefore(t *testing.T) {
 	c3 := TestCase{input: ". Quick brown fox jumps", expected: "Quick brown fox jumps"}
 	c4 := TestCase{input: "Quick brown fox jumps", expected: "Quick brown fox jumps"}
 	cases := []TestCase{c1, c2, c3, c4}
-	for _, v := range cases {
+	for i, v := range cases {
 		actual := TrimBefore(v.input)
 		if actual != v.expected {
-			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+			t.Errorf("test case %d failed with actual: '%s' expected: '%s'", i+1, actual, v.expected)
 		}
 	}
 }
@@ -88,10 +88,10 @@ func TestTrimAfter(t *testing.T) {
 	c2 := TestCase{input: "Quick brown fox. Jumps", expected: "Quick brown fox."}
 	c3 := TestCase{input: "“Quick brown fox.” Jumps", expected: "“Quick brown fox.”"}
 	cases := []TestCase{c1, c2, c3}
-	for _, v := range cases {
+	for i, v := range cases {
 		actual := TrimAfter(v.input)
 		if actual != v.expected {
-			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+			t.Errorf("test case %d failed with actual: '%s' expected: '%s'", i+1, actual, v.expected)
 		}
 	}
 }
@@ -102,10 +102,10 @@ func TestCapitalize(t *testing.T) {
 	c3 := TestCase{input: "“hello”", expected: "“Hello”"}
 	c4 := TestCase{input: "“Hello”", expected: "“Hello”"}
 	cases := []TestCase{c1, c2, c3, c4}
-	for _, v := range cases {
+	for i, v := range cases {
 		actual := Capitalize(v.input)
 		if actual != v.expected {
-			t.Errorf("failed with actual: '%s' expected: '%s'", actual, v.expected)
+			t.Errorf("test case %d failed with actual: '%s' expected: '%s'", i+1, actual, v.expected)
 		}
 	}
 }
