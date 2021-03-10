@@ -68,8 +68,6 @@ func ToPDF(h []highlight.Highlight) ([]byte, error) {
 		if i%4 == 0 {
 			pdf.AddPage()
 		}
-
-		//https://github.com/jung-kurt/gofpdf/issues/80 understand this!!
 		text := unicodeTranslator(v.Text)
 		text = fmt.Sprintf("\n%s", text)
 		pdf.SetFont("Arial", "", 14)

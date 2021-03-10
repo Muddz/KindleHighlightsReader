@@ -14,10 +14,10 @@ func TestAsTxt(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".txt") {
-		t.Error("couldn't find .txt extension in filename:", path)
+		t.Error("failed to find .txt extension in filename:", path)
 	}
 	if !fileExist(path) {
-		t.Error("couldn't find test .txt file:", path)
+		t.Error("failed to find exported file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -32,13 +32,11 @@ func TestAsJSON(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".json") {
-		t.Error("couldn't find .json extension in filename:", path)
+		t.Error("failed to find .json extension in filename:", path)
 	}
-
 	if !fileExist(path) {
-		t.Error("couldn't find test .json file:", path)
+		t.Error("failed to find exported file:", path)
 	}
-
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
 			log.Println(err)
@@ -52,11 +50,10 @@ func TestAsCSV(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".csv") {
-		t.Error("couldn't find .csv extension in filename:", path)
+		t.Error("failed to find .csv extension in filename:", path)
 	}
-
 	if !fileExist(path) {
-		t.Error("couldn't find test .csv file:", path)
+		t.Error("failed to find exported file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -71,11 +68,10 @@ func TestAsPDF(t *testing.T) {
 		t.Error(err)
 	}
 	if !strings.Contains(path, ".pdf") {
-		t.Error("couldn't find .pdf extension in filename:", path)
+		t.Error("failed to find .pdf extension in filename:", path)
 	}
-
 	if !fileExist(path) {
-		t.Error("couldn't find test .pdf file:", path)
+		t.Error("failed to find exported file:", path)
 	}
 	t.Cleanup(func() {
 		if err := os.Remove(path); err != nil {
@@ -86,7 +82,7 @@ func TestAsPDF(t *testing.T) {
 
 func TestExport(t *testing.T) {
 	filename := "MyClippingsTest.pdf"
-	f, err := export(filename, nil)
+	f, err := export(nil, filename)
 	if err != nil {
 		t.Error(err)
 	}
