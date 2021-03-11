@@ -28,9 +28,9 @@ The JSON format is made for developers and is exported as an .json file and has 
 
 ## Download and Usage
 
-The program automatically finds your highlights by looking for the `My Clippings.txt` file in your Kindle if its plugged in to your computer or if the file is on your Desktop. You can also specify the path to the file yourself
+The program automatically finds your highlights by looking for the `My Clippings.txt` file in your Kindle if its plugged in to your computer or if the file is on your Desktop. You can also specify the path to the file yourself.
 
-The file can be found in your Kindle at the following path `/Kindle/documents/My clippings.txt`
+The file can be found in your Kindle device at the following path `/Kindle/documents/My clippings.txt`
 
 **Windows**  
 Download and run the .exe file which will open the program in a command prompt window.
