@@ -1,21 +1,20 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
 
-KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and style the them and exports them in any of following formats: text, json, csv or pdf.
+KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and format your highlights before exporting them in any of following formats: text, json, csv or pdf.
 
 
 ## Features
-- Trim highlights for redundant characters before and after like: `ed. Hello` > `Hello`
-- Insert periods on all highlights.
-- Insert quotations on all highlights.
-- Remove quotation from all highlights.
+- Trim highlights for redundant characters before and after: `ed. Hello` > `Hello`
+- Insert or remove periods on all highlights.
+- Insert or remove quotation marks on all highlights.
 - Capitalize first letters on all highlights.
 - Export as .txt .json .csv or .pdf files.
 - Works on Windows and MacOS
 
 #### JSON
 
-The JSON format is useful for developers who wants to unmarshal the JSON string to objects in any langauge to be used for an app, webpage or database. The JSON output is saved in a `.json` file and has the following format:
+The JSON format is made for developers and is exported as an .json file and has the following output format:
 
 ```
 [
@@ -27,18 +26,23 @@ The JSON format is useful for developers who wants to unmarshal the JSON string 
 ]
 ```
 
-## Usage
+## Download and Usage
+
+The program will automatically find your Kindle's `My Clippings.txt` file if its already on your desktop 
+or if your Kindle is plugged in to your computer. You can also specify the path to the file yourself.
+
+The file can be found at the following path in your kindle: `/Kindle/documents/my clippings.txt`
 
 **Windows**  
 Download and just run the .exe file which will open the program in a command prompt window.
 
-[Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader.exe)
+[Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_v1.0.0.exe)
 
 **MacOS**  
-Download the binary file, right click on it and 'open with' -> 'terminal'.   
+Download the binary file, right click on it and *open with terminal*.
 This is only necessary the first time, any other time just double click on the file itself.
 
-[Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS)
+[Download for MacOS](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_MacOS_v1.0.0)
 
 
 ## License
