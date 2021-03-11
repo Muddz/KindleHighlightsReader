@@ -9,8 +9,8 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 - Insert or remove periods on all highlights.
 - Insert or remove quotation marks on all highlights.
 - Capitalize first letters on all highlights.
-- Export as .txt .json .csv or .pdf files.
-- Works on Windows and MacOS
+- Export as .txt .json .csv .pdf files.
+- Compatible with Windows and MacOS
 
 #### JSON
 
@@ -28,13 +28,12 @@ The JSON format is made for developers and is exported as an .json file and has 
 
 ## Download and Usage
 
-The program will automatically find your Kindle's `My Clippings.txt` file if its already on your desktop 
-or if your Kindle is plugged in to your computer. You can also specify the path to the file yourself.
+The program automatically finds your highlights by looking for the `My Clippings.txt` file in your Kindle if its plugged in to your computer or if the file is on your Desktop. You can also specify the path to the file yourself
 
-The file can be found at the following path in your kindle: `/Kindle/documents/my clippings.txt`
+The file can be found in your Kindle at the following path `/Kindle/documents/My clippings.txt`
 
 **Windows**  
-Download and just run the .exe file which will open the program in a command prompt window.
+Download and run the .exe file which will open the program in a command prompt window.
 
 [Download for Windows](https://github.com/Muddz/KindleHighlightsReader/releases/download/1.0.0/KindleHighlightsReader_v1.0.0.exe)
 
