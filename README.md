@@ -6,8 +6,8 @@ KindleHighlightsReader is a program that reads your highlights from your Kindle 
 
 ## Features
 - Trim highlights for redundant characters before and after: `ed. Hello` > `Hello`
-- Insert or remove periods on all highlights.
 - Insert or remove quotation marks on all highlights.
+- Insert or remove periods on all highlights.
 - Capitalize first letters on all highlights.
 - Export as .txt .json .csv .pdf files.
 - Compatible with Windows and MacOS
