@@ -1,7 +1,7 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
 
-A program to edit and prettify all your Amazon Kindle highlights and export them as pdf, text, json or csv files. The program is very user friendly and simple to use, requires no instal
+A program to edit and prettify all your Amazon Kindle highlights and export them as pdf, text, json or csv files. The program is very user friendly and simple to use, requires no installation.
 
 
 ## Features
