@@ -1,7 +1,7 @@
 # KindleHighlightReader <img width="35px" src="https://www.flaticon.com/svg/static/icons/svg/845/845938.svg">
 
 
-KindleHighlightsReader is a program that reads your highlights from your Kindle with options to clean and format your highlights before exporting them in any of following formats: text, json, csv or pdf.
+A program to edit and prettify all your Amazon Kindle highlights and export them as pdf, text, json or csv files. The program is very user friendly and simple to use, requires no instal
 
 
 ## Features
