@@ -30,10 +30,10 @@ func TestAsPDF(t *testing.T) {
 
 func check(t *testing.T, path string, extension string, err error) {
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if !strings.Contains(path, extension) {
-		t.Errorf("failed to find %s extension in filename: %s", extension, path)
+		t.Fatalf("failed to find %s extension in filename: %s", extension, path)
 	}
 	if !fileExist(path) {
 		t.Error("failed to find exported file:", path)

@@ -2,6 +2,7 @@ package convert
 
 import (
 	"KindleHighlightsReader/highlight"
+	"log"
 	"testing"
 )
 
@@ -19,8 +20,9 @@ func TestToJSON(t *testing.T) {
 	h := getTestHighlights()
 	b, err := ToJSON(h)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
+	log.Println("hello")
 	actual := string(b)
 	expected := `[{"Title":"title","Author":"author","Text":"text"},{"Title":"title","Author":"author","Text":"text"}]`
 	if actual != expected {
@@ -32,7 +34,7 @@ func TestToCSV(t *testing.T) {
 	h := getTestHighlights()
 	b, err := ToCSV(h)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	actual := string(b)
 	expected := "Title,Author,Text\ntitle,author,text\ntitle,author,text\n"
@@ -45,7 +47,7 @@ func TestToPDF(t *testing.T) {
 	h := getTestHighlights()
 	actual, err := ToPDF(h)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if len(actual) < len(h) {
 		t.Error("some PDF content was missing")

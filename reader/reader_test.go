@@ -7,11 +7,11 @@ import (
 func TestReadHighlights(t *testing.T) {
 	highlights, err := ReadHighlights("MyClippings.txt")
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	if len(highlights) != 2 {
-		t.Errorf("failed to parse test highlights, expected: 2 highlights actual was: %d", len(highlights))
+		t.Fatalf("failed to parse test highlights, expected: 2 highlights actual was: %d", len(highlights))
 	}
 
 	for _, v := range highlights {

@@ -11,7 +11,7 @@ import (
 func TestGetMyClippingsFile(t *testing.T) {
 	testFile, err := getDesktopTestFile()
 	if err != nil {
-		t.Error("failed to setup test file:", err)
+		t.Fatal("failed to setup test file:", err)
 	}
 
 	f := GetMyClippingsFile()
